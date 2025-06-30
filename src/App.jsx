@@ -2,31 +2,32 @@ import React, { useEffect, useRef, useState } from 'react';
 
 const App = () => {
   const [isReading, setIsReading] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(null);
   const gridRef = useRef(null);
   const startBtnRef = useRef(null);
 
-  // Vocabulary data with working image URLs
+  // Vocabulary data with phonetic and Chinese explanation
   const breakfastItems = [
-    { name: 'Salad', img: ' https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80' },
-    { name: 'Sausage', img: ' https://source.unsplash.com/400x400/?breakfast-sausage' },
-    { name: 'Tea', img: ' https://source.unsplash.com/400x400/?cup-of-tea' },
-    { name: 'Cookies', img: ' https://source.unsplash.com/400x400/?cookies' },
-    { name: 'Baked Beans', img: ' https://source.unsplash.com/400x400/?baked-beans' },
-    { name: 'Coffee', img: ' https://source.unsplash.com/400x400/?cup-of-coffee' },
-    { name: 'Muffin', img: ' https://source.unsplash.com/400x400/?breakfast-muffin' },
-    { name: 'Oatmeal', img: ' https://source.unsplash.com/400x400/?bowl-of-oatmeal' },
-    { name: 'Jam', img: ' https://source.unsplash.com/400x400/?jar-of-jam' },
-    { name: 'Sandwich', img: ' https://source.unsplash.com/400x400/?breakfast-sandwich' },
-    { name: 'Croissant', img: ' https://source.unsplash.com/400x400/?croissant' },
-    { name: 'Toast & Butter', img: ' https://source.unsplash.com/400x400/?toast,butter' },
-    { name: 'Bagel', img: ' https://source.unsplash.com/400x400/?bagel' },
-    { name: 'Waffle', img: ' https://source.unsplash.com/400x400/?waffle' },
-    { name: 'Hot Chocolate', img: ' https://source.unsplash.com/400x400/?hot-chocolate' },
-    { name: 'Orange Juice', img: ' https://source.unsplash.com/400x400/?orange-juice' },
-    { name: 'Pancakes', img: ' https://source.unsplash.com/400x400/?pancakes' },
-    { name: 'Cereal', img: ' https://source.unsplash.com/400x400/?bowl-of-cereal' },
-    { name: 'Scrambled Eggs', img: ' https://source.unsplash.com/400x400/?scrambled-eggs' },
-    { name: 'Milk', img: ' https://source.unsplash.com/400x400/?glass-of-milk' }
+    { name: 'Salad', phonetic: '/ˈsæl.əd/', zh: '沙拉', img: 'https://images.unsplash.com/photo-1650072387363-3c957ac79f0c?ixlib=rb-4.1.0&q=85&fm=jpg&crop=entropy&cs=srgb' },
+    { name: 'Sausage', phonetic: '/ˈsɔː.sɪdʒ/', zh: '香肠', img: 'https://images.unsplash.com/photo-1691480241974-92481cef09ff?q=80&w=1760&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+    { name: 'Tea', phonetic: '/tiː/', zh: '茶', img: 'https://images.unsplash.com/photo-1558160074-4d7d8bdf4256?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+    { name: 'Cookies', phonetic: '/ˈkʊk.iz/', zh: '饼干', img: 'https://plus.unsplash.com/premium_photo-1670895801135-858a7d167ea4?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+    { name: 'Baked Beans', phonetic: '/beɪkt biːnz/', zh: '烘豆', img: 'https://plus.unsplash.com/premium_photo-1669655027790-ce16e29405c9?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+    { name: 'Coffee', phonetic: '/ˈkɒf.i/', zh: '咖啡', img: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?q=80&w=3137&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+    { name: 'Muffin', phonetic: '/ˈmʌf.ɪn/', zh: '松饼', img: 'https://images.unsplash.com/photo-1607958996333-41aef7caefaa?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+    { name: 'Oatmeal', phonetic: '/ˈəʊt.miːl/', zh: '燕麦粥', img: 'https://images.unsplash.com/photo-1650294411492-8343eaec1124?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+    { name: 'Jam', phonetic: '/dʒæm/', zh: '果酱', img: 'https://images.unsplash.com/photo-1590083052217-3c5ca32f3906?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+    { name: 'Sandwich', phonetic: '/ˈsæn.wɪtʃ/', zh: '三明治', img: 'https://images.unsplash.com/photo-1553909489-cd47e0907980?q=80&w=1925&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+    { name: 'Croissant', phonetic: '/ˈkwɑː.sɒ̃/', zh: '可颂', img: 'https://images.unsplash.com/photo-1681218079567-35aef7c8e7e4?q=80&w=2148&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+    { name: 'Toast', phonetic: '/təʊst/', zh: '吐司', img: 'https://images.unsplash.com/photo-1619095762086-66b82f914dcf?q=80&w=1925&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+    { name: 'Bagel', phonetic: '/ˈbeɪ.ɡəl/', zh: '百吉饼', img: 'https://images.unsplash.com/photo-1610735458851-bf3be7078588?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+    { name: 'Waffle', phonetic: '/ˈwɒf.əl/', zh: '华夫饼', img: 'https://images.unsplash.com/photo-1562376552-0d160a2f238d?q=80&w=1925&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+    { name: 'Hot Chocolate', phonetic: '/hɒt ˈtʃɒk.lət/', zh: '热巧克力', img: 'https://images.unsplash.com/photo-1481391032119-d89fee407e44?q=80&w=1365&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+    { name: 'Orange Juice', phonetic: '/ˈɒr.ɪndʒ dʒuːs/', zh: '橙汁', img: 'https://plus.unsplash.com/premium_photo-1675667390417-d9d23160f4a6?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+    { name: 'Pancakes', phonetic: '/ˈpæn.keɪks/', zh: '煎饼', img: 'https://images.unsplash.com/photo-1597524305544-cd821476715f?q=80&w=1760&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+    { name: 'Cereal', phonetic: '/ˈsɪə.ri.əl/', zh: '谷物', img: 'https://images.unsplash.com/photo-1583337346971-4ed7c964fb7f?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+    { name: 'Scrambled Eggs', phonetic: '/ˈskræm.bəld eɡz/', zh: '炒蛋', img: 'https://images.unsplash.com/photo-1562918005-50afb98e5d32?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+    { name: 'Milk', phonetic: '/mɪlk/', zh: '牛奶', img: 'https://plus.unsplash.com/premium_photo-1694481100261-ab16523c4093?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' }
   ];
 
   // Function to speak text
@@ -57,20 +58,17 @@ const App = () => {
   // Main function to read words aloud
   const startReadingSequence = async () => {
     if (isReading) return;
-    
     setIsReading(true);
     const startBtn = startBtnRef.current;
     if (startBtn) {
       startBtn.disabled = true;
       startBtn.innerHTML = 'Learning...';
     }
-    
     const cards = document.querySelectorAll('.food-card');
-
     for (let i = 0; i < breakfastItems.length; i++) {
+      setActiveIndex(i);
       const card = cards[i];
       const word = breakfastItems[i].name;
-
       if (card) {
         card.scrollIntoView({ behavior: 'smooth', block: 'center' });
         await new Promise(res => setTimeout(res, 500));
@@ -81,7 +79,7 @@ const App = () => {
         await new Promise(res => setTimeout(res, 300));
       }
     }
-
+    setActiveIndex(null);
     setIsReading(false);
     if (startBtn) {
       startBtn.disabled = false;
@@ -119,12 +117,12 @@ const App = () => {
         id="vocabulary-grid"
         ref={gridRef}
         className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 md:gap-3 px-2"
-        style={{ maxHeight: '85vh', overflowY: 'auto' }}
+        style={{ maxHeight: '85vh', overflowY: 'auto', paddingTop: '1rem', paddingBottom: '1rem' }}
       >
         {breakfastItems.map((item, index) => (
           <div 
             key={index} 
-            className="food-card bg-white rounded-lg shadow-md overflow-hidden text-center cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg"
+            className={`food-card bg-white rounded-lg shadow-md overflow-hidden text-center cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg${activeIndex === index ? ' active' : ''}`}
             data-index={index}
           >
             <img 
@@ -138,6 +136,12 @@ const App = () => {
             />
             <div className="p-4">
               <p className="font-semibold text-lg">{item.name}</p>
+              {activeIndex === index && (
+                <div className="mt-2">
+                  <div className="text-green-700 text-base font-mono">{item.phonetic}</div>
+                  <div className="text-yellow-700 text-base">{item.zh}</div>
+                </div>
+              )}
             </div>
           </div>
         ))}
