@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import VocabularyCard from './components/VocabularyCard';
 
 // Use a stylish, highly readable font for vocabulary words
 const readableFont = "'Baloo 2', 'Nunito', 'Segoe UI', 'Arial', sans-serif";
@@ -59,8 +60,8 @@ const App = () => {
     { name: 'Orange Juice', phonetic: '/ˈɒr.ɪndʒ dʒuːs/', zh: '橙汁', img: 'https://plus.unsplash.com/premium_photo-1675667390417-d9d23160f4a6?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
     { name: 'Pancakes', phonetic: '/ˈpæn.keɪks/', zh: '煎饼', img: 'https://images.unsplash.com/photo-1597524305544-cd821476715f?q=80&w=1760&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
     { name: 'Cereal', phonetic: '/ˈsɪə.ri.əl/', zh: '谷物', img: 'https://images.unsplash.com/photo-1583337346971-4ed7c964fb7f?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
-    { name: 'Eggs', phonetic: '/ˈeɡz/', zh: '鸡蛋', img: 'https://images.unsplash.com/photo-1562918005-50afb98e5d32?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
-    { name: 'Milk', phonetic: '/mɪlk/', zh: '牛奶', img: 'https://plus.unsplash.com/premium_photo-1694481100261-ab16523c4093?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' }
+    // { name: 'Eggs', phonetic: '/ˈeɡz/', zh: '鸡蛋', img: 'https://images.unsplash.com/photo-1562918005-50afb98e5d32?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+    // { name: 'Milk', phonetic: '/mɪlk/', zh: '牛奶', img: 'https://plus.unsplash.com/premium_photo-1694481100261-ab16523c4093?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' }
   ];
 
   // Function to speak text
@@ -139,84 +140,19 @@ const App = () => {
   const renderCard = (item, index) => {
     const isActive = activeIndex === index;
     return (
-      <div
+      <VocabularyCard
         key={index}
-        className={`food-card bg-white rounded-3xl shadow-xl overflow-hidden text-center cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl cartoon-card
-          ${isActive ? 'active cartoon-bounce border-4 border-yellow-400 relative z-10' : ''}`}
-        data-index={index}
-        style={{
-          fontFamily: readableFont,
-          borderColor: isActive ? '#f59e42' : 'transparent',
-          position: 'relative',
-          boxShadow: isActive
-            ? '0 8px 32px 0 rgba(245,158,66,0.15)'
-            : undefined,
-          background: isActive
-            ? 'linear-gradient(135deg,#fffbe9 80%,#ffe0b2 100%)'
-            : '#fff'
-        }}
-        tabIndex={0}
-        aria-label={`${item.name}, ${item.phonetic}, ${item.zh}`}
+        item={item}
+        isActive={isActive}
+        isReading={isReading}
+        index={index}
         onClick={() => {
           if (!isReading) setActiveIndex(index);
         }}
         onKeyDown={e => {
           if (!isReading && (e.key === 'Enter' || e.key === ' ')) setActiveIndex(index);
         }}
-      >
-        {isActive && <HandArrow />}
-        <img
-          src={item.img}
-          alt={item.name}
-          className="w-full h-32 sm:h-40 object-cover cartoon-img"
-          style={{
-            borderRadius: '1.5rem 1.5rem 0 0',
-            borderBottom: isActive ? '3px dashed #f59e42' : 'none'
-          }}
-          onError={e => {
-            e.target.onerror = null;
-            e.target.src = ' https://placehold.co/400x400/cccccc/ffffff?text=Image+Not+Found';
-          }}
-        />
-        <div className="p-4">
-          <p
-            className="font-bold text-2xl mb-1"
-            style={{
-              color: '#f59e42',
-              fontFamily: readableFont,
-              letterSpacing: '0.02em'
-            }}
-          >
-            {item.name}
-          </p>
-            <div className="mt-2">
-              <div
-                className="text-green-700 font-mono"
-                style={{
-                  fontSize: '1.5rem',
-                  background: '#fffbe9',
-                  borderRadius: '0.5rem',
-                  display: 'inline-block',
-                  padding: '0.1rem 0.5rem',
-                  marginBottom: '0.2rem',
-                  fontFamily: readableFont,
-                  fontWeight: 600
-                }}
-              >
-                {item.phonetic}
-              </div>
-              <div
-                className="text-yellow-700 text-lg"
-                style={{
-                  fontWeight: 'bold',
-                  fontFamily: readableFont
-                }}
-              >
-                {item.zh}
-              </div>
-            </div>
-        </div>
-      </div>
+      />
     );
   };
 
@@ -224,37 +160,49 @@ const App = () => {
   const renderHeader = () => (
     <header className="text-center mb-4">
       <div className="inline-block px-6 py-2 rounded-xl title-card text-white shadow-lg" style={{ fontFamily: readableFont }}>
-        <h2 className="text-2xl tracking-widest">Vocabulary</h2>
-        <h1 className="text-5xl font-bold">Breakfast</h1>
+        <h2
+          className="text-2xl tracking-widest"
+          style={{ fontFamily: "'Comic Neue', 'Comic Sans MS', 'Baloo 2', cursive, sans-serif" }}
+        >
+          Anna英语充电站
+        </h2>
+        <h1
+          className="text-5xl font-bold"
+          style={{ fontFamily: "'Luckiest Guy', 'Comic Neue', 'Baloo 2', cursive, sans-serif" }}
+        >
+          Breakfast
+        </h1>
       </div>
     </header>
   );
 
   // Helper: Render controls
-  const renderControls = () => (
-    <div className="mt-6 flex flex-col items-center gap-4">
-      <button
-        id="start-reading-btn"
-        ref={startBtnRef}
-        onClick={startReadingSequence}
-        className="btn-learn text-white font-bold py-4 px-8 rounded-full shadow-lg text-xl flex items-center justify-center mx-auto transform hover:scale-105 transition-transform cartoon-btn"
-        style={{
-          fontFamily: readableFont,
-          background: 'linear-gradient(90deg,#f59e42 60%,#fbbf24 100%)',
-          border: '3px solid #fffbe9',
-          boxShadow: '0 4px 16px 0 #f59e42'
-        }}
-        aria-label="Start Learning"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 inline-block mr-2 -mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        Start Learning
-      </button>
-      <div className="text-gray-500 text-sm mt-2">Tip: Click or press Enter/Space on a card to focus it.</div>
-    </div>
-  );
+  const renderControls = () => {
+    return (
+      <div className="mt-6 flex flex-col items-center gap-4">
+        <button
+          id="start-reading-btn"
+          ref={startBtnRef}
+          onClick={startReadingSequence}
+          className="btn-learn text-white font-bold py-4 px-8 rounded-full shadow-lg text-xl flex items-center justify-center mx-auto transform hover:scale-105 transition-transform cartoon-btn"
+          style={{
+            fontFamily: readableFont,
+            background: 'linear-gradient(90deg,#f59e42 60%,#fbbf24 100%)',
+            border: '3px solid #fffbe9',
+            boxShadow: '0 4px 16px 0 #f59e42'
+          }}
+          aria-label="Start Learning"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 inline-block mr-2 -mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          Start Learning
+        </button>
+        <div className="text-gray-500 text-sm mt-2">Tip: Click or press Enter/Space on a card to focus it.</div>
+      </div>
+    );
+  };
 
   // Show all words initially if not reading
   useEffect(() => {
@@ -269,7 +217,7 @@ const App = () => {
           id="vocabulary-grid"
           ref={gridRef}
           className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6 px-2"
-          style={{ maxHeight: '85vh', overflowY: 'auto', paddingTop: '1rem', paddingBottom: '1rem', width: '100%', maxWidth: 1200 }}
+          style={{ maxHeight: '88vh', overflowY: 'auto', paddingTop: '1rem', paddingBottom: '1rem', width: '100%', maxWidth: 1200 }}
         >
           {breakfastItems.map(renderCard)}
         </div>
