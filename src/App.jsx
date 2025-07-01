@@ -189,7 +189,6 @@ const App = () => {
           >
             {item.name}
           </p>
-          {(isActive || (!isReading && activeIndex === null)) && (
             <div className="mt-2">
               <div
                 className="text-green-700 text-lg font-mono"
@@ -215,7 +214,6 @@ const App = () => {
                 {item.zh}
               </div>
             </div>
-          )}
         </div>
       </div>
     );
