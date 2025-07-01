@@ -59,7 +59,7 @@ const App = () => {
     { name: 'Orange Juice', phonetic: '/ˈɒr.ɪndʒ dʒuːs/', zh: '橙汁', img: 'https://plus.unsplash.com/premium_photo-1675667390417-d9d23160f4a6?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
     { name: 'Pancakes', phonetic: '/ˈpæn.keɪks/', zh: '煎饼', img: 'https://images.unsplash.com/photo-1597524305544-cd821476715f?q=80&w=1760&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
     { name: 'Cereal', phonetic: '/ˈsɪə.ri.əl/', zh: '谷物', img: 'https://images.unsplash.com/photo-1583337346971-4ed7c964fb7f?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
-    { name: 'Scrambled Eggs', phonetic: '/ˈskræm.bəld eɡz/', zh: '炒蛋', img: 'https://images.unsplash.com/photo-1562918005-50afb98e5d32?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+    { name: 'Eggs', phonetic: '/ˈeɡz/', zh: '鸡蛋', img: 'https://images.unsplash.com/photo-1562918005-50afb98e5d32?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
     { name: 'Milk', phonetic: '/mɪlk/', zh: '牛奶', img: 'https://plus.unsplash.com/premium_photo-1694481100261-ab16523c4093?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' }
   ];
 
@@ -191,8 +191,9 @@ const App = () => {
           </p>
             <div className="mt-2">
               <div
-                className="text-green-700 text-lg font-mono"
+                className="text-green-700 font-mono"
                 style={{
+                  fontSize: '1.5rem',
                   background: '#fffbe9',
                   borderRadius: '0.5rem',
                   display: 'inline-block',
