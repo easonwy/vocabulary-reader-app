@@ -1,5 +1,38 @@
 import React, { useEffect, useRef, useState } from 'react';
 
+// Use a stylish, highly readable font for vocabulary words
+const readableFont = "'Baloo 2', 'Nunito', 'Segoe UI', 'Arial', sans-serif";
+
+const HandArrow = () => (
+  <svg
+    className="hand-arrow"
+    width="60"
+    height="60"
+    viewBox="0 0 60 60"
+    style={{
+      position: 'absolute',
+      left: '-50px',
+      top: '50%',
+      transform: 'translateY(-50%) rotate(-20deg)',
+      zIndex: 10,
+      pointerEvents: 'none'
+    }}
+  >
+    <g>
+      <path
+        d="M50 30 Q40 28 35 40 Q33 45 30 40 Q28 35 35 35 Q25 35 25 45"
+        stroke="#f59e42"
+        strokeWidth="4"
+        fill="none"
+        strokeLinecap="round"
+      />
+      <ellipse cx="50" cy="30" rx="7" ry="10" fill="#f59e42" />
+      <ellipse cx="50" cy="30" rx="5" ry="8" fill="#fffbe9" />
+      <ellipse cx="50" cy="30" rx="2" ry="3" fill="#f59e42" />
+    </g>
+  </svg>
+);
+
 const App = () => {
   const [isReading, setIsReading] = useState(false);
   const [activeIndex, setActiveIndex] = useState(null);
@@ -103,10 +136,10 @@ const App = () => {
   }, [isReading]);
 
   return (
-    <div className="min-h-screen h-screen overflow-hidden bg-[#f0fdf4]">
+    <div className="min-h-screen h-screen overflow-hidden bg-[#f0fdf4] cartoon-bg">
       {/* Header */}
       <header className="text-center mb-4">
-        <div className="inline-block px-6 py-2 rounded-xl title-card text-white shadow-lg">
+        <div className="inline-block px-6 py-2 rounded-xl title-card text-white shadow-lg" style={{ fontFamily: readableFont }}>
           <h2 className="text-2xl tracking-widest">Vocabulary</h2>
           <h1 className="text-5xl font-bold">Breakfast</h1>
         </div>
@@ -116,30 +149,81 @@ const App = () => {
       <div
         id="vocabulary-grid"
         ref={gridRef}
-        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 md:gap-3 px-2"
+        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6 px-2"
         style={{ maxHeight: '85vh', overflowY: 'auto', paddingTop: '1rem', paddingBottom: '1rem' }}
       >
         {breakfastItems.map((item, index) => (
           <div 
-            key={index} 
-            className={`food-card bg-white rounded-lg shadow-md overflow-hidden text-center cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg${activeIndex === index ? ' active' : ''}`}
+            key={index}
+            className={
+              `food-card bg-white rounded-3xl shadow-xl overflow-hidden text-center cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl cartoon-card
+              ${activeIndex === index ? 'active cartoon-bounce border-4 border-yellow-400 relative z-10' : ''}`
+            }
             data-index={index}
+            style={{
+              fontFamily: readableFont,
+              borderColor: activeIndex === index ? '#f59e42' : 'transparent',
+              position: 'relative',
+              boxShadow: activeIndex === index
+                ? '0 8px 32px 0 rgba(245,158,66,0.15)'
+                : undefined,
+              background: activeIndex === index
+                ? 'linear-gradient(135deg,#fffbe9 80%,#ffe0b2 100%)'
+                : '#fff'
+            }}
           >
+            {/* Hand Arrow */}
+            {activeIndex === index && <HandArrow />}
             <img 
               src={item.img} 
               alt={item.name} 
-              className="w-full h-32 sm:h-40 object-cover"
+              className="w-full h-32 sm:h-40 object-cover cartoon-img"
+              style={{
+                borderRadius: '1.5rem 1.5rem 0 0',
+                borderBottom: activeIndex === index ? '3px dashed #f59e42' : 'none'
+              }}
               onError={(e) => {
                 e.target.onerror = null;
                 e.target.src = ' https://placehold.co/400x400/cccccc/ffffff?text=Image+Not+Found';
               }}
             />
             <div className="p-4">
-              <p className="font-semibold text-lg">{item.name}</p>
+              <p
+                className="font-bold text-2xl mb-1"
+                style={{
+                  color: '#f59e42',
+                  fontFamily: readableFont,
+                  letterSpacing: '0.02em',
+                  // Remove textShadow for clarity
+                }}
+              >
+                {item.name}
+              </p>
               {activeIndex === index && (
                 <div className="mt-2">
-                  <div className="text-green-700 text-base font-mono">{item.phonetic}</div>
-                  <div className="text-yellow-700 text-base">{item.zh}</div>
+                  <div
+                    className="text-green-700 text-lg font-mono"
+                    style={{
+                      background: '#fffbe9',
+                      borderRadius: '0.5rem',
+                      display: 'inline-block',
+                      padding: '0.1rem 0.5rem',
+                      marginBottom: '0.2rem',
+                      fontFamily: readableFont,
+                      fontWeight: 600
+                    }}
+                  >
+                    {item.phonetic}
+                  </div>
+                  <div
+                    className="text-yellow-700 text-lg"
+                    style={{
+                      fontWeight: 'bold',
+                      fontFamily: readableFont
+                    }}
+                  >
+                    {item.zh}
+                  </div>
                 </div>
               )}
             </div>
@@ -153,7 +237,13 @@ const App = () => {
           id="start-reading-btn" 
           ref={startBtnRef}
           onClick={startReadingSequence}
-          className="btn-learn text-white font-bold py-4 px-8 rounded-full shadow-lg text-xl flex items-center justify-center mx-auto transform hover:scale-105 transition-transform"
+          className="btn-learn text-white font-bold py-4 px-8 rounded-full shadow-lg text-xl flex items-center justify-center mx-auto transform hover:scale-105 transition-transform cartoon-btn"
+          style={{
+            fontFamily: readableFont,
+            background: 'linear-gradient(90deg,#f59e42 60%,#fbbf24 100%)',
+            border: '3px solid #fffbe9',
+            boxShadow: '0 4px 16px 0 #f59e42'
+          }}
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 inline-block mr-2 -mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
