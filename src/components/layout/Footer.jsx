@@ -3,16 +3,20 @@ import React, { useState, useRef, useEffect } from 'react';
 // Use a stylish, highly readable font for vocabulary words
 const readableFont = "'Baloo 2', 'Nunito', 'Segoe UI', 'Arial', sans-serif";
 
-// Simple Chevron Up icon for the trigger tab
-const ChevronUpIcon = () => (
+// REMOVED: ChevronUpIcon
+// const ChevronUpIcon = () => ( ... );
+
+// New Settings Icon
+const SettingsIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
   </svg>
 );
 
 const Footer = ({
   startReadingSequence,
-  startBtnRef: initialStartBtnRef, // Rename to avoid conflict with local ref if needed, or ensure it's used correctly
+  startBtnRef: initialStartBtnRef,
   availableSubjects,
   currentSubjectKey,
   onSubjectChange,
@@ -20,7 +24,12 @@ const Footer = ({
 }) => {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const leaveTimeoutRef = useRef(null);
-  const localStartBtnRef = useRef(null); // Local ref for the button inside the panel
+  const localStartBtnRef = useRef(null);
+
+  // If in reading mode, don't render the footer panel at all
+  if (isReading) { // Corrected to always hide if reading
+    return null;
+  }
 
   // Effect to potentially assign the passed initialStartBtnRef if it's a callback ref or to manage it
   useEffect(() => {
@@ -53,12 +62,13 @@ const Footer = ({
     >
       {/* Trigger Tab - visible when panel is closed */}
       {!isPanelOpen && (
-        <div
-          className="p-3 bg-amber-500 text-white rounded-t-lg cursor-pointer hover:bg-amber-600 shadow-lg"
-          aria-label="Open controls panel" // Added for accessibility
+        <button // Changed div to button for semantic correctness and accessibility
+          type="button" // Explicitly set type for button
+          className="w-14 h-14 flex items-center justify-center bg-amber-500 text-white rounded-full cursor-pointer hover:bg-amber-600 shadow-xl focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-opacity-75"
+          aria-label="Open controls panel"
         >
-          <ChevronUpIcon />
-        </div>
+          <SettingsIcon />
+        </button>
       )}
 
       {/* Panel Content - slides/fades in */}
