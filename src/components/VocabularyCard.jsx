@@ -35,7 +35,6 @@ const HandArrow = () => (
 const VocabularyCard = ({
   item,
   isActive,
-  isReading,
   onClick,
   onKeyDown,
   index
@@ -65,7 +64,7 @@ const VocabularyCard = ({
     <img
       src={item.img}
       alt={item.name}
-      className="w-full h-45 sm:h-50 object-cover cartoon-img"
+      className="w-full h-35 sm:h-40 object-cover cartoon-img"
       style={{
         borderRadius: '1.5rem 1.5rem 0 0',
         borderBottom: isActive ? '3px dashed #f59e42' : 'none'
