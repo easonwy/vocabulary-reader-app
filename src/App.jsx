@@ -177,7 +177,7 @@ const App = () => {
   );
 
   // Helper: Render controls
-  const renderControls = () => (
+  const renderFooter = () => (
     <div className="mt-6 flex flex-col items-center gap-4">
       <button
         id="start-reading-btn"
@@ -237,7 +237,7 @@ const App = () => {
         >
           {breakfastItems.map(renderCard)}
         </div>
-        {renderControls()}
+        {renderFooter()}
       </main>
     </div>
   );
