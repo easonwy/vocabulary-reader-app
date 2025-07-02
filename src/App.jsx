@@ -177,32 +177,48 @@ const App = () => {
   );
 
   // Helper: Render controls
-  const renderControls = () => {
-    return (
-      <div className="mt-6 flex flex-col items-center gap-4">
-        <button
-          id="start-reading-btn"
-          ref={startBtnRef}
-          onClick={startReadingSequence}
-          className="btn-learn text-white font-bold py-4 px-8 rounded-full shadow-lg text-xl flex items-center justify-center mx-auto transform hover:scale-105 transition-transform cartoon-btn"
-          style={{
-            fontFamily: readableFont,
-            background: 'linear-gradient(90deg,#f59e42 60%,#fbbf24 100%)',
-            border: '3px solid #fffbe9',
-            boxShadow: '0 4px 16px 0 #f59e42'
-          }}
-          aria-label="Start Learning"
+  const renderControls = () => (
+    <div className="mt-6 flex flex-col items-center gap-4">
+      <button
+        id="start-reading-btn"
+        ref={startBtnRef}
+        onClick={startReadingSequence}
+        className="btn-learn text-white font-bold py-4 px-8 rounded-full shadow-lg text-xl flex items-center justify-center mx-auto transform hover:scale-105 transition-transform cartoon-btn"
+        style={{
+          fontFamily: readableFont,
+          background: "linear-gradient(90deg,#f59e42 60%,#fbbf24 100%)",
+          border: "3px solid #fffbe9",
+          boxShadow: "0 4px 16px 0 #f59e42",
+        }}
+        aria-label="Start Learning"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-6 w-6 inline-block mr-2 -mt-1"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 inline-block mr-2 -mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          Start Learning
-        </button>
-        <div className="text-gray-500 text-sm mt-2">Tip: Click or press Enter/Space on a card to focus it.</div>
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
+          />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+        Start Learning
+      </button>
+      <div className="text-gray-500 text-sm mt-2">
+        Tip: Click or press Enter/Space on a card to focus it.
       </div>
-    );
-  };
+    </div>
+  );
 
   // Show all words initially if not reading
   useEffect(() => {
