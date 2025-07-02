@@ -47,8 +47,8 @@ const App = () => {
       setIsLoading(false);
       setActiveIndex(null); // Reset active card index when subject changes
       setIsReading(false); // Reset reading state
-       // Safely access properties of startBtnRef.current
-       if (startBtnRef.current && typeof startBtnRef.current.disabled === 'boolean') {
+      // Safely access properties of startBtnRef.current
+      if (startBtnRef.current && typeof startBtnRef.current.disabled === 'boolean') {
         startBtnRef.current.disabled = false;
         if (typeof startBtnRef.current.innerHTML === 'string') {
           startBtnRef.current.innerHTML = `
@@ -58,10 +58,11 @@ const App = () => {
           </svg>
           Start Learning
         `;
+        }
       }
     }
-  }, [availableSubjects]); // Add availableSubjects to dependencies if it can change
-
+  }, [availableSubjects, startBtnRef]);
+  // Add availableSubjects to dependencies if it can change
   // Load initial vocabulary
   useEffect(() => {
     loadVocabulary(currentSubject);
