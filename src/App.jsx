@@ -47,9 +47,11 @@ const App = () => {
       setIsLoading(false);
       setActiveIndex(null); // Reset active card index when subject changes
       setIsReading(false); // Reset reading state
-       if (startBtnRef.current) {
+       // Safely access properties of startBtnRef.current
+       if (startBtnRef.current && typeof startBtnRef.current.disabled === 'boolean') {
         startBtnRef.current.disabled = false;
-        startBtnRef.current.innerHTML = `
+        if (typeof startBtnRef.current.innerHTML === 'string') {
+          startBtnRef.current.innerHTML = `
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block mr-2 -mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -99,9 +101,14 @@ const App = () => {
     if (isReading) return;
     setIsReading(true);
     const startBtn = startBtnRef.current;
-    if (startBtn) {
+    // Safely access properties of startBtn
+    if (startBtn && typeof startBtn.disabled === 'boolean') {
       startBtn.disabled = true;
-      startBtn.innerHTML = 'Learning...';
+      // It's generally safer to avoid direct innerHTML manipulation if possible,
+      // but for now, keeping consistent with existing code.
+      if (typeof startBtn.innerHTML === 'string') {
+        startBtn.innerHTML = 'Learning...';
+      }
     }
     const cards = document.querySelectorAll('.food-card');
     for (let i = 0; i < vocabularyData.length; i++) {

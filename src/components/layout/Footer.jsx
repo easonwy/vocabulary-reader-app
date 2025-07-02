@@ -26,11 +26,6 @@ const Footer = ({
   const leaveTimeoutRef = useRef(null);
   const localStartBtnRef = useRef(null);
 
-  // If in reading mode, don't render the footer panel at all
-  if (isReading) { // Corrected to always hide if reading
-    return null;
-  }
-
   // Effect to potentially assign the passed initialStartBtnRef if it's a callback ref or to manage it
   useEffect(() => {
     if (typeof initialStartBtnRef === 'function') {
@@ -56,7 +51,7 @@ const Footer = ({
 
   return (
     <div
-      className="fixed bottom-4 right-4 z-50" // Outer container for positioning
+      className={`fixed bottom-4 right-4 z-50 ${isReading ? 'hidden' : ''}`} // Outer container for positioning, conditionally hidden
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
