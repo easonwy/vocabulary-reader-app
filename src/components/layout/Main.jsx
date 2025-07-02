@@ -10,7 +10,6 @@ const Main = ({ vocabularyItems, activeIndex, isReading, gridRef, setActiveIndex
         key={item.name + '-' + index} // Ensure key is unique, especially if names can repeat across lists
         item={item}
         isActive={isActive}
-        isReading={isReading}
         index={index}
         onClick={() => {
           if (!isReading) setActiveIndex(index);

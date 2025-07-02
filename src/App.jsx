@@ -18,7 +18,9 @@ const App = () => {
   const [vocabularyData, setVocabularyData] = useState([]);
   const [availableSubjects, setAvailableSubjects] = useState([
     { key: 'breakfast', name: 'Breakfast' },
-    { key: 'lunch', name: 'Lunch' }, // Added Lunch
+    { key: 'lunch', name: 'Lunch' },
+    { key: 'chinese-food', name: 'Chinese Food' },
+    { key: 'kitchen', name: 'Kitchen' }, // Added Kitchen
     { key: 'animals', name: 'Animals' },
     // Add more subjects here or fetch dynamically
   ]);
