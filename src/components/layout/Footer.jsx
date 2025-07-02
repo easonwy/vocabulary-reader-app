@@ -49,7 +49,7 @@ const Footer = ({
       Start Learning
     </button>
 
-    <div className="mt-2"> {/* Added margin top for spacing */}
+    <div className="mt-2"> {/* Reverted: Removed inline style, kept mt-2 */}
       <label htmlFor="subject-select" className="mr-2 text-gray-700" style={{ fontFamily: readableFont }}>
         Change Subject:
       </label>
@@ -69,7 +69,7 @@ const Footer = ({
       </select>
     </div>
 
-    <div className="text-gray-500 text-sm mt-2">
+    <div className="text-gray-500 text-sm mt-2"> {/* Reverted: Uncommented tip div */}
       Tip: Click or press Enter/Space on a card to focus it.
     </div>
   </div>

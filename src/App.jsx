@@ -147,7 +147,7 @@ const App = () => {
   }, [isReading]);
 
   return (
-    <div className="min-h-screen h-screen overflow-hidden bg-[#f0fdf4] cartoon-bg">
+    <div className="min-h-screen h-screen flex flex-col overflow-hidden bg-[#f0fdf4] cartoon-bg"> {/* Added flex flex-col */}
       <Header currentSubjectName={availableSubjects.find(s => s.key === currentSubject)?.name || 'Vocabulary'} />
       {isLoading && <div className="text-center p-4">Loading vocabulary...</div>}
       {error && <div className="text-center p-4 text-red-500">Error: {error}</div>}

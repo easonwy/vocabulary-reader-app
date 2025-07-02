@@ -23,7 +23,7 @@ const Main = ({ vocabularyItems, activeIndex, isReading, gridRef, setActiveIndex
   };
 
   return (
-    <main className="flex flex-col items-center flex-grow" style={{ minHeight: 'calc(100vh - 200px)' }}> {/* Adjusted for flex-grow and min-height */}
+    <main className="flex flex-col items-center flex-grow overflow-auto"> {/* Added overflow-auto, removed inline minHeight */}
       <div
         id="vocabulary-grid"
         ref={gridRef}
