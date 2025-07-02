@@ -29,12 +29,11 @@ const Main = ({ vocabularyItems, activeIndex, isReading, gridRef, setActiveIndex
         ref={gridRef}
         className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6 px-2"
         style={{
-          maxHeight: 'calc(100vh - 220px)', // Adjusted max height considering header/footer
-          overflowY: 'auto',
           paddingTop: '1rem',
           paddingBottom: '1rem',
           width: '100%',
           maxWidth: 1200
+          // maxHeight and overflowY removed
         }}
       >
         {vocabularyItems && vocabularyItems.map(renderCard)}
