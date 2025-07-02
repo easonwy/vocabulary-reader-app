@@ -51,29 +51,41 @@ const Footer = ({
 
   return (
     <div
-      className={`fixed bottom-4 right-4 z-50 ${isReading ? 'hidden' : ''}`} // Outer container for positioning, conditionally hidden
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      className={`fixed bottom-4 right-4 z-50 ${isReading ? 'hidden' : ''}`}
+      style={{ pointerEvents: 'none' }} // Prevents accidental blocking of other UI
     >
-      {/* Trigger Tab - visible when panel is closed */}
-      {!isPanelOpen && (
-        <button // Changed div to button for semantic correctness and accessibility
-          type="button" // Explicitly set type for button
-          className="w-14 h-14 flex items-center justify-center bg-amber-500 text-white rounded-full cursor-pointer hover:bg-amber-600 shadow-xl focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-opacity-75"
-          aria-label="Open controls panel"
-        >
-          <SettingsIcon />
-        </button>
-      )}
+      {/* Settings Icon absolutely at right-bottom */}
+      <button
+        type="button"
+        className="w-14 h-14 flex items-center justify-center bg-amber-500 text-white rounded-full cursor-pointer hover:bg-amber-600 shadow-xl focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-opacity-75"
+        aria-label="Open controls panel"
+        style={{
+          position: 'fixed',
+          right: '1.5rem',
+          bottom: '1.5rem',
+          zIndex: 60,
+          pointerEvents: 'auto'
+        }}
+        onClick={() => setIsPanelOpen(true)}
+        tabIndex={isReading ? -1 : 0}
+      >
+        <SettingsIcon />
+      </button>
 
-      {/* Panel Content - slides/fades in */}
+      {/* Panel Content */}
       <div
         className={`transition-all duration-300 ease-in-out overflow-hidden
                     bg-white p-6 rounded-lg shadow-xl border border-gray-200
-                    ${isPanelOpen ? 'opacity-100 translate-y-0 max-h-[500px]' : 'opacity-0 translate-y-full max-h-0 pointer-events-none'}`}
-        // Note: translate-y-full might push it too far down if the trigger is also part of this transform origin.
-        // Consider adjusting transform origin or using a different initial hidden state if slide-up is desired.
-        // For now, this aims for a slide-up from a conceptually "below" position.
+                    ${isPanelOpen ? 'opacity-100 translate-y-0 max-h-[500px] pointer-events-auto' : 'opacity-0 translate-y-full max-h-0 pointer-events-none'}`}
+        style={{
+          position: 'fixed',
+          right: '5.5rem',
+          bottom: '2.5rem',
+          zIndex: 55,
+          minWidth: 260
+        }}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
       >
         <div className="flex flex-col items-center gap-4"> {/* This div now holds the actual content */}
           <button
