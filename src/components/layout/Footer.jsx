@@ -58,7 +58,7 @@ const Footer = ({
         value={currentSubjectKey}
         onChange={(e) => onSubjectChange(e.target.value)}
         disabled={isReading} // Disable dropdown while reading
-        className="p-2 rounded-md border-2 border-amber-400 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-200 focus:ring-opacity-50"
+        className="p-2 rounded-md border-2 border-amber-400 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-200 focus:ring-opacity-50 bg-white text-gray-900"
         style={{ fontFamily: readableFont, minWidth: '150px' }}
       >
         {availableSubjects && availableSubjects.map(subject => (
