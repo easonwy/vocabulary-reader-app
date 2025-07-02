@@ -1,5 +1,0 @@
-feat: improve vocabulary card readability with new font style
-
-- Switched vocabulary word font to 'Baloo 2', 'Nunito', and other highly readable sans-serif fonts
-- Removed text shadow for better clarity
-- Kept all other card and phonetic/translation styles consistent
