@@ -61,8 +61,9 @@ const Footer = ({
         aria-label="Open controls panel"
         style={{
           position: 'fixed',
-          right: '1.5rem',
-          bottom: '1.5rem',
+          left: '50%',
+          top: '50%',
+          transform: 'translate(-50%, -50%)',
           zIndex: 60,
           pointerEvents: 'auto'
         }}
@@ -74,13 +75,14 @@ const Footer = ({
 
       {/* Panel Content */}
       <div
-        className={`transition-all duration-300 ease-in-out overflow-hidden
+        className={`transition-all duration-300 ease-in-out
                     bg-white p-6 rounded-lg shadow-xl border border-gray-200
                     ${isPanelOpen ? 'opacity-100 translate-y-0 max-h-[500px] pointer-events-auto' : 'opacity-0 translate-y-full max-h-0 pointer-events-none'}`}
         style={{
           position: 'fixed',
-          right: '5.5rem',
-          bottom: '2.5rem',
+          left: '50%',
+          top: 'calc(50% + 36px)', // Icon height 56px (14 * 4px), so 28px to edge. Add 8px margin.
+          transform: 'translateX(-50%)',
           zIndex: 55,
           minWidth: 260
         }}
