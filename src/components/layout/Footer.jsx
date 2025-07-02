@@ -51,10 +51,10 @@ const Footer = ({
 
   return (
     <div
-      className={`fixed bottom-4 right-4 z-50 ${isReading ? 'hidden' : ''}`}
-      style={{ pointerEvents: 'none' }} // Prevents accidental blocking of other UI
+      className={`fixed right-4 top-1/2 z-50 ${isReading ? 'hidden' : ''}`}
+      style={{ pointerEvents: 'none', transform: 'translateY(-50%)' }}
     >
-      {/* Settings Icon absolutely at right-bottom */}
+      {/* Settings Icon at right center */}
       <button
         type="button"
         className="w-14 h-14 flex items-center justify-center bg-amber-500 text-white rounded-full cursor-pointer hover:bg-amber-600 shadow-xl focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-opacity-75"
@@ -62,7 +62,8 @@ const Footer = ({
         style={{
           position: 'fixed',
           right: '1.5rem',
-          bottom: '1.5rem',
+          top: '50%',
+          transform: 'translateY(-50%)',
           zIndex: 60,
           pointerEvents: 'auto'
         }}
@@ -74,13 +75,14 @@ const Footer = ({
 
       {/* Panel Content */}
       <div
-        className={`transition-all duration-300 ease-in-out overflow-hidden
+        className={`transition-all duration-300 ease-in-out
                     bg-white p-6 rounded-lg shadow-xl border border-gray-200
                     ${isPanelOpen ? 'opacity-100 translate-y-0 max-h-[500px] pointer-events-auto' : 'opacity-0 translate-y-full max-h-0 pointer-events-none'}`}
         style={{
           position: 'fixed',
-          right: '5.5rem',
-          bottom: '2.5rem',
+          right: '6.5rem',
+          top: 'calc(50% + 36px)', // Icon height 56px (14 * 4px), so 28px to edge. Add 8px margin.
+          transform: 'translateY(-50%)',
           zIndex: 55,
           minWidth: 260
         }}
@@ -100,13 +102,13 @@ const Footer = ({
               border: "3px solid #fffbe9",
               boxShadow: "0 4px 16px 0 #f59e42",
             }}
-            aria-label="Start Learning"
+            aria-label="Start"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 inline-block mr-2 -mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            Start Learning
+            Start
           </button>
 
           <div className="mt-1">
@@ -127,10 +129,6 @@ const Footer = ({
                 </option>
               ))}
             </select>
-          </div>
-
-          <div className="text-gray-500 text-xs mt-1">
-            Tip: Click or press Enter/Space on a card to focus it.
           </div>
         </div>
       </div>
