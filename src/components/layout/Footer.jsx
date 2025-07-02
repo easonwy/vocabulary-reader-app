@@ -49,10 +49,11 @@ const Footer = ({
     }, 300); // 300ms delay before closing
   };
 
+  // Always allow pointer events for the panel and icon, but not for the outer container
   return (
     <div
-      className={`fixed right-4 top-1/2 z-50 ${isReading ? 'hidden' : ''}`}
-      style={{ pointerEvents: 'none', transform: 'translateY(-50%)' }}
+      className={`fixed inset-0 z-50 flex items-center justify-end pointer-events-none ${isReading ? 'hidden' : ''}`}
+      style={{}}
     >
       {/* Settings Icon at right center */}
       <button
@@ -67,7 +68,10 @@ const Footer = ({
           zIndex: 60,
           pointerEvents: 'auto'
         }}
-        onClick={() => setIsPanelOpen(true)}
+        onClick={e => {
+          e.stopPropagation();
+          setIsPanelOpen(true);
+        }}
         tabIndex={isReading ? -1 : 0}
       >
         <SettingsIcon />
@@ -77,19 +81,23 @@ const Footer = ({
       <div
         className={`transition-all duration-300 ease-in-out
                     bg-white p-6 rounded-lg shadow-xl border border-gray-200
-                    ${isPanelOpen ? 'opacity-100 translate-y-0 max-h-[500px] pointer-events-auto' : 'opacity-0 translate-y-full max-h-0 pointer-events-none'}`}
+                    ${isPanelOpen ? 'opacity-100 max-h-[500px] pointer-events-auto' : 'opacity-0 max-h-0 pointer-events-none'}`}
         style={{
           position: 'fixed',
-          right: '6.5rem',
-          top: 'calc(50% + 36px)', // Icon height 56px (14 * 4px), so 28px to edge. Add 8px margin.
-          transform: 'translateY(-50%)',
+          right: '1.5rem',
+          top: 'calc(50% + 40px)', // 40px below the icon
+          transform: 'translateY(0)',
           zIndex: 55,
-          minWidth: 260
+          minWidth: 260,
+          maxWidth: '95vw',
+          width: '320px',
+          boxSizing: 'border-box',
+          pointerEvents: isPanelOpen ? 'auto' : 'none'
         }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <div className="flex flex-col items-center gap-4"> {/* This div now holds the actual content */}
+        <div className="flex flex-col items-center gap-4 w-full">
           <button
             id="start-reading-btn"
             ref={localStartBtnRef} // Use local ref, which is then connected to initialStartBtnRef via useEffect
