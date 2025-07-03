@@ -27,6 +27,7 @@ const App = () => {
   const [textOverlayPosition, setTextOverlayPosition] = useState('bottom'); // State for overlay position
   const [cardsPerRow, setCardsPerRow] = useState(3); // State for words per row, default 3
   const [currentTheme, setCurrentTheme] = useState('theme-default'); // State for current theme
+  const [showScrollbar, setShowScrollbar] = useState(false); // State for scrollbar visibility
 
   // Function to load vocabulary data
   const loadVocabulary = useCallback(async (subjectKey) => {
@@ -90,6 +91,11 @@ const App = () => {
   // Handler for theme change
   const handleThemeChange = (newTheme) => {
     setCurrentTheme(newTheme);
+  };
+
+  // Handler for scrollbar toggle
+  const handleScrollbarToggle = () => {
+    setShowScrollbar(prevShowScrollbar => !prevShowScrollbar);
   };
 
   // Function to speak text
@@ -204,6 +210,7 @@ const App = () => {
             countdownValue={countdownValue}
             textOverlayPosition={textOverlayPosition}
             cardsPerRow={cardsPerRow}
+            showScrollbar={showScrollbar} // Pass showScrollbar to Playground
           />
         </div>
 
@@ -227,6 +234,8 @@ const App = () => {
             onCardsPerRowChange={handleCardsPerRowChange}
             currentTheme={currentTheme} // Pass currentTheme to ControlPanel
             onThemeChange={handleThemeChange} // Pass theme handler to ControlPanel
+            showScrollbar={showScrollbar} // Pass showScrollbar to ControlPanel
+            onScrollbarToggle={handleScrollbarToggle} // Pass handler to ControlPanel
           />
         </div>
       </div>
