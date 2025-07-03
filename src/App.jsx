@@ -2,11 +2,6 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import Header from './components/layout/Header';
 import Main from './components/layout/Main';
 import Footer from './components/layout/Footer';
-// VocabularyCard is used by Main component, so it's not directly needed here anymore if Main handles its own imports.
-// We can remove it if Main.jsx imports VocabularyCard itself.
-// For now, let's assume Main.jsx handles its own VocabularyCard import.
-
-// const HandArrow = () => ( ... ); // Commented out as it's not currently used after refactor
 
 const App = () => {
   const [isReading, setIsReading] = useState(false);
@@ -26,6 +21,7 @@ const App = () => {
   ]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isPanelVisible, setIsPanelVisible] = useState(true);
 
   // Function to load vocabulary data
   const loadVocabulary = useCallback(async (subjectKey) => {
@@ -103,17 +99,18 @@ const App = () => {
   // Main function to read words aloud
   const startReadingSequence = async () => {
     if (isReading) return;
+    setIsPanelVisible(false); // Hide panel and icon immediately
     setIsReading(true);
     const startBtn = startBtnRef.current;
     // Safely access properties of startBtn
     if (startBtn && typeof startBtn.disabled === 'boolean') {
       startBtn.disabled = true;
-      // It's generally safer to avoid direct innerHTML manipulation if possible,
-      // but for now, keeping consistent with existing code.
       if (typeof startBtn.innerHTML === 'string') {
         startBtn.innerHTML = 'Learning...';
       }
     }
+    // Wait for 5 seconds before starting reading
+    await new Promise(res => setTimeout(res, 5000));
     const cards = document.querySelectorAll('.food-card');
     for (let i = 0; i < vocabularyData.length; i++) {
       setActiveIndex(i);
@@ -141,6 +138,8 @@ const App = () => {
         Start Again
       `;
     }
+    // Wait 3 seconds before showing the panel and icon again
+    setTimeout(() => setIsPanelVisible(true), 3000);
   };
 
   // Cleanup speech synthesis on unmount
@@ -158,29 +157,30 @@ const App = () => {
   }, [isReading]);
 
   return (
-    <div className="min-h-screen h-screen flex flex-col overflow-hidden bg-[#f0fdf4] cartoon-bg"> {/* Added flex flex-col */}
+    <div className="min-h-screen h-screen flex flex-col overflow-hidden bg-[#f0fdf4] cartoon-bg">
       <Header currentSubjectName={availableSubjects.find(s => s.key === currentSubject)?.name || 'Vocabulary'} />
       {isLoading && <div className="text-center p-4">Loading vocabulary...</div>}
       {error && <div className="text-center p-4 text-red-500">Error: {error}</div>}
       {!isLoading && !error && vocabularyData.length === 0 && <div className="text-center p-4">No vocabulary items found for this subject.</div>}
       {!isLoading && !error && vocabularyData.length > 0 && (
         <Main
-          // breakfastItems prop should be renamed to vocabularyItems or similar
-          vocabularyItems={vocabularyData} // Pass the dynamic vocabulary data
+          vocabularyItems={vocabularyData}
           activeIndex={activeIndex}
           isReading={isReading}
           gridRef={gridRef}
           setActiveIndex={setActiveIndex}
         />
       )}
-      <Footer
-        startReadingSequence={startReadingSequence}
-        startBtnRef={startBtnRef}
-        availableSubjects={availableSubjects}
-        currentSubjectKey={currentSubject}
-        onSubjectChange={handleSubjectChange}
-        isReading={isReading} // Pass isReading to potentially disable dropdown during reading
-      />
+      {isPanelVisible && (
+        <Footer
+          startReadingSequence={startReadingSequence}
+          startBtnRef={startBtnRef}
+          availableSubjects={availableSubjects}
+          currentSubjectKey={currentSubject}
+          onSubjectChange={handleSubjectChange}
+          isReading={isReading}
+        />
+      )}
     </div>
   );
 };

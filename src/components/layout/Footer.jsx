@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-// Use a stylish, highly readable font for vocabulary words
+// Use a stylish, highly readable font for vocabulary
 const readableFont = "'Baloo 2', 'Nunito', 'Segoe UI', 'Arial', sans-serif";
 
 // REMOVED: ChevronUpIcon
