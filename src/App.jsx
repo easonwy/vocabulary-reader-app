@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import Header from './components/layout/Header';
-import Main from './components/layout/Main';
 import ControlPanel from './components/ControlPanel';
+import Playground from './components/Playground';
 
 const App = () => {
   const [isReading, setIsReading] = useState(false);
@@ -12,6 +11,7 @@ const App = () => {
   const [currentSubject, setCurrentSubject] = useState('breakfast'); // Default subject
   const [speechRate, setSpeechRate] = useState(1.0);
   const [vocabularyData, setVocabularyData] = useState([]);
+  const [textOverlay, setTextOverlay] = useState(''); // State for text overlay
   const [availableSubjects, setAvailableSubjects] = useState([
     { key: 'breakfast', name: 'Breakfast' },
     { key: 'lunch', name: 'Lunch' },
@@ -22,6 +22,7 @@ const App = () => {
   ]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [countdownValue, setCountdownValue] = useState(null); // For 3, 2, 1 countdown
 
   // Function to load vocabulary data
   const loadVocabulary = useCallback(async (subjectKey) => {
@@ -63,6 +64,11 @@ const App = () => {
     setSpeechRate(parseFloat(newRate));
   };
 
+  // Handler for text overlay change
+  const handleTextOverlayChange = (newText) => {
+    setTextOverlay(newText);
+  };
+
   // Function to speak text
   const speak = (text) => {
     return new Promise((resolve) => {
@@ -90,14 +96,25 @@ const App = () => {
 
   // Main function to read words aloud
   const startReadingSequence = async () => {
-    if (isReading) return;
+    if (isReading || countdownValue) return; // Prevent starting if already reading or counting down
+
+    // Start countdown
+    setCountdownValue(3);
+    await new Promise(res => setTimeout(res, 1000));
+    setCountdownValue(2);
+    await new Promise(res => setTimeout(res, 1000));
+    setCountdownValue(1);
+    await new Promise(res => setTimeout(res, 1000));
+    setCountdownValue(null); // Clear countdown
+
     setIsReading(true);
     if (startBtnRef.current) {
         startBtnRef.current.disabled = true;
     }
 
-    // Wait before starting reading
-    await new Promise(res => setTimeout(res, 5000));
+    // Original delay before actual reading of cards (can be removed if countdown is enough)
+    // await new Promise(res => setTimeout(res, 5000));
+    // For now, let's remove this extra delay as the countdown serves as preparation time.
 
     const cards = document.querySelectorAll('.food-card');
     for (let i = 0; i < vocabularyData.length; i++) {
@@ -140,26 +157,24 @@ const App = () => {
 
   return (
     <div className="min-h-screen h-screen flex flex-col overflow-hidden bg-[#f0fdf4] cartoon-bg">
-      <Header currentSubjectName={availableSubjects.find(s => s.key === currentSubject)?.name || 'Vocabulary'} />
+      {/* Header is now part of Playground, so no direct rendering here */}
 
       {/* Main content area: flex-col on small screens, md:flex-row on medium and up */}
       <div className="flex flex-col md:flex-row flex-1 overflow-hidden">
-        {/* Left Column: Playground (Vocabulary Grid) */}
-        <div className="flex-1 overflow-y-auto p-4"> {/* Takes available space */}
-          {isLoading && <div className="text-center p-4">Loading vocabulary...</div>}
-          {error && <div className="text-center p-4 text-red-500">Error: {error}</div>}
-          {!isLoading && !error && vocabularyData.length === 0 && (
-            <div className="text-center p-4">No vocabulary items found for this subject.</div>
-          )}
-          {!isLoading && !error && vocabularyData.length > 0 && (
-            <Main
-              vocabularyItems={vocabularyData}
-              activeIndex={activeIndex}
-              isReading={isReading}
-              gridRef={gridRef}
-              setActiveIndex={setActiveIndex} // setActiveIndex is used by Main to set active card on click
-            />
-          )}
+        {/* Left Column: Playground */}
+        <div className="flex-1 overflow-y-auto bg-gray-700"> {/* Playground will control its own padding & background */}
+          <Playground
+            currentSubjectName={availableSubjects.find(s => s.key === currentSubject)?.name || 'Vocabulary'}
+            vocabularyItems={vocabularyData}
+            activeIndex={activeIndex}
+            isReading={isReading}
+            gridRef={gridRef}
+            setActiveIndex={setActiveIndex}
+            isLoading={isLoading}
+            error={error}
+            textOverlay={textOverlay}
+            countdownValue={countdownValue} // Pass countdownValue to Playground
+          />
         </div>
 
         {/* Right Column: Control Panel */}
@@ -172,8 +187,10 @@ const App = () => {
             currentSubjectKey={currentSubject}
             onSubjectChange={handleSubjectChange}
             isReading={isReading}
-            speechRate={speechRate} // Pass speechRate
-            onSpeedChange={handleSpeedChange} // Pass handler
+            speechRate={speechRate}
+            onSpeedChange={handleSpeedChange}
+            textOverlay={textOverlay} // Pass textOverlay to ControlPanel
+            onTextOverlayChange={handleTextOverlayChange} // Pass handler to ControlPanel
           />
         </div>
       </div>

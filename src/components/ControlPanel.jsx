@@ -12,6 +12,8 @@ const ControlPanel = ({
   isReading,
   speechRate,     // Renamed from currentSpeed for clarity
   onSpeedChange,
+  textOverlay,
+  onTextOverlayChange,
 }) => {
   return (
     <div
@@ -30,13 +32,13 @@ const ControlPanel = ({
           border: "3px solid #fffbe9",
           boxShadow: "0 4px 16px 0 #f59e42",
         }}
-        aria-label="Start"
+        aria-label="Record" // Changed aria-label
       >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 inline-block mr-2 -mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        {/* New Record Icon (a simple circle) */}
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 inline-block mr-2 -mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm0-2a6 6 0 100-12 6 6 0 000 12z" clipRule="evenodd" />
         </svg>
-        {isReading ? 'Learning...' : 'Start'}
+        {isReading ? 'Recording...' : 'Record'} {/* Changed button text */}
       </button>
 
       <div className="mt-1 w-full">
