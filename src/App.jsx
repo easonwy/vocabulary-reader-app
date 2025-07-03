@@ -127,26 +127,45 @@ const App = () => {
         startBtnRef.current.disabled = true;
     }
 
-    // Original delay before actual reading of cards (can be removed if countdown is enough)
-    // await new Promise(res => setTimeout(res, 5000));
-    // For now, let's remove this extra delay as the countdown serves as preparation time.
+    console.log("JULES_DEBUG: Sequence phase: setIsReading(true) called.");
+    console.log("JULES_DEBUG: Vocabulary data length:", vocabularyData.length);
+    console.log("JULES_DEBUG: Querying for .food-card elements...");
+
+    // Adding a small delay to potentially allow React to finish rendering updates if any were pending
+    // This is a common workaround if DOM queries happen too quickly after state sets that might affect layout.
+    await new Promise(res => setTimeout(res, 50)); // 50ms delay
 
     const cards = document.querySelectorAll('.food-card');
-    for (let i = 0; i < vocabularyData.length; i++) {
-      if (!window.speechSynthesis || !isReading) {
-        window.speechSynthesis.cancel();
-        break;
-      }
-      setActiveIndex(i);
-      const card = cards[i];
-      const word = vocabularyData[i].name;
-      if (card) {
-        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        await new Promise(res => setTimeout(res, 500)); // Time for scroll
-        await speak(word);
-        await new Promise(res => setTimeout(res, 300)); // Pause before next word
+    console.log("JULES_DEBUG: Number of .food-card elements found (after 50ms delay):", cards.length);
+
+    if (vocabularyData.length === 0) {
+      console.log("JULES_DEBUG: No vocabulary data to read. Ending sequence.");
+    } else if (cards.length === 0 && vocabularyData.length > 0) {
+      console.log("JULES_DEBUG: Vocabulary data exists, but no .food-card elements were found in the DOM. Ending sequence. Check Main.jsx and VocabularyCard.jsx rendering.");
+    } else {
+      for (let i = 0; i < vocabularyData.length; i++) {
+        if (!window.speechSynthesis || !isReading) {
+          console.log("JULES_DEBUG: Breaking reading loop. Speech synthesis stopped or isReading is false.");
+          window.speechSynthesis.cancel();
+          break;
+        }
+        setActiveIndex(i);
+        const card = cards[i]; // Should be safe if cards.length matches vocabularyData.length or is at least i
+        const word = vocabularyData[i].name;
+
+        if (card) {
+          console.log(`JULES_DEBUG: Reading card ${i}: ${word}`);
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          await new Promise(res => setTimeout(res, 500)); // Time for scroll
+          await speak(word);
+          await new Promise(res => setTimeout(res, 300)); // Pause before next word
+        } else {
+          // This case should ideally not be reached if cards.length > 0 and matches vocabularyData.length
+          console.log(`JULES_DEBUG: Card element not found for index ${i}, word: ${word}. This might indicate a mismatch between vocabularyData and rendered cards.`);
+        }
       }
     }
+    console.log("JULES_DEBUG: Reading loop finished or bypassed.");
     setActiveIndex(null);
     setIsReading(false);
     if (startBtnRef.current) {
