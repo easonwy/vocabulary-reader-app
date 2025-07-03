@@ -1,7 +1,7 @@
 import React from 'react';
 import VocabularyCard from '../VocabularyCard';
 
-const Main = ({ vocabularyItems, activeIndex, isReading, gridRef, setActiveIndex, cardsPerRow }) => {
+const Main = ({ vocabularyItems, activeIndex, isReading, gridRef, setActiveIndex, cardsPerRow, showScrollbar }) => {
   // Helper: Render a single vocabulary card
   const renderCard = (item, index) => {
     const isActive = activeIndex === index;
@@ -39,7 +39,7 @@ const Main = ({ vocabularyItems, activeIndex, isReading, gridRef, setActiveIndex
   return (
     // The main element itself doesn't have much direct styling that needs theming,
     // mostly structure. Its children (cards) will be themed.
-    <main className="flex flex-col items-center flex-grow">
+    <main className={`flex flex-col items-center flex-grow ${showScrollbar ? 'overflow-auto' : 'overflow-hidden'}`}>
       <div
         id="vocabulary-grid"
         ref={gridRef}

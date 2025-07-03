@@ -20,6 +20,8 @@ const ControlPanel = ({
   onCardsPerRowChange,
   currentTheme,
   onThemeChange,
+  showScrollbar,
+  onScrollbarToggle,
 }) => {
   const positionOptions = [
     { id: 'pos-top', value: 'top', label: 'Top' },
@@ -158,6 +160,36 @@ const ControlPanel = ({
             </label>
           ))}
         </div>
+      </div>
+
+      {/* Scrollbar Toggle Switch */}
+      <div className="mt-4 w-full flex items-center justify-between">
+        <label htmlFor="scrollbar-toggle-switch" className="text-sm" style={{ color: 'var(--text-primary)' }}>
+          Show Scrollbar
+        </label>
+        <button
+          id="scrollbar-toggle-switch"
+          type="button"
+          role="switch"
+          aria-checked={showScrollbar}
+          onClick={onScrollbarToggle}
+          disabled={isReading}
+          className={`relative inline-flex items-center h-6 rounded-full w-11 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-[var(--input-disabled-opacity)]`}
+          style={{
+            backgroundColor: showScrollbar ? 'var(--text-accent)' : 'var(--input-border-color)',
+            borderColor: 'transparent', // Or use a variable if needed
+            // Ring color might need a variable if you want it themed
+            // For now, using a generic one or relying on Tailwind's default if applicable
+            // '--tw-ring-color': 'var(--input-focus-ring-color)', // Example if needed
+          }}
+        >
+          <span
+            className={`inline-block w-4 h-4 transform bg-white rounded-full transition-transform`}
+            style={{
+              transform: showScrollbar ? 'translateX(1.25rem)' : 'translateX(0.25rem)', // Adjust based on h-6 w-11
+            }}
+          />
+        </button>
       </div>
     </div>
   );
