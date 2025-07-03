@@ -24,7 +24,7 @@ const App = () => {
   const [error, setError] = useState(null);
   const [countdownValue, setCountdownValue] = useState(null); // For 3, 2, 1 countdown
   const [textOverlayPosition, setTextOverlayPosition] = useState('bottom'); // State for overlay position
-  const [cardsPerRow, setCardsPerRow] = useState(2); // State for words per row, default 2
+  const [cardsPerRow, setCardsPerRow] = useState(3); // State for words per row, default 3
 
   // Function to load vocabulary data
   const loadVocabulary = useCallback(async (subjectKey) => {
@@ -44,14 +44,13 @@ const App = () => {
     } finally {
       setIsLoading(false);
       setActiveIndex(null);
-      console.log("JULES_DEBUG: loadVocabulary's finally block. Current isReading val:", isReading, "Countdown val:", countdownValue); // Added log
-      // setIsReading(false); // Temporarily commented out for diagnostics
-      console.log("JULES_DEBUG: loadVocabulary's finally block. setIsReading(false) was TEMPORARILY COMMENTED OUT.");
+      console.log("JULES_DEBUG: loadVocabulary's finally block. Current isReading val:", isReading, "Countdown val:", countdownValue); // Kept for one more test cycle
+      setIsReading(false); // Reinstated
       if (startBtnRef.current) {
         startBtnRef.current.disabled = false;
       }
     }
-  }, [availableSubjects, countdownValue, isReading]); // Added countdownValue and isReading to dependencies for logging accuracy, though they don't influence the core logic of loadVocabulary itself.
+  }, [availableSubjects]); // Corrected dependencies: only availableSubjects
 
   // Load initial vocabulary
   useEffect(() => {
