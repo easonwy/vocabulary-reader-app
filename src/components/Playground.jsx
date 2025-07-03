@@ -22,15 +22,14 @@ const Playground = ({
   countdownValue,
   // Prop for text overlay position
   textOverlayPosition,
+  // Prop for cards per row
+  cardsPerRow,
 }) => {
   const getOverlayPositionClasses = () => {
     switch (textOverlayPosition) {
       case 'top':
         return 'top-4 left-4 right-4';
       case 'center':
-        // For vertical center, we also need to ensure the element itself doesn't take full width if text is short
-        // So, 'left-4 right-4' makes it a bar. If we want it to shrink to text width:
-        // 'top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' (and remove text-center from inner text if so)
         return 'top-1/2 -translate-y-1/2 left-4 right-4';
       case 'bottom':
       default:
@@ -39,17 +38,16 @@ const Playground = ({
   };
 
   return (
-    // Playground container: flex column, take full height, center content, add some padding for the frame effect
-    <div className="flex flex-col h-full items-center justify-center bg-gray-800 p-2 md:p-4 overflow-hidden relative">
-      <Header currentSubjectName={currentSubjectName} className="absolute top-0 left-0 right-0 z-10" />
+    // Root element is now the 9:16 frame, taking ~99% height of parent, centered by parent in App.jsx
+    // It's a flex column to arrange Header and Main.
+    <div className="aspect-[9/16] h-[99%] w-auto max-w-full max-h-full bg-white shadow-2xl rounded-lg flex flex-col overflow-hidden relative mx-auto">
+      {/* Header renders normally at the top */}
+      <Header currentSubjectName={currentSubjectName} />
 
-      {/* 9:16 Aspect Ratio Frame - also a positioning context for overlays */}
-      <div className="w-full h-full flex items-center justify-center relative">
-        <div className="aspect-[9/16] bg-white shadow-2xl max-w-[400px] md:max-w-[min(100vh*9/16-100px,450px)] max-h-[calc(100%-60px)] w-auto h-full flex flex-col overflow-hidden rounded-lg relative">
-          {/* Main Content Area */}
-          <div className="flex-1 overflow-y-auto p-1">
-            {isLoading && <div className="text-center p-4">Loading vocabulary...</div>}
-            {error && <div className="text-center p-4 text-red-500">Error: {error}</div>}
+      {/* Main Content Area (or status messages) - takes remaining space and scrolls */}
+      <div className="flex-1 overflow-y-auto p-2 md:p-4"> {/* Added some padding */}
+        {isLoading && <div className="text-center p-4">Loading vocabulary...</div>}
+        {error && <div className="text-center p-4 text-red-500">Error: {error}</div>}
             {!isLoading && !error && (!vocabularyItems || vocabularyItems.length === 0) && (
               <div className="text-center p-4">No vocabulary items found for this subject.</div>
             )}
@@ -60,30 +58,29 @@ const Playground = ({
                 isReading={isReading}
                 gridRef={gridRef}
                 setActiveIndex={setActiveIndex}
+                cardsPerRow={cardsPerRow} // Pass cardsPerRow to Main
               />
             )}
           </div>
 
-          {/* Text Overlay Display */}
-          {textOverlay && (
-            <div
-              className={`absolute p-2 bg-black bg-opacity-60 text-white text-center text-sm md:text-base rounded pointer-events-none z-20 ${getOverlayPositionClasses()}`}
-              style={{ fontFamily: "'Baloo 2', 'Nunito', sans-serif" }}
-            >
-              {textOverlay}
-            </div>
-          )}
-
-          {/* Countdown Display */}
-          {countdownValue && (
-            <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 z-30 pointer-events-none">
-              <span className="text-white text-8xl md:text-9xl font-bold" style={{ fontFamily: "'Patrick Hand', cursive" }}>
-                {countdownValue}
-              </span>
-            </div>
-          )}
+      {/* Text Overlay Display - positioned relative to the root Playground div */}
+      {textOverlay && (
+        <div
+          className={`absolute p-2 bg-black bg-opacity-60 text-white text-center text-sm md:text-base rounded pointer-events-none z-20 ${getOverlayPositionClasses()}`}
+          style={{ fontFamily: "'Baloo 2', 'Nunito', sans-serif" }}
+        >
+          {textOverlay}
         </div>
-      </div>
+      )}
+
+      {/* Countdown Display - positioned relative to the root Playground div */}
+      {countdownValue && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 z-30 pointer-events-none">
+          <span className="text-white text-8xl md:text-9xl font-bold" style={{ fontFamily: "'Patrick Hand', cursive" }}>
+            {countdownValue}
+          </span>
+        </div>
+      )}
     </div>
   );
 };

@@ -24,6 +24,7 @@ const App = () => {
   const [error, setError] = useState(null);
   const [countdownValue, setCountdownValue] = useState(null); // For 3, 2, 1 countdown
   const [textOverlayPosition, setTextOverlayPosition] = useState('bottom'); // State for overlay position
+  const [cardsPerRow, setCardsPerRow] = useState(3); // State for words per row, default 3
 
   // Function to load vocabulary data
   const loadVocabulary = useCallback(async (subjectKey) => {
@@ -73,6 +74,14 @@ const App = () => {
   // Handler for text overlay position change
   const handleTextOverlayPositionChange = (newPosition) => {
     setTextOverlayPosition(newPosition);
+  };
+
+  // Handler for cards per row change
+  const handleCardsPerRowChange = (newCount) => {
+    const count = parseInt(newCount, 10);
+    if (count > 0 && count <= 10) { // Example validation: 1 to 10 cards
+      setCardsPerRow(count);
+    }
   };
 
   // Function to speak text
@@ -167,8 +176,8 @@ const App = () => {
 
       {/* Main content area: flex-col on small screens, md:flex-row on medium and up */}
       <div className="flex flex-col md:flex-row flex-1 overflow-hidden">
-        {/* Left Column: Playground */}
-        <div className="flex-1 overflow-y-auto bg-gray-700"> {/* Playground will control its own padding & background */}
+        {/* Left Column: Playground wrapper - for centering the Playground component */}
+        <div className="flex-1 flex items-center justify-center overflow-hidden p-1 bg-gray-800">
           <Playground
             currentSubjectName={availableSubjects.find(s => s.key === currentSubject)?.name || 'Vocabulary'}
             vocabularyItems={vocabularyData}
@@ -180,7 +189,8 @@ const App = () => {
             error={error}
             textOverlay={textOverlay}
             countdownValue={countdownValue}
-            textOverlayPosition={textOverlayPosition} // Pass position to Playground
+            textOverlayPosition={textOverlayPosition}
+            cardsPerRow={cardsPerRow} // Pass cardsPerRow to Playground
           />
         </div>
 
@@ -193,11 +203,15 @@ const App = () => {
             availableSubjects={availableSubjects}
             currentSubjectKey={currentSubject}
             onSubjectChange={handleSubjectChange}
-            isReading={isReading}
+            isReading={isReading || !!countdownValue} // Correctly disable controls if reading or counting down
             speechRate={speechRate}
             onSpeedChange={handleSpeedChange}
-            textOverlay={textOverlay} // Pass textOverlay to ControlPanel
-            onTextOverlayChange={handleTextOverlayChange} // Pass handler to ControlPanel
+            textOverlay={textOverlay}
+            onTextOverlayChange={handleTextOverlayChange}
+            textOverlayPosition={textOverlayPosition}
+            onTextOverlayPositionChange={handleTextOverlayPositionChange}
+            cardsPerRow={cardsPerRow}
+            onCardsPerRowChange={handleCardsPerRowChange}
           />
         </div>
       </div>
