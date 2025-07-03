@@ -14,7 +14,15 @@ const ControlPanel = ({
   onSpeedChange,
   textOverlay,
   onTextOverlayChange,
+  textOverlayPosition,
+  onTextOverlayPositionChange,
 }) => {
+  const positionOptions = [
+    { id: 'pos-top', value: 'top', label: 'Top' },
+    { id: 'pos-center', value: 'center', label: 'Center' },
+    { id: 'pos-bottom', value: 'bottom', label: 'Bottom' },
+  ];
+
   return (
     <div
       // Use Tailwind for responsive width: full width on small screens, md:w-80 on medium and up.

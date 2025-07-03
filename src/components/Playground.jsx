@@ -20,7 +20,24 @@ const Playground = ({
   textOverlay,
   // Prop for countdown display
   countdownValue,
+  // Prop for text overlay position
+  textOverlayPosition,
 }) => {
+  const getOverlayPositionClasses = () => {
+    switch (textOverlayPosition) {
+      case 'top':
+        return 'top-4 left-4 right-4';
+      case 'center':
+        // For vertical center, we also need to ensure the element itself doesn't take full width if text is short
+        // So, 'left-4 right-4' makes it a bar. If we want it to shrink to text width:
+        // 'top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' (and remove text-center from inner text if so)
+        return 'top-1/2 -translate-y-1/2 left-4 right-4';
+      case 'bottom':
+      default:
+        return 'bottom-4 left-4 right-4';
+    }
+  };
+
   return (
     // Playground container: flex column, take full height, center content, add some padding for the frame effect
     <div className="flex flex-col h-full items-center justify-center bg-gray-800 p-2 md:p-4 overflow-hidden relative">
@@ -50,7 +67,7 @@ const Playground = ({
           {/* Text Overlay Display */}
           {textOverlay && (
             <div
-              className="absolute bottom-4 left-4 right-4 p-2 bg-black bg-opacity-50 text-white text-center text-sm md:text-base rounded pointer-events-none z-20"
+              className={`absolute p-2 bg-black bg-opacity-60 text-white text-center text-sm md:text-base rounded pointer-events-none z-20 ${getOverlayPositionClasses()}`}
               style={{ fontFamily: "'Baloo 2', 'Nunito', sans-serif" }}
             >
               {textOverlay}

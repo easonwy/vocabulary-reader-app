@@ -23,6 +23,7 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [countdownValue, setCountdownValue] = useState(null); // For 3, 2, 1 countdown
+  const [textOverlayPosition, setTextOverlayPosition] = useState('bottom'); // State for overlay position
 
   // Function to load vocabulary data
   const loadVocabulary = useCallback(async (subjectKey) => {
@@ -67,6 +68,11 @@ const App = () => {
   // Handler for text overlay change
   const handleTextOverlayChange = (newText) => {
     setTextOverlay(newText);
+  };
+
+  // Handler for text overlay position change
+  const handleTextOverlayPositionChange = (newPosition) => {
+    setTextOverlayPosition(newPosition);
   };
 
   // Function to speak text
@@ -173,7 +179,8 @@ const App = () => {
             isLoading={isLoading}
             error={error}
             textOverlay={textOverlay}
-            countdownValue={countdownValue} // Pass countdownValue to Playground
+            countdownValue={countdownValue}
+            textOverlayPosition={textOverlayPosition} // Pass position to Playground
           />
         </div>
 
