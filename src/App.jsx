@@ -44,12 +44,14 @@ const App = () => {
     } finally {
       setIsLoading(false);
       setActiveIndex(null);
-      setIsReading(false);
+      console.log("JULES_DEBUG: loadVocabulary's finally block. Current isReading val:", isReading, "Countdown val:", countdownValue); // Added log
+      // setIsReading(false); // Temporarily commented out for diagnostics
+      console.log("JULES_DEBUG: loadVocabulary's finally block. setIsReading(false) was TEMPORARILY COMMENTED OUT.");
       if (startBtnRef.current) {
         startBtnRef.current.disabled = false;
       }
     }
-  }, [availableSubjects]);
+  }, [availableSubjects, countdownValue, isReading]); // Added countdownValue and isReading to dependencies for logging accuracy, though they don't influence the core logic of loadVocabulary itself.
 
   // Load initial vocabulary
   useEffect(() => {
@@ -131,12 +133,13 @@ const App = () => {
     console.log("JULES_DEBUG: Vocabulary data length:", vocabularyData.length);
     console.log("JULES_DEBUG: Querying for .food-card elements...");
 
-    // Adding a small delay to potentially allow React to finish rendering updates if any were pending
-    // This is a common workaround if DOM queries happen too quickly after state sets that might affect layout.
-    await new Promise(res => setTimeout(res, 50)); // 50ms delay
+    // const cards = document.querySelectorAll('.food-card'); // Original position of query
+    // console.log("JULES_DEBUG: Number of .food-card elements found (before potential delay if re-added):", cards.length); // Original log
 
+    // Delay removed as per plan step 3 - logs indicated cards were found.
     const cards = document.querySelectorAll('.food-card');
-    console.log("JULES_DEBUG: Number of .food-card elements found (after 50ms delay):", cards.length);
+    console.log("JULES_DEBUG: Number of .food-card elements found:", cards.length);
+
 
     if (vocabularyData.length === 0) {
       console.log("JULES_DEBUG: No vocabulary data to read. Ending sequence.");
@@ -187,6 +190,10 @@ const App = () => {
     if (!isReading) {
       setActiveIndex(null);
     }
+  }, [isReading]);
+
+  useEffect(() => {
+    console.log("JULES_DEBUG: isReading state CHANGED to:", isReading);
   }, [isReading]);
 
   return (
