@@ -4,6 +4,7 @@ import Playground from './components/Playground';
 
 const App = () => {
   const [isReading, setIsReading] = useState(false);
+  const isReadingRef = useRef(isReading); // Ref to track isReading status immediately
   const [activeIndex, setActiveIndex] = useState(null);
   const gridRef = useRef(null);
   const startBtnRef = useRef(null);
@@ -124,6 +125,7 @@ const App = () => {
     setCountdownValue(null); // Clear countdown
 
     setIsReading(true);
+    isReadingRef.current = true; // Set ref immediately
     if (startBtnRef.current) {
         startBtnRef.current.disabled = true;
     }
@@ -146,13 +148,14 @@ const App = () => {
       console.log("JULES_DEBUG: Vocabulary data exists, but no .food-card elements were found in the DOM. Ending sequence. Check Main.jsx and VocabularyCard.jsx rendering.");
     } else {
       for (let i = 0; i < vocabularyData.length; i++) {
-        if (!window.speechSynthesis || !isReading) {
-          console.log("JULES_DEBUG: Breaking reading loop. Speech synthesis stopped or isReading is false.");
+        // Use isReadingRef.current for the check
+        if (!window.speechSynthesis || !isReadingRef.current) {
+          console.log("JULES_DEBUG: Breaking reading loop. Speech synthesis stopped or isReadingRef.current is false.");
           window.speechSynthesis.cancel();
           break;
         }
         setActiveIndex(i);
-        const card = cards[i]; // Should be safe if cards.length matches vocabularyData.length or is at least i
+        const card = cards[i];
         const word = vocabularyData[i].name;
 
         if (card) {
@@ -162,7 +165,6 @@ const App = () => {
           await speak(word);
           await new Promise(res => setTimeout(res, 300)); // Pause before next word
         } else {
-          // This case should ideally not be reached if cards.length > 0 and matches vocabularyData.length
           console.log(`JULES_DEBUG: Card element not found for index ${i}, word: ${word}. This might indicate a mismatch between vocabularyData and rendered cards.`);
         }
       }
@@ -170,6 +172,7 @@ const App = () => {
     console.log("JULES_DEBUG: Reading loop finished or bypassed.");
     setActiveIndex(null);
     setIsReading(false);
+    isReadingRef.current = false; // Set ref immediately when stopping
     if (startBtnRef.current) {
       startBtnRef.current.disabled = false;
     }
@@ -193,6 +196,7 @@ const App = () => {
 
   useEffect(() => {
     console.log("JULES_DEBUG: isReading state CHANGED to:", isReading);
+    isReadingRef.current = isReading; // Keep ref synchronized with state
   }, [isReading]);
 
   return (
