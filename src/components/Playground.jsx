@@ -40,14 +40,23 @@ const Playground = ({
   return (
     // Root element is now the 9:16 frame, taking ~99% height of parent, centered by parent in App.jsx
     // It's a flex column to arrange Header and Main.
-    <div className="aspect-[9/16] h-[99%] w-auto max-w-full max-h-full bg-white shadow-2xl rounded-lg flex flex-col overflow-hidden relative mx-auto">
+    // Uses CSS variables for background, shadow, and border-radius.
+    <div
+      className="aspect-[9/16] h-[99%] w-auto max-w-full max-h-full flex flex-col overflow-hidden relative mx-auto"
+      style={{
+        backgroundColor: 'var(--canvas-bg)',
+        boxShadow: 'var(--canvas-shadow)',
+        borderRadius: 'var(--canvas-border-radius)'
+      }}
+    >
       {/* Header renders normally at the top */}
       <Header currentSubjectName={currentSubjectName} />
 
       {/* Main Content Area (or status messages) - takes remaining space and scrolls */}
-      <div className="flex-1 overflow-y-auto p-2 md:p-4"> {/* Added some padding */}
+      {/* Text color for status messages should also be themed */}
+      <div className="flex-1 overflow-y-auto p-2 md:p-4 text-[var(--text-primary)]">
         {isLoading && <div className="text-center p-4">Loading vocabulary...</div>}
-        {error && <div className="text-center p-4 text-red-500">Error: {error}</div>}
+        {error && <div className="text-center p-4 text-red-500">Error: {error}</div>} {/* Error color might need its own var */}
             {!isLoading && !error && (!vocabularyItems || vocabularyItems.length === 0) && (
               <div className="text-center p-4">No vocabulary items found for this subject.</div>
             )}
@@ -58,7 +67,7 @@ const Playground = ({
                 isReading={isReading}
                 gridRef={gridRef}
                 setActiveIndex={setActiveIndex}
-                cardsPerRow={cardsPerRow} // Pass cardsPerRow to Main
+                cardsPerRow={cardsPerRow}
               />
             )}
           </div>
@@ -66,8 +75,12 @@ const Playground = ({
       {/* Text Overlay Display - positioned relative to the root Playground div */}
       {textOverlay && (
         <div
-          className={`absolute p-2 bg-black bg-opacity-60 text-white text-center text-sm md:text-base rounded pointer-events-none z-20 ${getOverlayPositionClasses()}`}
-          style={{ fontFamily: "'Baloo 2', 'Nunito', sans-serif" }}
+          className={`absolute p-2 text-center text-sm md:text-base rounded pointer-events-none z-20 ${getOverlayPositionClasses()}`}
+          style={{
+            backgroundColor: 'var(--overlay-bg)',
+            color: 'var(--overlay-text-color)',
+            fontFamily: 'var(--font-readable)'
+          }}
         >
           {textOverlay}
         </div>

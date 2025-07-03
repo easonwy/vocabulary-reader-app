@@ -18,6 +18,8 @@ const ControlPanel = ({
   onTextOverlayPositionChange,
   cardsPerRow,
   onCardsPerRowChange,
+  currentTheme,
+  onThemeChange,
 }) => {
   const positionOptions = [
     { id: 'pos-top', value: 'top', label: 'Top' },
@@ -27,20 +29,26 @@ const ControlPanel = ({
 
   return (
     <div
-      // Use Tailwind for responsive width: full width on small screens, md:w-80 on medium and up.
-      className="bg-white p-6 rounded-lg shadow-xl border border-gray-200 flex flex-col items-center gap-4 w-full md:w-80"
+      className="p-6 rounded-lg shadow-xl border flex flex-col items-center gap-4 w-full md:w-80"
+      style={{
+        backgroundColor: 'var(--control-panel-content-bg)',
+        borderColor: 'var(--control-panel-border-color)',
+        // The overall font for control panel text can be defined here or inherit from body
+        fontFamily: 'var(--font-readable)'
+      }}
     >
       <button
         id="start-reading-btn"
         ref={startBtnRef}
         onClick={startReadingSequence}
-        disabled={isReading} // This prop in App.jsx should be (isReading || !!countdownValue)
-        className="btn-learn text-white font-bold py-3 px-6 rounded-full shadow-lg text-lg flex items-center justify-center cartoon-btn w-full"
+        disabled={isReading}
+        className="text-white font-bold py-3 px-6 rounded-full shadow-lg text-lg flex items-center justify-center w-full cartoon-btn" // Removed btn-learn, text-white is now var
         style={{
-          fontFamily: readableFont,
-          background: "linear-gradient(90deg,#f59e42 60%,#fbbf24 100%)",
-          border: "3px solid #fffbe9",
-          boxShadow: "0 4px 16px 0 #f59e42",
+          fontFamily: 'var(--button-font-family)', // Using the specific button font
+          backgroundImage: 'var(--button-primary-bg-image)',
+          borderColor: 'var(--button-primary-border-color)',
+          boxShadow: 'var(--button-primary-shadow)',
+          color: 'var(--text-button-primary)'
         }}
         aria-label="Record"
       >
@@ -50,68 +58,90 @@ const ControlPanel = ({
         {isReading ? 'Recording...' : 'Record'}
       </button>
 
-      <div className="mt-1 w-full">
-        <label htmlFor="subject-select-panel" className="mr-2 text-gray-700 text-sm block mb-1" style={{ fontFamily: readableFont }}>
-          Subject:
-        </label>
-        <select
-          id="subject-select-panel"
-          value={currentSubjectKey}
-          onChange={(e) => onSubjectChange(e.target.value)}
-          disabled={isReading}
-          className="p-2 rounded-md border-2 border-amber-400 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-200 focus:ring-opacity-50 bg-white text-gray-900 text-sm w-full"
-          style={{ fontFamily: readableFont }}
-        >
-          {availableSubjects && availableSubjects.map(subject => (
-            <option key={subject.key} value={subject.key}>
-              {subject.name}
-            </option>
-          ))}
-        </select>
-      </div>
+      {/* Generic style for input/select wrappers */}
+      {[[
+        "Subject:", "subject-select-panel", currentSubjectKey, onSubjectChange, availableSubjects.map(s => ({value: s.key, label: s.name})), "select"
+      ],[
+        `Speed: ${speechRate !== undefined ? speechRate.toFixed(1) + 'x' : '1.0x'}`, "speed-control-slider", speechRate === undefined ? 1.0 : speechRate, (e) => onSpeedChange(parseFloat(e.target.value)), {min: "0.5", max: "2", step: "0.1"}, "range"
+      ],[
+        "Text Overlay:", "text-overlay-input", textOverlay || '', (e) => onTextOverlayChange(e.target.value), {placeholder: "Enter text for overlay..."}, "text"
+      ],[
+        "Words per Row (1-5):", "cards-per-row-input", cardsPerRow === undefined ? 3 : cardsPerRow, (e) => onCardsPerRowChange(e.target.value), {min: "1", max: "5"}, "number"
+      ],[
+        "Theme:", "theme-select", currentTheme, (e) => onThemeChange(e.target.value), [
+          { value: 'theme-default', label: 'Default' },
+          { value: 'theme-dark', label: 'Dark Mode' },
+          { value: 'theme-playful', label: 'Playful' },
+          { value: 'theme-serene', label: 'Serene' },
+        ], "select"
+      ]].map(([labelContent, id, value, handleChange, optionsOrProps, type]) => (
+        <div className="mt-4 w-full" key={id}>
+          <label htmlFor={id} className="mr-2 text-sm block mb-1" style={{color: 'var(--text-primary)'}}>
+            {labelContent}
+          </label>
+          {type === "select" ? (
+            <select
+              id={id}
+              value={value}
+              onChange={handleChange}
+              disabled={isReading}
+              className="p-2 rounded-md border-2 shadow-sm text-sm w-full disabled:opacity-[var(--input-disabled-opacity)]"
+              style={{
+                borderColor: id === 'subject-select-panel' ? 'var(--select-border-color)' : 'var(--input-border-color)',
+                backgroundColor: 'var(--input-bg)',
+                color: 'var(--input-text-color)',
+                fontFamily: 'var(--font-readable)',
+                // Tailwind's focus:ring/border doesn't easily accept CSS vars for color, could use JS or more complex CSS if needed
+              }}
+            >
+              {optionsOrProps.map(opt => <option key={opt.value} value={opt.value}>{opt.label}</option>)}
+            </select>
+          ) : type === "range" ? (
+            <input
+              type={type}
+              id={id}
+              value={value}
+              onChange={handleChange}
+              disabled={isReading}
+              min={optionsOrProps.min}
+              max={optionsOrProps.max}
+              step={optionsOrProps.step}
+              className="w-full h-2 rounded-lg appearance-none cursor-pointer disabled:opacity-[var(--input-disabled-opacity)]"
+              style={{
+                backgroundColor: 'var(--slider-track-bg)',
+                accentColor: 'var(--slider-thumb-color)' // For browsers supporting accent-color
+              }}
+            />
+          ) : ( // text, number
+            <input
+              type={type}
+              id={id}
+              value={value}
+              onChange={handleChange}
+              disabled={isReading}
+              min={optionsOrProps?.min}
+              max={optionsOrProps?.max}
+              placeholder={optionsOrProps?.placeholder}
+              className="p-2 rounded-md border-2 shadow-sm text-sm w-full disabled:opacity-[var(--input-disabled-opacity)]"
+              style={{
+                borderColor: 'var(--input-border-color)',
+                backgroundColor: 'var(--input-bg)',
+                color: 'var(--input-text-color)',
+                fontFamily: 'var(--font-readable)'
+              }}
+            />
+          )}
+        </div>
+      ))}
 
-      {/* Speed Control */}
+      {/* Text Overlay Position Controls - Radio buttons need more specific structure */}
       <div className="mt-4 w-full">
-        <label htmlFor="speed-control-slider" className="mr-2 text-gray-700 text-sm block mb-1" style={{ fontFamily: readableFont }}>
-          Speed: {speechRate !== undefined ? `${speechRate.toFixed(1)}x` : '1.0x'}
-        </label>
-        <input
-          type="range"
-          id="speed-control-slider"
-          min="0.5"
-          max="2"
-          step="0.1"
-          value={speechRate === undefined ? 1.0 : speechRate}
-          onChange={(e) => onSpeedChange(parseFloat(e.target.value))}
-          disabled={isReading}
-          className="w-full h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer accent-amber-500 disabled:opacity-50"
-        />
-      </div>
-
-      {/* Text Overlay Input */}
-      <div className="mt-4 w-full">
-        <label htmlFor="text-overlay-input" className="mr-2 text-gray-700 text-sm block mb-1" style={{ fontFamily: readableFont }}>
-          Text Overlay:
-        </label>
-        <input
-          type="text"
-          id="text-overlay-input"
-          value={textOverlay || ''}
-          onChange={(e) => onTextOverlayChange(e.target.value)}
-          disabled={isReading}
-          className="p-2 rounded-md border-2 border-gray-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-200 focus:ring-opacity-50 bg-white text-gray-900 text-sm w-full disabled:opacity-50"
-          placeholder="Enter text for overlay..."
-        />
-      </div>
-
-      {/* Text Overlay Position Controls */}
-      <div className="mt-4 w-full">
-        <label className="mr-2 text-gray-700 text-sm block mb-2" style={{ fontFamily: readableFont }}>
+        <label className="mr-2 text-sm block mb-2" style={{ color: 'var(--text-primary)' }}>
           Overlay Position:
         </label>
         <div className="flex justify-around items-center gap-2">
           {positionOptions.map(option => (
-            <label key={option.id} htmlFor={option.id} className="flex items-center text-sm text-gray-600 cursor-pointer">
+            <label key={option.id} htmlFor={option.id} className="flex items-center text-sm cursor-pointer" style={{color: 'var(--text-secondary)'}}>
               <input
                 type="radio"
                 id={option.id}
@@ -120,29 +150,13 @@ const ControlPanel = ({
                 checked={textOverlayPosition === option.value}
                 onChange={() => onTextOverlayPositionChange(option.value)}
                 disabled={isReading}
-                className="mr-1.5 h-4 w-4 text-amber-600 border-gray-300 focus:ring-amber-500 disabled:opacity-50"
+                className="mr-1.5 h-4 w-4 border-gray-300 disabled:opacity-[var(--input-disabled-opacity)]"
+                style={{ accentColor: 'var(--text-accent)'}} // For browsers supporting accent-color
               />
               {option.label}
             </label>
           ))}
         </div>
-      </div>
-
-      {/* Cards Per Row Control */}
-      <div className="mt-4 w-full">
-        <label htmlFor="cards-per-row-input" className="mr-2 text-gray-700 text-sm block mb-1" style={{ fontFamily: readableFont }}>
-          Words per Row (1-5):
-        </label>
-        <input
-          type="number"
-          id="cards-per-row-input"
-          value={cardsPerRow === undefined ? 3 : cardsPerRow}
-          onChange={(e) => onCardsPerRowChange(e.target.value)}
-          disabled={isReading}
-          min="1"
-          max="5" // Max 5 for typical phone screen, can be adjusted
-          className="p-2 rounded-md border-2 border-gray-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-200 focus:ring-opacity-50 bg-white text-gray-900 text-sm w-full disabled:opacity-50"
-        />
       </div>
     </div>
   );

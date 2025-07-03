@@ -26,6 +26,7 @@ const App = () => {
   const [countdownValue, setCountdownValue] = useState(null); // For 3, 2, 1 countdown
   const [textOverlayPosition, setTextOverlayPosition] = useState('bottom'); // State for overlay position
   const [cardsPerRow, setCardsPerRow] = useState(3); // State for words per row, default 3
+  const [currentTheme, setCurrentTheme] = useState('theme-default'); // State for current theme
 
   // Function to load vocabulary data
   const loadVocabulary = useCallback(async (subjectKey) => {
@@ -45,8 +46,8 @@ const App = () => {
     } finally {
       setIsLoading(false);
       setActiveIndex(null);
-      console.log("JULES_DEBUG: loadVocabulary's finally block. Current isReading val:", isReading, "Countdown val:", countdownValue); // Kept for one more test cycle
-      setIsReading(false); // Reinstated
+      // console.log("JULES_DEBUG: loadVocabulary's finally block. Current isReading val:", isReading, "Countdown val:", countdownValue);
+      setIsReading(false);
       if (startBtnRef.current) {
         startBtnRef.current.disabled = false;
       }
@@ -84,6 +85,11 @@ const App = () => {
     if (count > 0 && count <= 10) { // Example validation: 1 to 10 cards
       setCardsPerRow(count);
     }
+  };
+
+  // Handler for theme change
+  const handleThemeChange = (newTheme) => {
+    setCurrentTheme(newTheme);
   };
 
   // Function to speak text
@@ -125,32 +131,16 @@ const App = () => {
     setCountdownValue(null); // Clear countdown
 
     setIsReading(true);
-    isReadingRef.current = true; // Set ref immediately
+    isReadingRef.current = true;
     if (startBtnRef.current) {
         startBtnRef.current.disabled = true;
     }
 
-    console.log("JULES_DEBUG: Sequence phase: setIsReading(true) called.");
-    console.log("JULES_DEBUG: Vocabulary data length:", vocabularyData.length);
-    console.log("JULES_DEBUG: Querying for .food-card elements...");
-
-    // const cards = document.querySelectorAll('.food-card'); // Original position of query
-    // console.log("JULES_DEBUG: Number of .food-card elements found (before potential delay if re-added):", cards.length); // Original log
-
-    // Delay removed as per plan step 3 - logs indicated cards were found.
     const cards = document.querySelectorAll('.food-card');
-    console.log("JULES_DEBUG: Number of .food-card elements found:", cards.length);
 
-
-    if (vocabularyData.length === 0) {
-      console.log("JULES_DEBUG: No vocabulary data to read. Ending sequence.");
-    } else if (cards.length === 0 && vocabularyData.length > 0) {
-      console.log("JULES_DEBUG: Vocabulary data exists, but no .food-card elements were found in the DOM. Ending sequence. Check Main.jsx and VocabularyCard.jsx rendering.");
-    } else {
+    if (vocabularyData.length > 0 && cards.length > 0) {
       for (let i = 0; i < vocabularyData.length; i++) {
-        // Use isReadingRef.current for the check
         if (!window.speechSynthesis || !isReadingRef.current) {
-          console.log("JULES_DEBUG: Breaking reading loop. Speech synthesis stopped or isReadingRef.current is false.");
           window.speechSynthesis.cancel();
           break;
         }
@@ -159,20 +149,16 @@ const App = () => {
         const word = vocabularyData[i].name;
 
         if (card) {
-          console.log(`JULES_DEBUG: Reading card ${i}: ${word}`);
           card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          await new Promise(res => setTimeout(res, 500)); // Time for scroll
+          await new Promise(res => setTimeout(res, 500));
           await speak(word);
-          await new Promise(res => setTimeout(res, 300)); // Pause before next word
-        } else {
-          console.log(`JULES_DEBUG: Card element not found for index ${i}, word: ${word}. This might indicate a mismatch between vocabularyData and rendered cards.`);
+          await new Promise(res => setTimeout(res, 300));
         }
       }
     }
-    console.log("JULES_DEBUG: Reading loop finished or bypassed.");
     setActiveIndex(null);
     setIsReading(false);
-    isReadingRef.current = false; // Set ref immediately when stopping
+    isReadingRef.current = false;
     if (startBtnRef.current) {
       startBtnRef.current.disabled = false;
     }
@@ -188,25 +174,23 @@ const App = () => {
   }, []);
 
   // Reset activeIndex when isReading changes to false
+  // and synchronize isReadingRef
   useEffect(() => {
     if (!isReading) {
       setActiveIndex(null);
     }
-  }, [isReading]);
-
-  useEffect(() => {
-    console.log("JULES_DEBUG: isReading state CHANGED to:", isReading);
-    isReadingRef.current = isReading; // Keep ref synchronized with state
+    isReadingRef.current = isReading;
   }, [isReading]);
 
   return (
-    <div className="min-h-screen h-screen flex flex-col overflow-hidden bg-[#f0fdf4] cartoon-bg">
+    <div className={`min-h-screen h-screen flex flex-col overflow-hidden ${currentTheme} cartoon-bg`}>
       {/* Header is now part of Playground, so no direct rendering here */}
 
       {/* Main content area: flex-col on small screens, md:flex-row on medium and up */}
       <div className="flex flex-col md:flex-row flex-1 overflow-hidden">
         {/* Left Column: Playground wrapper - for centering the Playground component */}
-        <div className="flex-1 flex items-center justify-center overflow-hidden p-1 bg-gray-800">
+        {/* This div will now use CSS variables for its background */}
+        <div className="flex-1 flex items-center justify-center overflow-hidden p-1 bg-[var(--playground-area-bg)]">
           <Playground
             currentSubjectName={availableSubjects.find(s => s.key === currentSubject)?.name || 'Vocabulary'}
             vocabularyItems={vocabularyData}
@@ -219,20 +203,20 @@ const App = () => {
             textOverlay={textOverlay}
             countdownValue={countdownValue}
             textOverlayPosition={textOverlayPosition}
-            cardsPerRow={cardsPerRow} // Pass cardsPerRow to Playground
+            cardsPerRow={cardsPerRow}
           />
         </div>
 
         {/* Right Column: Control Panel */}
-        {/* On small screens, border-t. On md screens, border-l. */}
-        <div className="p-4 bg-gray-50 border-t md:border-t-0 md:border-l border-gray-200 overflow-y-auto">
+        {/* This div will also use CSS variables for its background and border */}
+        <div className="p-4 bg-[var(--control-panel-bg)] border-t md:border-t-0 md:border-l border-[var(--control-panel-border-color)] overflow-y-auto">
           <ControlPanel
             startReadingSequence={startReadingSequence}
             startBtnRef={startBtnRef}
             availableSubjects={availableSubjects}
             currentSubjectKey={currentSubject}
             onSubjectChange={handleSubjectChange}
-            isReading={isReading || !!countdownValue} // Correctly disable controls if reading or counting down
+            isReading={isReading || !!countdownValue}
             speechRate={speechRate}
             onSpeedChange={handleSpeedChange}
             textOverlay={textOverlay}
@@ -241,6 +225,8 @@ const App = () => {
             onTextOverlayPositionChange={handleTextOverlayPositionChange}
             cardsPerRow={cardsPerRow}
             onCardsPerRowChange={handleCardsPerRowChange}
+            currentTheme={currentTheme} // Pass currentTheme to ControlPanel
+            onThemeChange={handleThemeChange} // Pass theme handler to ControlPanel
           />
         </div>
       </div>

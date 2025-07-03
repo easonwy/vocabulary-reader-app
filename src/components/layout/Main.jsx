@@ -37,13 +37,15 @@ const Main = ({ vocabularyItems, activeIndex, isReading, gridRef, setActiveIndex
   const gridColsClass = getGridColsClass(cardsPerRow);
 
   return (
-    <main className="flex flex-col items-center flex-grow overflow-auto"> {/* Added overflow-auto, removed inline minHeight */}
+    // The main element itself doesn't have much direct styling that needs theming,
+    // mostly structure. Its children (cards) will be themed.
+    <main className="flex flex-col items-center flex-grow overflow-auto">
       <div
         id="vocabulary-grid"
         ref={gridRef}
         className={`grid ${gridColsClass} gap-4 md:gap-6 px-2`} // Apply dynamic grid class
         style={{
-          paddingTop: '1rem',
+          paddingTop: '1rem', // These paddings could also become variables if needed
           paddingBottom: '1rem',
           width: '100%',
           maxWidth: 1200
