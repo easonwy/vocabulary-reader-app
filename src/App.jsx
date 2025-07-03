@@ -25,7 +25,7 @@ const App = () => {
   const [error, setError] = useState(null);
   const [countdownValue, setCountdownValue] = useState(null); // For 3, 2, 1 countdown
   const [textOverlayPosition, setTextOverlayPosition] = useState('bottom'); // State for overlay position
-  const [cardsPerRow, setCardsPerRow] = useState(3); // State for words per row, default 3
+  const [cardsPerRow, setCardsPerRow] = useState(2); // State for words per row, default 3
   const [currentTheme, setCurrentTheme] = useState('theme-default'); // State for current theme
   const [showScrollbar, setShowScrollbar] = useState(false); // State for scrollbar visibility
 
@@ -38,6 +38,20 @@ const App = () => {
       if (!response.ok) {
         throw new Error(`Failed to fetch ${subjectKey}.json: ${response.statusText}`);
       }
+      // Defensive: check content-type before parsing as JSON
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        // Try to detect if it's an HTML error page (e.g. 404)
+        const text = await response.text();
+        if (text.trim().startsWith('<!DOCTYPE html>')) {
+          throw new Error(
+            `File not found or server returned HTML. Please check if /vocabularies/${subjectKey}.json exists.`
+          );
+        }
+        throw new Error(
+          `Invalid response format. Expected JSON but got: ${text.slice(0, 100)}`
+        );
+      }
       const data = await response.json();
       setVocabularyData(data);
     } catch (err) {
@@ -47,7 +61,6 @@ const App = () => {
     } finally {
       setIsLoading(false);
       setActiveIndex(null);
-      // console.log("JULES_DEBUG: loadVocabulary's finally block. Current isReading val:", isReading, "Countdown val:", countdownValue);
       setIsReading(false);
       if (startBtnRef.current) {
         startBtnRef.current.disabled = false;
@@ -61,8 +74,15 @@ const App = () => {
   }, [currentSubject, loadVocabulary]);
 
   // Handler for subject change
-  const handleSubjectChange = (newSubjectKey) => {
-    setCurrentSubject(newSubjectKey);
+  const handleSubjectChange = (input) => {
+    // Accepts: event from <select>, string, or subject object
+    if (input?.target?.value) {
+      setCurrentSubject(input.target.value);
+    } else if (typeof input === 'string') {
+      setCurrentSubject(input);
+    } else if (input?.key) {
+      setCurrentSubject(input.key);
+    }
   };
 
   // Handler for speed change

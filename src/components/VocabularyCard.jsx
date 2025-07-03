@@ -65,7 +65,7 @@ const VocabularyCard = ({
   };
 
   const phoneticStyle = {
-    fontSize: '1.5rem',
+    fontSize: '1.2rem',
     backgroundColor: 'var(--card-phonetic-bg)',
     color: 'var(--card-phonetic-text-color)',
     borderRadius: '0.5rem',
@@ -77,7 +77,7 @@ const VocabularyCard = ({
   };
 
   const translationStyle = {
-    fontSize: '1.5rem',
+    fontSize: '1.2rem',
     fontWeight: 'bold',
     fontFamily: 'var(--font-readable)',
     color: 'var(--card-translation-text-color)',
