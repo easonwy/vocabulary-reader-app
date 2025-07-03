@@ -106,7 +106,7 @@ const VocabularyCard = ({
         }}
       />
       <div className="p-4">
-        <p className="font-bold text-1xl mb-1" style={nameStyle}>
+        <p className="font-bold text-2xl mb-1" style={nameStyle}>
           {item.name}
         </p>
         <div className="mt-2">

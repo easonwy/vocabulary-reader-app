@@ -62,12 +62,6 @@ const ControlPanel = ({
       {[[
         "Subject:", "subject-select-panel", currentSubjectKey, onSubjectChange, availableSubjects.map(s => ({value: s.key, label: s.name})), "select"
       ],[
-        `Speed: ${speechRate !== undefined ? speechRate.toFixed(1) + 'x' : '1.0x'}`, "speed-control-slider", speechRate === undefined ? 1.0 : speechRate, (e) => onSpeedChange(parseFloat(e.target.value)), {min: "0.5", max: "2", step: "0.1"}, "range"
-      ],[
-        "Text Overlay:", "text-overlay-input", textOverlay || '', (e) => onTextOverlayChange(e.target.value), {placeholder: "Enter text for overlay..."}, "text"
-      ],[
-        "Words per Row (1-5):", "cards-per-row-input", cardsPerRow === undefined ? 3 : cardsPerRow, (e) => onCardsPerRowChange(e.target.value), {min: "1", max: "5"}, "number"
-      ],[
         "Theme:", "theme-select", currentTheme, (e) => onThemeChange(e.target.value), [
           { value: 'theme-default', label: 'Default' },
           { value: 'theme-dark', label: 'Dark Mode' },
@@ -75,6 +69,12 @@ const ControlPanel = ({
           { value: 'theme-serene', label: 'Serene' },
           { value: 'theme-cartoon', label: 'Cartoon' }, // Added Cartoon theme
         ], "select"
+      ],[
+        `Speed: ${speechRate !== undefined ? speechRate.toFixed(1) + 'x' : '1.0x'}`, "speed-control-slider", speechRate === undefined ? 1.0 : speechRate, (e) => onSpeedChange(parseFloat(e.target.value)), {min: "0.5", max: "2", step: "0.1"}, "range"
+      ],[
+        "Words per Row (1-5):", "cards-per-row-input", cardsPerRow === undefined ? 3 : cardsPerRow, (e) => onCardsPerRowChange(e.target.value), {min: "1", max: "5"}, "number"
+      ],[
+        "Overlay Text:", "text-overlay-input", textOverlay || '', (e) => onTextOverlayChange(e.target.value), {placeholder: "Enter text for overlay..."}, "text"
       ]].map(([labelContent, id, value, handleChange, optionsOrProps, type]) => (
         <div className="mt-4 w-full" key={id}>
           <label htmlFor={id} className="mr-2 text-sm block mb-1" style={{color: 'var(--text-primary)'}}>
