@@ -214,6 +214,68 @@
   --overlay-text-color: #f0f9ff; /* sky-50 */
 }
 
+/* Cartoon Theme */
+.theme-cartoon {
+  --app-bg-color: #fffbe9;
+  --app-bg-image: repeating-linear-gradient(135deg, #fffbe9, #fffbe9 40px, #ffe0b2 40px, #ffe0b2 80px);
+  --playground-area-bg: #ffe0b2;
+  --control-panel-bg: #fffbe9;
+  --control-panel-content-bg: #fffbe9;
+  --control-panel-border-color: #f59e42;
+
+  --canvas-bg: #fffbe9;
+  --canvas-shadow: 0 10px 30px 0 #f59e42;
+  --canvas-border-radius: 2rem;
+
+  --header-bg: transparent;
+  --header-text-color: #f59e42;
+  --header-font-family: 'Patrick Hand', cursive;
+
+  --card-bg: #fffbe9;
+  --card-shadow: 0 10px 20px 0 #fbbf24;
+  --card-border-radius: 2rem;
+  --card-border-color: #fbbf24;
+  --card-active-bg: linear-gradient(135deg,#fffbe9 80%,#ffe0b2 100%);
+  --card-active-border-color: #f59e42;
+  --card-active-shadow: 0 8px 32px 0 #f59e42;
+  --card-image-border-radius: 2rem 2rem 0 0;
+  --card-image-border-bottom-active: 3px dashed #f59e42;
+  --card-name-text-color: #f59e42;
+  --card-phonetic-bg: #ffe0b2;
+  --card-phonetic-text-color: #f59e42;
+  --card-translation-text-color: #fbbf24;
+  --card-font-family: 'Luckiest Guy', 'Baloo 2', 'Nunito', 'Segoe UI', 'Arial', cursive, sans-serif;
+
+  --text-primary: #f59e42;
+  --text-secondary: #fbbf24;
+  --text-accent: #f59e42;
+  --text-disabled: #fbbf24;
+  --text-button-primary: #fffbe9;
+
+  --button-primary-bg-image: linear-gradient(90deg,#f59e42 60%,#fbbf24 100%);
+  --button-primary-border-color: #fffbe9;
+  --button-primary-shadow: 0 4px 16px 0 #f59e42;
+  --button-font-family: 'Luckiest Guy', 'Patrick Hand', 'Comic Sans MS', cursive, sans-serif;
+
+  --input-bg: #fffbe9;
+  --input-border-color: #fbbf24;
+  --input-text-color: #f59e42;
+  --input-focus-border-color: #f59e42;
+  --input-focus-ring-color: rgba(245, 158, 66, 0.5);
+  --input-disabled-opacity: 0.5;
+
+  --select-border-color: #fbbf24;
+
+  --slider-track-bg: #ffe0b2;
+  --slider-thumb-color: #f59e42;
+
+  --overlay-bg: rgba(245, 158, 66, 0.7);
+  --overlay-text-color: #fffbe9;
+
+  --font-body: 'Baloo 2', 'Nunito', 'Segoe UI', 'Arial', sans-serif;
+  --font-display: 'Luckiest Guy', 'Patrick Hand', cursive;
+  --font-readable: 'Baloo 2', 'Nunito', 'Segoe UI', 'Arial', sans-serif;
+}
 
 html, body, #root {
   height: 100%;

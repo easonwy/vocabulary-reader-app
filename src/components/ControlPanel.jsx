@@ -73,6 +73,7 @@ const ControlPanel = ({
           { value: 'theme-dark', label: 'Dark Mode' },
           { value: 'theme-playful', label: 'Playful' },
           { value: 'theme-serene', label: 'Serene' },
+          { value: 'theme-cartoon', label: 'Cartoon' }, // Added Cartoon theme
         ], "select"
       ]].map(([labelContent, id, value, handleChange, optionsOrProps, type]) => (
         <div className="mt-4 w-full" key={id}>
