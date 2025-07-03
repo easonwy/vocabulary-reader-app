@@ -24,7 +24,7 @@ const App = () => {
   const [error, setError] = useState(null);
   const [countdownValue, setCountdownValue] = useState(null); // For 3, 2, 1 countdown
   const [textOverlayPosition, setTextOverlayPosition] = useState('bottom'); // State for overlay position
-  const [cardsPerRow, setCardsPerRow] = useState(3); // State for words per row, default 3
+  const [cardsPerRow, setCardsPerRow] = useState(2); // State for words per row, default 2
 
   // Function to load vocabulary data
   const loadVocabulary = useCallback(async (subjectKey) => {
