@@ -39,7 +39,7 @@ const Main = ({ vocabularyItems, activeIndex, isReading, gridRef, setActiveIndex
   return (
     // The main element itself doesn't have much direct styling that needs theming,
     // mostly structure. Its children (cards) will be themed.
-    <main className="flex flex-col items-center flex-grow overflow-auto">
+    <main className="flex flex-col items-center flex-grow">
       <div
         id="vocabulary-grid"
         ref={gridRef}
