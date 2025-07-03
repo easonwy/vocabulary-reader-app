@@ -1,11 +1,12 @@
 [
   { "name": "Pizza", "phonetic": "/ˈpiːt.sə/", "zh": "披萨", "img": "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0" },
-  { "name": "Burger", "phonetic": "/ˈbɜː.ɡər/", "zh": "汉堡", "img": "https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0" },
-  { "name": "Pasta", "phonetic": "/ˈpæs.tə/", "zh": "意大利面", "img": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0" },
-  { "name": "Salmon", "phonetic": "/ˈsæm.ən/", "zh": "三文鱼", "img": "https://images.unsplash.com/photo-1504674900247-ec6b0b1b798e?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0" },
-  { "name": "Steak", "phonetic": "/steɪk/", "zh": "牛排", "img": "https://images.unsplash.com/photo-1551183053-bf91a1d81141?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0" },
-  { "name": "Soup", "phonetic": "/suːp/", "zh": "汤", "img": "https://images.unsplash.com/photo-1502741338009-cac2772e18bc?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0" },
-  { "name": "Rice", "phonetic": "/raɪs/", "zh": "米饭", "img": "https://images.unsplash.com/photo-1504674900247-ec6b0b1b798e?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0" },
-  { "name": "Chicken", "phonetic": "/ˈtʃɪk.ɪn/", "zh": "鸡肉", "img": "https://images.unsplash.com/photo-1464306076886-debca5e8a6b0?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0" },
-  { "name": "Sandwich", "phonetic": "/ˈsæn.wɪtʃ/", "zh": "三明治", "img": "https://images.unsplash.com/photo-1553909489-cd47e0907980?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0" }
+  { "name": "Burger", "phonetic": "/ˈbɜːr.ɡər/", "zh": "汉堡", "img": "https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0" },
+  { "name": "Pasta", "phonetic": "/ˈpæs.tə/", "zh": "意大利面", "img": "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0" },
+  { "name": "Salmon", "phonetic": "/ˈsæm.ən/", "zh": "三文鱼", "img": "https://plus.unsplash.com/premium_photo-1723478431094-4854c4555fc2?q=80&w=1427&auto=format&fit=crop&ixlib=rb-4.1.0" },
+  { "name": "Steak", "phonetic": "/steɪk/", "zh": "牛排", "img": "https://images.unsplash.com/photo-1546964124-0cce460f38ef?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0" },
+  { "name": "Soup", "phonetic": "/suːp/", "zh": "汤", "img": "https://plus.unsplash.com/premium_photo-1669831178095-005ed789250a?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0" },
+  { "name": "Rice", "phonetic": "/raɪs/", "zh": "米饭", "img": "https://images.unsplash.com/photo-1512058564366-18510be2db19?q=80&w=1472&auto=format&fit=crop&ixlib=rb-4.1.0" },
+  { "name": "Chicken", "phonetic": "/ˈtʃɪk.ɪn/", "zh": "鸡肉", "img": "https://images.unsplash.com/photo-1606728035253-49e8a23146de?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0" },
+  { "name": "Sandwich", "phonetic": "/ˈsæn.wɪtʃ/", "zh": "三明治", "img": "https://images.unsplash.com/photo-1592415486689-125cbbfcbee2?q=80&w=1025&auto=format&fit=crop&ixlib=rb-4.1.0" },
+  { "name": "French Fries", "phonetic": "/ˌfrentʃ ˈfraɪz/", "zh": "薯条", "img": "https://images.unsplash.com/photo-1630431341973-02e1b662ec35?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0" }
 ]

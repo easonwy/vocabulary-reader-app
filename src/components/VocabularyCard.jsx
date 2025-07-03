@@ -38,82 +38,88 @@ const VocabularyCard = ({
   onClick,
   onKeyDown,
   index
-}) => (
-  <div
-    key={index}
-    className={`food-card bg-white rounded-4xl shadow-xl overflow-hidden text-center cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl cartoon-card
-      ${isActive ? 'active cartoon-bounce border-4 border-yellow-400 relative z-10' : ''}`}
-    data-index={index}
-    style={{
-      fontFamily: readableFont,
-      borderColor: isActive ? '#f59e42' : 'transparent',
-      position: 'relative',
-      boxShadow: isActive
-        ? '0 8px 32px 0 rgba(245,158,66,0.15)'
-        : undefined,
-      background: isActive
-        ? 'linear-gradient(135deg,#fffbe9 80%,#ffe0b2 100%)'
-        : '#fff'
-    }}
-    tabIndex={0}
-    aria-label={`${item.name}, ${item.phonetic}, ${item.zh}`}
-    onClick={onClick}
-    onKeyDown={onKeyDown}
-  >
-    {isActive && <HandArrow />}
-    <img
-      src={item.img}
-      alt={item.name}
-      className="w-full h-35 sm:h-40 object-cover cartoon-img"
-      style={{
-        borderRadius: '1.5rem 1.5rem 0 0',
-        borderBottom: isActive ? '3px dashed #f59e42' : 'none'
-      }}
-      onError={e => {
-        e.target.onerror = null;
-        e.target.src = ' https://placehold.co/400x400/cccccc/ffffff?text=Image+Not+Found';
-      }}
-    />
-    <div className="p-4">
-      <p
-        className="font-bold text-2xl mb-1"
-        style={{
-          color: '#f59e42',
-          fontFamily: readableFont,
-          letterSpacing: '0.02em'
+}) => {
+  // Base classes - structural and interactive, less theme-dependent directly
+  const baseCardClasses = "food-card overflow-hidden text-center cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl cartoon-card";
+  // Active state classes - some might be themeable (like border color if not using active specific var)
+  const activeCardClasses = isActive ? "active cartoon-bounce relative z-10" : "";
+
+  const cardStyle = {
+    fontFamily: 'var(--card-font-family)',
+    backgroundColor: isActive ? 'var(--card-active-bg)' : 'var(--card-bg)',
+    boxShadow: isActive ? 'var(--card-active-shadow)' : 'var(--card-shadow)',
+    borderRadius: 'var(--card-border-radius)',
+    border: `4px solid ${isActive ? 'var(--card-active-border-color)' : 'var(--card-border-color)'}`, // Adjusted for consistent border width
+    position: 'relative', // Keep for HandArrow
+  };
+
+  const imgStyle = {
+    borderRadius: 'var(--card-image-border-radius)', // Uses a variable like '1.5rem 1.5rem 0 0'
+    borderBottom: isActive ? `var(--card-image-border-bottom-active)` : 'none',
+  };
+
+  const nameStyle = {
+    color: 'var(--card-name-text-color)',
+    fontFamily: 'var(--font-readable)', // or specific card name font var
+    letterSpacing: '0.02em',
+  };
+
+  const phoneticStyle = {
+    fontSize: '1.2rem',
+    backgroundColor: 'var(--card-phonetic-bg)',
+    color: 'var(--card-phonetic-text-color)',
+    borderRadius: '0.5rem',
+    display: 'inline-block',
+    padding: '0.1rem 0.5rem',
+    marginBottom: '0.2rem',
+    fontFamily: 'var(--font-readable)',
+    fontWeight: 600,
+  };
+
+  const translationStyle = {
+    fontSize: '1.2rem',
+    fontWeight: 'bold',
+    fontFamily: 'var(--font-readable)',
+    color: 'var(--card-translation-text-color)',
+  };
+
+  return (
+    <div
+      key={index} // key should be on the element being mapped if this is used in a map directly
+      className={`${baseCardClasses} ${activeCardClasses}`}
+      data-index={index}
+      style={cardStyle}
+      tabIndex={0}
+      aria-label={`${item.name}, ${item.phonetic}, ${item.zh}`}
+      onClick={onClick}
+      onKeyDown={onKeyDown}
+    >
+      {isActive && <HandArrow />} {/* HandArrow might need theming if its colors are hardcoded */}
+      <img
+        src={item.img}
+        alt={item.name}
+        className="w-full h-35 sm:h-40 object-cover cartoon-img" // cartoon-img might have themeable properties
+        style={imgStyle}
+        onError={e => {
+          e.target.onerror = null;
+          e.target.src = ' https://placehold.co/400x400/cccccc/ffffff?text=Image+Not+Found';
         }}
-      >
-        {item.name}
-      </p>
-      <div className="mt-2">
-        <div
-          className="text-green-700 font-mono"
-          style={{
-            fontSize: '1.5rem',
-            background: '#fffbe9',
-            borderRadius: '0.5rem',
-            display: 'inline-block',
-            padding: '0.1rem 0.5rem',
-            marginBottom: '0.2rem',
-            fontFamily: readableFont,
-            fontWeight: 600
-          }}
-        >
-          {item.phonetic}
-        </div>
-        <div
-          className="text-yellow-700 text-lg"
-          style={{
-            fontSize: '1.5rem',
-            fontWeight: 'bold',
-            fontFamily: readableFont
-          }}
-        >
-          {item.zh}
+      />
+      <div className="p-4">
+        <p className="font-bold text-1xl mb-1" style={nameStyle}>
+          {item.name}
+        </p>
+        <div className="mt-2">
+          <div className="font-mono" style={phoneticStyle}> {/* Removed text-green-700 */}
+            {item.phonetic}
+          </div>
+          <div className="text-lg" style={translationStyle}> {/* Removed text-yellow-700 */}
+            {item.zh}
+          </div>
         </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default VocabularyCard;

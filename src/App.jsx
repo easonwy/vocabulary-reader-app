@@ -1,31 +1,32 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import Header from './components/layout/Header';
-import Main from './components/layout/Main';
-import Footer from './components/layout/Footer';
-// VocabularyCard is used by Main component, so it's not directly needed here anymore if Main handles its own imports.
-// We can remove it if Main.jsx imports VocabularyCard itself.
-// For now, let's assume Main.jsx handles its own VocabularyCard import.
-
-// const HandArrow = () => ( ... ); // Commented out as it's not currently used after refactor
+import ControlPanel from './components/ControlPanel';
+import Playground from './components/Playground';
 
 const App = () => {
   const [isReading, setIsReading] = useState(false);
+  const isReadingRef = useRef(isReading); // Ref to track isReading status immediately
   const [activeIndex, setActiveIndex] = useState(null);
   const gridRef = useRef(null);
   const startBtnRef = useRef(null);
 
   const [currentSubject, setCurrentSubject] = useState('breakfast'); // Default subject
+  const [speechRate, setSpeechRate] = useState(1.0);
   const [vocabularyData, setVocabularyData] = useState([]);
+  const [textOverlay, setTextOverlay] = useState(''); // State for text overlay
   const [availableSubjects, setAvailableSubjects] = useState([
     { key: 'breakfast', name: 'Breakfast' },
     { key: 'lunch', name: 'Lunch' },
     { key: 'chinese-food', name: 'Chinese Food' },
-    { key: 'kitchen', name: 'Kitchen' }, // Added Kitchen
+    { key: 'kitchen', name: 'Kitchen' },
     { key: 'animals', name: 'Animals' },
     // Add more subjects here or fetch dynamically
   ]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [countdownValue, setCountdownValue] = useState(null); // For 3, 2, 1 countdown
+  const [textOverlayPosition, setTextOverlayPosition] = useState('bottom'); // State for overlay position
+  const [cardsPerRow, setCardsPerRow] = useState(2); // State for words per row, default 3
+  const [currentTheme, setCurrentTheme] = useState('theme-default'); // State for current theme
 
   // Function to load vocabulary data
   const loadVocabulary = useCallback(async (subjectKey) => {
@@ -36,48 +37,84 @@ const App = () => {
       if (!response.ok) {
         throw new Error(`Failed to fetch ${subjectKey}.json: ${response.statusText}`);
       }
+      // Defensive: check content-type before parsing as JSON
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        // Try to detect if it's an HTML error page (e.g. 404)
+        const text = await response.text();
+        if (text.trim().startsWith('<!DOCTYPE html>')) {
+          throw new Error(
+            `File not found or server returned HTML. Please check if /vocabularies/${subjectKey}.json exists.`
+          );
+        }
+        throw new Error(
+          `Invalid response format. Expected JSON but got: ${text.slice(0, 100)}`
+        );
+      }
       const data = await response.json();
       setVocabularyData(data);
-      const subjectConfig = availableSubjects.find(s => s.key === subjectKey);
-      if (subjectConfig) {
-        // setCurrentSubject(subjectConfig.name); // Set the display name
-      }
     } catch (err) {
       console.error("Error loading vocabulary data:", err);
       setError(err.message);
       setVocabularyData([]); // Clear data on error
     } finally {
       setIsLoading(false);
-      setActiveIndex(null); // Reset active card index when subject changes
-      setIsReading(false); // Reset reading state
-      // Safely access properties of startBtnRef.current
-      if (startBtnRef.current && typeof startBtnRef.current.disabled === 'boolean') {
+      setActiveIndex(null);
+      setIsReading(false);
+      if (startBtnRef.current) {
         startBtnRef.current.disabled = false;
-        if (typeof startBtnRef.current.innerHTML === 'string') {
-          startBtnRef.current.innerHTML = `
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block mr-2 -mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          Start
-        `;
-        }
       }
     }
-  }, [availableSubjects, startBtnRef]);
-  // Add availableSubjects to dependencies if it can change
+  }, [availableSubjects]); // Corrected dependencies: only availableSubjects
+
   // Load initial vocabulary
   useEffect(() => {
     loadVocabulary(currentSubject);
   }, [currentSubject, loadVocabulary]);
 
   // Handler for subject change
-  const handleSubjectChange = (newSubjectKey) => {
-    setCurrentSubject(newSubjectKey);
+  const handleSubjectChange = (input) => {
+    // Accepts: event from <select>, string, or subject object
+    if (input?.target?.value) {
+      setCurrentSubject(input.target.value);
+    } else if (typeof input === 'string') {
+      setCurrentSubject(input);
+    } else if (input?.key) {
+      setCurrentSubject(input.key);
+    }
   };
+
+  // Handler for speed change
+  const handleSpeedChange = (newRate) => {
+    setSpeechRate(parseFloat(newRate));
+  };
+
+  // Handler for text overlay change
+  const handleTextOverlayChange = (newText) => {
+    setTextOverlay(newText);
+  };
+
+  // Handler for text overlay position change
+  const handleTextOverlayPositionChange = (newPosition) => {
+    setTextOverlayPosition(newPosition);
+  };
+
+  // Handler for cards per row change
+  const handleCardsPerRowChange = (newCount) => {
+    const count = parseInt(newCount, 10);
+    if (count > 0 && count <= 10) { // Example validation: 1 to 10 cards
+      setCardsPerRow(count);
+    }
+  };
+
+  // Handler for theme change
+  const handleThemeChange = (newTheme) => {
+    setCurrentTheme(newTheme);
+  };
+
   // Function to speak text
   const speak = (text) => {
-    return new Promise((resolve) => { // Removed reject as it's handled by resolving
+    return new Promise((resolve) => {
       if (!('speechSynthesis' in window)) {
         console.warn('Speech Synthesis not supported by this browser.');
         setTimeout(resolve, 1000); 
@@ -88,7 +125,7 @@ const App = () => {
       
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = 'en-US';
-      utterance.rate = 0.9;
+      utterance.rate = speechRate;
       utterance.pitch = 1.1;
       utterance.onend = () => resolve();
       utterance.onerror = (e) => {
@@ -102,85 +139,117 @@ const App = () => {
 
   // Main function to read words aloud
   const startReadingSequence = async () => {
-    if (isReading) return;
+    if (isReading || countdownValue) return; // Prevent starting if already reading or counting down
+
+    // Start countdown
+    setCountdownValue(3);
+    await new Promise(res => setTimeout(res, 1000));
+    setCountdownValue(2);
+    await new Promise(res => setTimeout(res, 1000));
+    setCountdownValue(1);
+    await new Promise(res => setTimeout(res, 1000));
+    setCountdownValue(null); // Clear countdown
+
     setIsReading(true);
-    const startBtn = startBtnRef.current;
-    // Safely access properties of startBtn
-    if (startBtn && typeof startBtn.disabled === 'boolean') {
-      startBtn.disabled = true;
-      // It's generally safer to avoid direct innerHTML manipulation if possible,
-      // but for now, keeping consistent with existing code.
-      if (typeof startBtn.innerHTML === 'string') {
-        startBtn.innerHTML = 'Learning...';
-      }
+    isReadingRef.current = true;
+    if (startBtnRef.current) {
+        startBtnRef.current.disabled = true;
     }
+
     const cards = document.querySelectorAll('.food-card');
-    for (let i = 0; i < vocabularyData.length; i++) {
-      setActiveIndex(i);
-      const card = cards[i];
-      const word = vocabularyData[i].name;
-      if (card) {
-        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        await new Promise(res => setTimeout(res, 500));
-        card.classList.add('active');
-        await speak(word);
-        await new Promise(res => setTimeout(res, 200));
-        card.classList.remove('active');
-        await new Promise(res => setTimeout(res, 300));
+
+    if (vocabularyData.length > 0 && cards.length > 0) {
+      for (let i = 0; i < vocabularyData.length; i++) {
+        if (!window.speechSynthesis || !isReadingRef.current) {
+          window.speechSynthesis.cancel();
+          break;
+        }
+        setActiveIndex(i);
+        const card = cards[i];
+        const word = vocabularyData[i].name;
+
+        if (card) {
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          await new Promise(res => setTimeout(res, 500));
+          await speak(word);
+          await new Promise(res => setTimeout(res, 300));
+        }
       }
     }
     setActiveIndex(null);
     setIsReading(false);
-    if (startBtn) {
-      startBtn.disabled = false;
-      startBtn.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block mr-2 -mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        Start Again
-      `;
+    isReadingRef.current = false;
+    if (startBtnRef.current) {
+      startBtnRef.current.disabled = false;
     }
   };
 
   // Cleanup speech synthesis on unmount
   useEffect(() => {
     return () => {
-      if (isReading && 'speechSynthesis' in window) {
+      if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
       }
     };
-  }, [isReading]);
+  }, []);
 
-  // Show all words initially if not reading
+  // Reset activeIndex when isReading changes to false
+  // and synchronize isReadingRef
   useEffect(() => {
-    if (!isReading) setActiveIndex(null);
+    if (!isReading) {
+      setActiveIndex(null);
+    }
+    isReadingRef.current = isReading;
   }, [isReading]);
 
   return (
-    <div className="min-h-screen h-screen flex flex-col overflow-hidden bg-[#f0fdf4] cartoon-bg"> {/* Added flex flex-col */}
-      <Header currentSubjectName={availableSubjects.find(s => s.key === currentSubject)?.name || 'Vocabulary'} />
-      {isLoading && <div className="text-center p-4">Loading vocabulary...</div>}
-      {error && <div className="text-center p-4 text-red-500">Error: {error}</div>}
-      {!isLoading && !error && vocabularyData.length === 0 && <div className="text-center p-4">No vocabulary items found for this subject.</div>}
-      {!isLoading && !error && vocabularyData.length > 0 && (
-        <Main
-          // breakfastItems prop should be renamed to vocabularyItems or similar
-          vocabularyItems={vocabularyData} // Pass the dynamic vocabulary data
-          activeIndex={activeIndex}
-          isReading={isReading}
-          gridRef={gridRef}
-          setActiveIndex={setActiveIndex}
-        />
-      )}
-      <Footer
-        startReadingSequence={startReadingSequence}
-        startBtnRef={startBtnRef}
-        availableSubjects={availableSubjects}
-        currentSubjectKey={currentSubject}
-        onSubjectChange={handleSubjectChange}
-        isReading={isReading} // Pass isReading to potentially disable dropdown during reading
-      />
+    <div className={`min-h-screen h-screen flex flex-col overflow-hidden ${currentTheme} cartoon-bg`}>
+      {/* Header is now part of Playground, so no direct rendering here */}
+
+      {/* Main content area: flex-col on small screens, md:flex-row on medium and up */}
+      <div className="flex flex-col md:flex-row flex-1 overflow-hidden">
+        {/* Left Column: Playground wrapper - for centering the Playground component */}
+        {/* This div will now use CSS variables for its background */}
+        <div className="flex-1 flex items-center justify-center overflow-hidden p-1 bg-[var(--playground-area-bg)]">
+          <Playground
+            currentSubjectName={availableSubjects.find(s => s.key === currentSubject)?.name || 'Vocabulary'}
+            vocabularyItems={vocabularyData}
+            activeIndex={activeIndex}
+            isReading={isReading}
+            gridRef={gridRef}
+            setActiveIndex={setActiveIndex}
+            isLoading={isLoading}
+            error={error}
+            textOverlay={textOverlay}
+            countdownValue={countdownValue}
+            textOverlayPosition={textOverlayPosition}
+            cardsPerRow={cardsPerRow}
+          />
+        </div>
+
+        {/* Right Column: Control Panel */}
+        {/* This div will also use CSS variables for its background and border */}
+        <div className="p-4 bg-[var(--control-panel-bg)] border-t md:border-t-0 md:border-l border-[var(--control-panel-border-color)] overflow-y-auto">
+          <ControlPanel
+            startReadingSequence={startReadingSequence}
+            startBtnRef={startBtnRef}
+            availableSubjects={availableSubjects}
+            currentSubjectKey={currentSubject}
+            onSubjectChange={handleSubjectChange}
+            isReading={isReading || !!countdownValue}
+            speechRate={speechRate}
+            onSpeedChange={handleSpeedChange}
+            textOverlay={textOverlay}
+            onTextOverlayChange={handleTextOverlayChange}
+            textOverlayPosition={textOverlayPosition}
+            onTextOverlayPositionChange={handleTextOverlayPositionChange}
+            cardsPerRow={cardsPerRow}
+            onCardsPerRowChange={handleCardsPerRowChange}
+            currentTheme={currentTheme} // Pass currentTheme to ControlPanel
+            onThemeChange={handleThemeChange} // Pass theme handler to ControlPanel
+          />
+        </div>
+      </div>
     </div>
   );
 };

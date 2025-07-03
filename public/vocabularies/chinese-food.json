@@ -1,11 +1,11 @@
 [
   { "name": "Dumpling", "phonetic": "/ˈdʌm.plɪŋ/", "zh": "饺子", "img": "https://images.unsplash.com/photo-1504674900247-ec6b0b1b798e?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0" },
   { "name": "Noodles", "phonetic": "/ˈnuː.dlz/", "zh": "面条", "img": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0" },
-  { "name": "Sweet and Sour Pork", "phonetic": "/swiːt ənd saʊər pɔːk/", "zh": "糖醋里脊", "img": "https://images.unsplash.com/photo-1519864600265-abb23847ef2c?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0" },
-  { "name": "Kung Pao Chicken", "phonetic": "/kʌŋ paʊ ˈtʃɪk.ɪn/", "zh": "宫保鸡丁", "img": "https://images.unsplash.com/photo-1502741338009-cac2772e18bc?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0" },
-  { "name": "Mapo Tofu", "phonetic": "/ˈmɑː.poʊ ˈtoʊ.fuː/", "zh": "麻婆豆腐", "img": "https://images.unsplash.com/photo-1464306076886-debca5e8a6b0?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0" },
-  { "name": "Spring Roll", "phonetic": "/sprɪŋ roʊl/", "zh": "春卷", "img": "https://images.unsplash.com/photo-1519864600265-abb23847ef2c?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0" },
-  { "name": "Fried Rice", "phonetic": "/fraɪd raɪs/", "zh": "炒饭", "img": "https://images.unsplash.com/photo-1504674900247-ec6b0b1b798e?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0" },
-  { "name": "Hot Pot", "phonetic": "/hɒt pɒt/", "zh": "火锅", "img": "https://images.unsplash.com/photo-1502741338009-cac2772e18bc?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0" },
+  { "name": "Sweet and Sour Pork", "phonetic": "/ˌswiːt ən ˌsaʊər ˈpɔːrk/", "zh": "糖醋里脊", "img": "https://images.unsplash.com/photo-1519864600265-abb23847ef2c?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0" },
+  { "name": "Kung Pao Chicken", "phonetic": "/ˌkʌŋ paʊ ˈtʃɪk.ɪn/", "zh": "宫保鸡丁", "img": "https://images.unsplash.com/photo-1502741338009-cac2772e18bc?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0" },
+  { "name": "Mapo Tofu", "phonetic": "/ˌmɑː.poʊ ˈtoʊ.fuː/", "zh": "麻婆豆腐", "img": "https://images.unsplash.com/photo-1464306076886-debca5e8a6b0?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0" },
+  { "name": "Spring Roll", "phonetic": "/ˈsprɪŋ roʊl/", "zh": "春卷", "img": "https://images.unsplash.com/photo-1519864600265-abb23847ef2c?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0" },
+  { "name": "Fried Rice", "phonetic": "/ˌfraɪd ˈraɪs/", "zh": "炒饭", "img": "https://images.unsplash.com/photo-1504674900247-ec6b0b1b798e?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0" },
+  { "name": "Hot Pot", "phonetic": "/ˈhɒt pɒt/", "zh": "火锅", "img": "https://images.unsplash.com/photo-1502741338009-cac2772e18bc?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0" },
   { "name": "Tofu Skin", "phonetic": "/ˈtoʊ.fuː skɪn/", "zh": "腐竹", "img": "https://images.unsplash.com/photo-1504674900247-ec6b0b1b798e?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0" }
 ]

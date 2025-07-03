@@ -2,6 +2,281 @@
 @tailwind components;
 @tailwind utilities;
 
+:root, .theme-default {
+  /* App Structure */
+  --app-bg-color: #f0fdf4; /* light green */
+  --app-bg-image: repeating-linear-gradient(135deg, var(--app-bg-color), var(--app-bg-color) 40px, #fffbe9 40px, #fffbe9 80px); /* from cartoon-bg */
+  --playground-area-bg: #1f2937; /* gray-800 */
+  --control-panel-bg: #f9fafb; /* gray-50 */
+  --control-panel-content-bg: #ffffff; /* white */
+  --control-panel-border-color: #e5e7eb; /* gray-200 */
+
+  /* Playground Canvas */
+  --canvas-bg: #ffffff; /* white */
+  --canvas-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1); /* shadow-2xl */
+  --canvas-border-radius: 0.5rem; /* rounded-lg */
+
+  /* Header (assuming it might need its own styling within canvas) */
+  --header-bg: transparent; /* Or a specific color if needed */
+  --header-text-color: #4d7c0f; /* From old .title-card, dark olive green */
+  --header-font-family: 'Patrick Hand', cursive;
+
+  /* Main Content/Cards */
+  --card-bg: #ffffff;
+  --card-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); /* shadow-xl */
+  --card-border-radius: 1.5rem; /* rounded-4xl */
+  --card-border-color: transparent; /* From food-card */
+  --card-active-bg: linear-gradient(135deg,#fffbe9 80%,#ffe0b2 100%);
+  --card-active-border-color: #f59e42; /* amber-500 variant */
+  --card-active-shadow: 0 8px 32px 0 rgba(245,158,66,0.15);
+  --card-image-border-radius: 1.5rem 1.5rem 0 0;
+  --card-image-border-bottom-active: 3px dashed #f59e42;
+  --card-name-text-color: #f59e42;
+  --card-phonetic-bg: #fffbe9;
+  --card-phonetic-text-color: #15803d; /* green-700 */
+  --card-translation-text-color: #b45309; /* yellow-700 */
+  --card-font-family: 'Baloo 2', 'Nunito', 'Segoe UI', 'Arial', sans-serif;
+
+  /* Controls & Text */
+  --text-primary: #374151; /* gray-700 */
+  --text-secondary: #6b7280; /* gray-500 */
+  --text-accent: #f59e0b; /* amber-500 */
+  --text-disabled: #9ca3af; /* gray-400 */
+  --text-button-primary: #ffffff;
+
+  --button-primary-bg-image: linear-gradient(90deg,#f59e42 60%,#fbbf24 100%);
+  --button-primary-border-color: #fffbe9;
+  --button-primary-shadow: 0 4px 16px 0 #f59e42;
+  --button-font-family: 'Patrick Hand', 'Comic Sans MS', cursive, sans-serif;
+
+  --input-bg: #ffffff;
+  --input-border-color: #d1d5db; /* gray-300 */
+  --input-text-color: #111827; /* gray-900 */
+  --input-focus-border-color: var(--text-accent); /* amber-500 */
+  --input-focus-ring-color: rgba(245, 158, 11, 0.5); /* amber-200 with opacity */
+  --input-disabled-opacity: 0.5;
+
+  --select-border-color: #fbbf24; /* amber-400 */
+
+  --slider-track-bg: #d1d5db; /* gray-300 */
+  --slider-thumb-color: var(--text-accent); /* amber-500 */
+
+  /* Text Overlay */
+  --overlay-bg: rgba(0, 0, 0, 0.6);
+  --overlay-text-color: #ffffff;
+
+  /* General */
+  --font-body: 'Inter', sans-serif;
+  --font-display: 'Patrick Hand', cursive; /* For titles, buttons */
+  --font-readable: 'Baloo 2', 'Nunito', 'Segoe UI', 'Arial', sans-serif; /* For cards, important text */
+}
+
+/* Dark Theme */
+.theme-dark {
+  --app-bg-color: #1f2937; /* gray-800 */
+  --app-bg-image: none; /* Solid color for dark normally */
+  --playground-area-bg: #111827; /* gray-900 */
+  --control-panel-bg: #374151; /* gray-700 */
+  --control-panel-content-bg: #4b5563; /* gray-600 */
+  --control-panel-border-color: #4b5563; /* gray-600 */
+
+  --canvas-bg: #27272a; /* zinc-800 */
+  --canvas-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.2), 0 8px 10px -6px rgb(0 0 0 / 0.2);
+
+  --header-text-color: #d1d5db; /* gray-300 */
+
+  --card-bg: #3f3f46; /* zinc-700 */
+  --card-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+  --card-active-bg: linear-gradient(135deg, #52525b 80%, #71717a 100%); /* zinc-600 to zinc-500 */
+  --card-active-border-color: #fbbf24; /* amber-400 (keep some brightness) */
+  --card-image-border-bottom-active: 3px dashed #fbbf24;
+  --card-name-text-color: #fbbf24;
+  --card-phonetic-bg: #52525b; /* zinc-600 */
+  --card-phonetic-text-color: #a3e635; /* lime-400 */
+  --card-translation-text-color: #fde047; /* yellow-300 */
+
+  --text-primary: #e5e7eb; /* gray-100 */
+  --text-secondary: #9ca3af; /* gray-400 */
+  --text-accent: #fbbf24; /* amber-400 */
+  --text-disabled: #6b7280; /* gray-500 */
+  --text-button-primary: #111827; /* gray-900 */
+
+  --button-primary-bg-image: linear-gradient(90deg,#fbbf24 60%,#fcd34d 100%); /* amber-400 to amber-300 */
+  --button-primary-border-color: #1f2937; /* gray-800 */
+  --button-primary-shadow: 0 4px 16px 0 #eab308; /* yellow-500 */
+
+  --input-bg: #4b5563; /* gray-600 */
+  --input-border-color: #6b7280; /* gray-500 */
+  --input-text-color: #f3f4f6; /* gray-100 */
+  --input-focus-border-color: var(--text-accent);
+  --input-focus-ring-color: rgba(251, 191, 36, 0.5);
+
+  --select-border-color: var(--text-accent);
+
+  --slider-track-bg: #6b7280; /* gray-500 */
+  --slider-thumb-color: var(--text-accent);
+
+  --overlay-bg: rgba(0, 0, 0, 0.7);
+  --overlay-text-color: #ffffff;
+}
+
+/* Playful Theme */
+.theme-playful {
+  --app-bg-color: #fef3c7; /* amber-100 */
+  --app-bg-image: repeating-linear-gradient(45deg, #fde68a, #fde68a 10px, #fef3c7 10px, #fef3c7 20px); /* amber-200 and amber-100 stripes */
+  --playground-area-bg: #a78bfa; /* violet-400 */
+  --control-panel-bg: #fbcfe8; /* pink-200 */
+  --control-panel-content-bg: #ffffff;
+  --control-panel-border-color: #f9a8d4; /* pink-300 */
+
+  --canvas-bg: #ffffff;
+  --canvas-shadow: 0 10px 20px rgba(236, 72, 153, 0.3); /* shadow-pink-500 */
+
+  --header-text-color: #c026d3; /* fuchsia-600 */
+
+  --card-bg: #ecfccb; /* lime-100 */
+  --card-active-bg: linear-gradient(135deg,#a7f3d0 80%,#6ee7b7 100%); /* emerald-200 to emerald-300 */
+  --card-active-border-color: #34d399; /* emerald-400 */
+  --card-image-border-bottom-active: 3px dashed #34d399;
+  --card-name-text-color: #d946ef; /* fuchsia-500 */
+  --card-phonetic-bg: #dcfce7; /* green-100 */
+  --card-phonetic-text-color: #059669; /* emerald-600 */
+  --card-translation-text-color: #7c3aed; /* violet-600 */
+
+  --text-primary: #581c87; /* violet-800 */
+  --text-secondary: #a855f7; /* purple-500 */
+  --text-accent: #ec4899; /* pink-500 */
+  --text-button-primary: #ffffff;
+
+  --button-primary-bg-image: linear-gradient(90deg,#ec4899 60%,#f472b6 100%); /* pink-500 to pink-400 */
+  --button-primary-border-color: #fff;
+  --button-primary-shadow: 0 4px 16px 0 #db2777; /* pink-600 */
+
+  --input-bg: #ffffff;
+  --input-border-color: #f9a8d4; /* pink-300 */
+  --input-text-color: #581c87; /* violet-800 */
+  --input-focus-border-color: var(--text-accent);
+  --input-focus-ring-color: rgba(236, 72, 153, 0.5);
+
+  --select-border-color: #f472b6; /* pink-400 */
+
+  --slider-track-bg: #fbcfe8; /* pink-200 */
+  --slider-thumb-color: var(--text-accent);
+
+  --overlay-bg: rgba(91, 33, 182, 0.6); /* purple-700 with opacity */
+  --overlay-text-color: #fef08a; /* yellow-100 */
+}
+
+/* Serene Theme */
+.theme-serene {
+  --app-bg-color: #e0f2fe; /* sky-100 */
+  --app-bg-image: none;
+  --playground-area-bg: #38bdf8; /* sky-400 */
+  --control-panel-bg: #f0f9ff; /* sky-50 */
+  --control-panel-content-bg: #ffffff;
+  --control-panel-border-color: #bae6fd; /* sky-200 */
+
+  --canvas-bg: #ffffff;
+  --canvas-shadow: 0 10px 20px rgba(56, 189, 248, 0.2); /* shadow-sky-400 */
+
+  --header-text-color: #0369a1; /* sky-700 */
+
+  --card-bg: #f0f9ff; /* sky-50 */
+  --card-active-bg: linear-gradient(135deg,#cffafe 80%,#a5f3fc 100%); /* cyan-100 to cyan-200 */
+  --card-active-border-color: #22d3ee; /* cyan-400 */
+  --card-image-border-bottom-active: 3px dashed #22d3ee;
+  --card-name-text-color: #0891b2; /* cyan-600 */
+  --card-phonetic-bg: #e0f2fe; /* sky-100 */
+  --card-phonetic-text-color: #075985; /* sky-800 */
+  --card-translation-text-color: #0e7490; /* cyan-700 */
+
+  --text-primary: #0c4a6e; /* sky-900 */
+  --text-secondary: #0369a1; /* sky-700 */
+  --text-accent: #0ea5e9; /* sky-500 */
+  --text-button-primary: #ffffff;
+
+  --button-primary-bg-image: linear-gradient(90deg,#0ea5e9 60%,#38bdf8 100%); /* sky-500 to sky-400 */
+  --button-primary-border-color: #e0f2fe; /* sky-100 */
+  --button-primary-shadow: 0 4px 16px 0 #0284c7; /* sky-600 */
+
+  --input-bg: #ffffff;
+  --input-border-color: #bae6fd; /* sky-200 */
+  --input-text-color: #0c4a6e; /* sky-900 */
+  --input-focus-border-color: var(--text-accent);
+  --input-focus-ring-color: rgba(14, 165, 233, 0.5);
+
+  --select-border-color: #7dd3fc; /* sky-300 */
+
+  --slider-track-bg: #e0f2fe; /* sky-100 */
+  --slider-thumb-color: var(--text-accent);
+
+  --overlay-bg: rgba(2, 132, 199, 0.6); /* sky-600 with opacity */
+  --overlay-text-color: #f0f9ff; /* sky-50 */
+}
+
+/* Cartoon Theme */
+.theme-cartoon {
+  --app-bg-color: #fffbe9;
+  --app-bg-image: repeating-linear-gradient(135deg, #fffbe9, #fffbe9 40px, #ffe0b2 40px, #ffe0b2 80px);
+  --playground-area-bg: #ffe0b2;
+  --control-panel-bg: #fffbe9;
+  --control-panel-content-bg: #fffbe9;
+  --control-panel-border-color: #f59e42;
+
+  --canvas-bg: #fffbe9;
+  --canvas-shadow: 0 10px 30px 0 #f59e42;
+  --canvas-border-radius: 2rem;
+
+  --header-bg: transparent;
+  --header-text-color: #f59e42;
+  --header-font-family: 'Patrick Hand', cursive;
+
+  --card-bg: #fffbe9;
+  --card-shadow: 0 10px 20px 0 #fbbf24;
+  --card-border-radius: 2rem;
+  --card-border-color: #fbbf24;
+  --card-active-bg: linear-gradient(135deg,#fffbe9 80%,#ffe0b2 100%);
+  --card-active-border-color: #f59e42;
+  --card-active-shadow: 0 8px 32px 0 #f59e42;
+  --card-image-border-radius: 2rem 2rem 0 0;
+  --card-image-border-bottom-active: 3px dashed #f59e42;
+  --card-name-text-color: #f59e42;
+  --card-phonetic-bg: #ffe0b2;
+  --card-phonetic-text-color: #f59e42;
+  --card-translation-text-color: #fbbf24;
+  --card-font-family: 'Luckiest Guy', 'Baloo 2', 'Nunito', 'Segoe UI', 'Arial', cursive, sans-serif;
+
+  --text-primary: #f59e42;
+  --text-secondary: #fbbf24;
+  --text-accent: #f59e42;
+  --text-disabled: #fbbf24;
+  --text-button-primary: #fffbe9;
+
+  --button-primary-bg-image: linear-gradient(90deg,#f59e42 60%,#fbbf24 100%);
+  --button-primary-border-color: #fffbe9;
+  --button-primary-shadow: 0 4px 16px 0 #f59e42;
+  --button-font-family: 'Luckiest Guy', 'Patrick Hand', 'Comic Sans MS', cursive, sans-serif;
+
+  --input-bg: #fffbe9;
+  --input-border-color: #fbbf24;
+  --input-text-color: #f59e42;
+  --input-focus-border-color: #f59e42;
+  --input-focus-ring-color: rgba(245, 158, 66, 0.5);
+  --input-disabled-opacity: 0.5;
+
+  --select-border-color: #fbbf24;
+
+  --slider-track-bg: #ffe0b2;
+  --slider-thumb-color: #f59e42;
+
+  --overlay-bg: rgba(245, 158, 66, 0.7);
+  --overlay-text-color: #fffbe9;
+
+  --font-body: 'Baloo 2', 'Nunito', 'Segoe UI', 'Arial', sans-serif;
+  --font-display: 'Luckiest Guy', 'Patrick Hand', cursive;
+  --font-readable: 'Baloo 2', 'Nunito', 'Segoe UI', 'Arial', sans-serif;
+}
+
 html, body, #root {
   height: 100%;
   min-height: 100vh;
@@ -9,11 +284,12 @@ html, body, #root {
 }
 
 body {
-  font-family: 'Inter', sans-serif;
-  background-color: #f0fdf4; /* A light green background */
+  font-family: var(--font-body);
+  background-color: var(--app-bg-color);
+  /* If cartoon-bg is default, it can be applied here or on app root */
 }
 
-.title-card {
+.title-card { /* This class might be deprecated if Header is styled directly or uses vars */
   font-family: 'Patrick Hand', cursive;
   background-color: #4d7c0f; /* A dark olive green */
 }
