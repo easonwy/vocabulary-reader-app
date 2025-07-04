@@ -1,7 +1,7 @@
 import React from 'react';
 import VocabularyCard from '../VocabularyCard';
 
-const Main = ({ vocabularyItems, activeIndex, isReading, gridRef, setActiveIndex, cardsPerRow }) => {
+const Main = ({ vocabularyItems, activeIndex, isReading, gridRef, setActiveIndex, cardsPerRow }) => { // Removed showScrollbar
   // Helper: Render a single vocabulary card
   const renderCard = (item, index) => {
     const isActive = activeIndex === index;
@@ -35,21 +35,21 @@ const Main = ({ vocabularyItems, activeIndex, isReading, gridRef, setActiveIndex
     }
   };
   const gridColsClass = getGridColsClass(cardsPerRow);
+  // Changed to always use overflow-auto
+  const vocabularyGridClasses = `box-border grid ${gridColsClass} gap-4 md:gap-6 px-2 w-full max-w-[1200px] overflow-auto`;
 
   return (
-    // The main element itself doesn't have much direct styling that needs theming,
-    // mostly structure. Its children (cards) will be themed.
+    // The main element itself is now just a flex container.
+    // Its child, vocabulary-grid, will handle the scrolling.
     <main className="flex flex-col items-center flex-grow">
       <div
         id="vocabulary-grid"
-        ref={gridRef}
-        className={`grid ${gridColsClass} gap-4 md:gap-6 px-2`} // Apply dynamic grid class
+        ref={gridRef} // Keep original ref assignment
+        className={vocabularyGridClasses} // Apply dynamic grid class and overflow
         style={{
-          paddingTop: '1rem', // These paddings could also become variables if needed
+          paddingTop: '1rem',
           paddingBottom: '1rem',
-          width: '100%',
-          maxWidth: 1200
-          // maxHeight and overflowY removed
+          height: '100%'
         }}
       >
         {vocabularyItems && vocabularyItems.map(renderCard)}

@@ -27,6 +27,8 @@ const App = () => {
   const [textOverlayPosition, setTextOverlayPosition] = useState('bottom'); // State for overlay position
   const [cardsPerRow, setCardsPerRow] = useState(2); // State for words per row, default 3
   const [currentTheme, setCurrentTheme] = useState('theme-default'); // State for current theme
+  // const [showScrollbar, setShowScrollbar] = useState(false); // Removed
+  const [headerPosition, setHeaderPosition] = useState('top'); // 'top' or 'bottom'
 
   // Function to load vocabulary data
   const loadVocabulary = useCallback(async (subjectKey) => {
@@ -110,6 +112,17 @@ const App = () => {
   // Handler for theme change
   const handleThemeChange = (newTheme) => {
     setCurrentTheme(newTheme);
+  };
+
+  // Handler for header position change
+  const handleHeaderPositionChange = (newPosition) => {
+    setHeaderPosition(newPosition);
+  };
+
+  // Function to scroll vocabulary grid to top by reloading the current subject
+  const scrollToTop = () => {
+    console.log('App.jsx - scrollToTop (reload list) called for subject:', currentSubject);
+    loadVocabulary(currentSubject);
   };
 
   // Function to speak text
@@ -204,13 +217,10 @@ const App = () => {
 
   return (
     <div className={`min-h-screen h-screen flex flex-col overflow-hidden ${currentTheme} cartoon-bg`}>
-      {/* Header is now part of Playground, so no direct rendering here */}
-
       {/* Main content area: flex-col on small screens, md:flex-row on medium and up */}
       <div className="flex flex-col md:flex-row flex-1 overflow-hidden">
-        {/* Left Column: Playground wrapper - for centering the Playground component */}
-        {/* This div will now use CSS variables for its background */}
-        <div className="flex-1 flex items-center justify-center overflow-hidden p-1 bg-[var(--playground-area-bg)]">
+        {/* Left Column: Playground wrapper */}
+        <div className="w-full md:w-1/2 flex items-center justify-center overflow-hidden p-1 bg-[var(--playground-area-bg)]">
           <Playground
             currentSubjectName={availableSubjects.find(s => s.key === currentSubject)?.name || 'Vocabulary'}
             vocabularyItems={vocabularyData}
@@ -224,12 +234,13 @@ const App = () => {
             countdownValue={countdownValue}
             textOverlayPosition={textOverlayPosition}
             cardsPerRow={cardsPerRow}
+            // showScrollbar={showScrollbar} // Removed
+            headerPosition={headerPosition}
           />
         </div>
 
         {/* Right Column: Control Panel */}
-        {/* This div will also use CSS variables for its background and border */}
-        <div className="p-4 bg-[var(--control-panel-bg)] border-t md:border-t-0 md:border-l border-[var(--control-panel-border-color)] overflow-y-auto">
+        <div className="w-full md:w-1/2 p-8 bg-[var(--control-panel-bg)] border-t md:border-t-0 md:border-l border-[var(--control-panel-border-color)] overflow-y-auto flex flex-col items-center">
           <ControlPanel
             startReadingSequence={startReadingSequence}
             startBtnRef={startBtnRef}
@@ -245,8 +256,13 @@ const App = () => {
             onTextOverlayPositionChange={handleTextOverlayPositionChange}
             cardsPerRow={cardsPerRow}
             onCardsPerRowChange={handleCardsPerRowChange}
-            currentTheme={currentTheme} // Pass currentTheme to ControlPanel
-            onThemeChange={handleThemeChange} // Pass theme handler to ControlPanel
+            currentTheme={currentTheme}
+            onThemeChange={handleThemeChange}
+            // showScrollbar={showScrollbar} // Removed
+            // onScrollbarToggle={handleScrollbarToggle} // Removed
+            headerPosition={headerPosition}
+            onHeaderPositionChange={handleHeaderPositionChange}
+            onScrollToTop={scrollToTop} // Added scrollToTop prop
           />
         </div>
       </div>

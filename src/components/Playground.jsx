@@ -24,7 +24,13 @@ const Playground = ({
   textOverlayPosition,
   // Prop for cards per row
   cardsPerRow,
+  // Prop for scrollbar visibility - REMOVED
+  // showScrollbar,
+  // Prop for header position
+  headerPosition,
 }) => {
+  const mainContentWrapperClasses = `flex-1 p-1 md:p-2 text-[var(--text-primary)] overflow-hidden`;
+
   const getOverlayPositionClasses = () => {
     switch (textOverlayPosition) {
       case 'top':
@@ -49,12 +55,12 @@ const Playground = ({
         borderRadius: 'var(--canvas-border-radius)'
       }}
     >
-      {/* Header renders normally at the top */}
-      <Header currentSubjectName={currentSubjectName} />
+      {/* Header: Conditionally rendered based on headerPosition */}
+      {headerPosition === 'top' && <Header currentSubjectName={currentSubjectName} headerPosition={headerPosition} className="mb-1 md:mb-1"/>}
 
       {/* Main Content Area (or status messages) - takes remaining space and scrolls */}
       {/* Text color for status messages should also be themed */}
-      <div className="flex-1 p-2 md:p-4 text-[var(--text-primary)]">
+      <div className={mainContentWrapperClasses}>
         {isLoading && <div className="text-center p-4">Loading vocabulary...</div>}
         {error && <div className="text-center p-4 text-red-500">Error: {error}</div>} {/* Error color might need its own var */}
             {!isLoading && !error && (!vocabularyItems || vocabularyItems.length === 0) && (
@@ -68,9 +74,14 @@ const Playground = ({
                 gridRef={gridRef}
                 setActiveIndex={setActiveIndex}
                 cardsPerRow={cardsPerRow}
+                // showScrollbar={showScrollbar} // Removed
               />
             )}
           </div>
+
+      {/* Footer: Conditionally rendered Header if position is 'bottom' */}
+      {/* Header is not rendered if headerPosition is 'hide' */}
+      {headerPosition === 'bottom' && <Header currentSubjectName={currentSubjectName} headerPosition={headerPosition} className="mt-1 md:mt-1"/>}
 
       {/* Text Overlay Display - positioned relative to the root Playground div */}
       {textOverlay && (
