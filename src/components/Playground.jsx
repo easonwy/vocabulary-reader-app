@@ -24,8 +24,8 @@ const Playground = ({
   textOverlayPosition,
   // Prop for cards per row
   cardsPerRow,
-  // Prop for scrollbar visibility
-  showScrollbar,
+  // Prop for scrollbar visibility - REMOVED
+  // showScrollbar,
   // Prop for header position
   headerPosition,
 }) => {
@@ -74,7 +74,7 @@ const Playground = ({
                 gridRef={gridRef}
                 setActiveIndex={setActiveIndex}
                 cardsPerRow={cardsPerRow}
-                showScrollbar={showScrollbar} // Pass showScrollbar to Main
+                // showScrollbar={showScrollbar} // Removed
               />
             )}
           </div>
