@@ -62,13 +62,23 @@ const VocabularyCard = ({
     justifyContent: isCircularLayout ? 'center' : '', // Center items vertically
   };
 
+  // For grid layout, use a fixed aspect ratio for image wrapper
+  const gridImgWrapperStyle = {
+    width: '100%',
+    aspectRatio: '4 / 3', // or '1 / 1' for square, adjust as needed
+    background: '#fff',
+    display: 'block',
+    overflow: 'hidden',
+  };
+
   const imgStyle = {
     borderRadius: isCircularLayout ? '50%' : 'var(--card-image-border-radius)', // Circular image
     borderBottom: isActive && !isCircularLayout ? `var(--card-image-border-bottom-active)` : 'none', // No border bottom for circular
-    width: isCircularLayout ? '60%' : '100%', // Adjust width for circular image
-    height: isCircularLayout ? '60%' : 'auto', // Adjust height for circular image
-    objectFit: 'cover', // Ensure image covers the area
-    aspectRatio: isCircularLayout ? '1 / 1' : '', // Maintain aspect ratio for circular images
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    aspectRatio: isCircularLayout ? '1 / 1' : '', // Only for circular
+    display: 'block',
   };
 
   const nameStyle = {
@@ -108,16 +118,32 @@ const VocabularyCard = ({
       onKeyDown={onKeyDown}
     >
       {isActive && !isCircularLayout && <HandArrow />} {/* HandArrow might need theming or be hidden for circular */}
-      <img
-        src={item.img}
-        alt={item.name}
-        className={`object-cover cartoon-img ${isCircularLayout ? '' : 'w-full h-35 sm:h-40'}`} // Conditional classes for size
-        style={imgStyle}
-        onError={e => {
-          e.target.onerror = null;
-          e.target.src = ' https://placehold.co/400x400/cccccc/ffffff?text=Image+Not+Found';
-        }}
-      />
+      {/* For grid layout, wrap image in a fixed aspect ratio box */}
+      {!isCircularLayout ? (
+        <div style={gridImgWrapperStyle}>
+          <img
+            src={item.img}
+            alt={item.name}
+            className="object-cover cartoon-img"
+            style={imgStyle}
+            onError={e => {
+              e.target.onerror = null;
+              e.target.src = ' https://placehold.co/400x400/cccccc/ffffff?text=Image+Not+Found';
+            }}
+          />
+        </div>
+      ) : (
+        <img
+          src={item.img}
+          alt={item.name}
+          className="object-cover cartoon-img"
+          style={imgStyle}
+          onError={e => {
+            e.target.onerror = null;
+            e.target.src = ' https://placehold.co/400x400/cccccc/ffffff?text=Image+Not+Found';
+          }}
+        />
+      )}
       <div className={isCircularLayout ? "text-center mt-2" : "p-4"}>
         <p className={`font-bold mb-1 ${isCircularLayout ? 'text-lg' : 'text-2xl'}`} style={nameStyle}>
           {item.name}
@@ -137,7 +163,6 @@ const VocabularyCard = ({
             <p className="text-xs" style={{ color: 'var(--card-phonetic-text-color)' }}>{item.phonetic}</p>
             // item.zh was duplicated here, removed. It's shown in the !isCircularLayout block or could be added here if desired for circular.
           )}
-          </div>
         </div>
       </div>
     </div>
