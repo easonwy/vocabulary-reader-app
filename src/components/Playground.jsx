@@ -33,7 +33,7 @@ const Playground = ({
   // Prop for active card effect
   activeCardEffect,
 }) => {
-  const mainContentWrapperClasses = `flex-1 p-1 md:p-3 text-[var(--text-primary)] overflow-visible`; // Changed overflow-hidden to overflow-visible
+  const mainContentWrapperClasses = `flex-1 p-1 md:p-3 text-[var(--text-primary)] overflow-hidden`; // Reverted to overflow-hidden for diagnosis
 
   const getOverlayPositionClasses = () => {
     switch (textOverlayPosition) {

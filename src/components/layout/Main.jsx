@@ -43,18 +43,24 @@ const Main = ({ vocabularyItems, activeIndex, isReading, gridRef, setActiveIndex
   return (
     // The main element itself is now just a flex container.
     // Its child, vocabulary-grid, will handle the scrolling.
-    <main className="flex flex-col items-center flex-grow">
-      <div
-        id="vocabulary-grid"
-        ref={gridRef} // Keep original ref assignment
-        className={vocabularyGridClasses} // Apply dynamic grid class and overflow
-        style={{
-          paddingTop: '2rem', // Increased from 1rem
-          paddingBottom: '2rem', // Increased from 1rem
-          height: '100%'
-        }}
-      >
-        {vocabularyItems && vocabularyItems.map(renderCard)}
+    // Added an intermediate wrapper for overflow:visible to help with glow effects.
+    <main className="flex flex-col items-center flex-grow w-full"> {/* Added w-full to main */}
+      <div style={{ overflow: 'visible', width: '100%', display: 'flex', justifyContent: 'center', flexGrow: 1 }}>
+        {/* This new div allows glow to escape grid bounds if needed, while centering the grid */}
+        {/* It also needs to allow the grid to take appropriate width, hence width: 100% and flex properties */}
+        <div
+          id="vocabulary-grid"
+          ref={gridRef} // Keep original ref assignment
+          className={vocabularyGridClasses} // Apply dynamic grid class and overflow (overflow-auto is here)
+          style={{
+            paddingTop: '2rem', // Increased from 1rem
+            paddingBottom: '2rem', // Increased from 1rem
+            height: '100%'
+            // max-width is part of vocabularyGridClasses, so grid won't exceed its defined max-width
+          }}
+        >
+          {vocabularyItems && vocabularyItems.map(renderCard)}
+        </div>
       </div>
     </main>
   );
