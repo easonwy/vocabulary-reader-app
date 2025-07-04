@@ -467,3 +467,66 @@ body {
   60% { transform: translateY(-60%) rotate(-20deg) scale(1.08);}
   100% { transform: translateY(-55%) rotate(-20deg) scale(1.04);}
 }
+
+/* Styles for Circular Layout */
+.layout-circular.food-card {
+  /* Remove border-radius: 50%; so card is not a circle */
+  text-align: center;
+  /* Remove aspect-ratio and other circle-forcing styles */
+}
+
+.layout-circular .cartoon-img {
+  /* Ensure image is centered and doesn't overflow if not handled by inline styles */
+  margin: auto;
+}
+
+.layout-circular.food-card.active {
+  /* Custom active state for circular cards if needed, e.g., border animation or shadow */
+  /* Example: a slightly different shadow or border style for active circular cards */
+  box-shadow: 0 0 20px 5px var(--card-active-border-color); /* More pronounced glow for active circular cards */
+}
+
+/* Adjust text sizes for circular cards if needed */
+.layout-circular .font-bold { /* This targets item.name */
+  font-size: 1rem; /* Smaller font size for name in circular layout */
+  line-height: 1.2; /* Adjust line height for tighter space */
+}
+
+.layout-circular .text-xs { /* This targets item.phonetic if shown in circular */
+  font-size: 0.65rem; /* Even smaller for phonetic */
+}
+
+/* Liner Pro Effect - Updated to use user-provided pulse-glow animation */
+@keyframes pulse-glow {
+  0% {
+    /* Using provided keyframe: combines themed border color with themed active shadow - reduced size */
+    box-shadow: 0 0 2px 0px var(--card-active-border-color), var(--card-active-shadow, 0 8px 32px 0 rgba(245,158,66,0.15));
+  }
+  50% {
+    /* Reduced blur from 20px to 12px, and spread from 10px to 6px */
+    box-shadow: 0 0 12px 5px var(--card-active-border-color), var(--card-active-shadow, 0 8px 32px 0 rgba(245,158,66,0.15));
+  }
+  100% {
+    /* Reduced size */
+    box-shadow: 0 0 2px 0px var(--card-active-border-color), var(--card-active-shadow, 0 8px 32px 0 rgba(245,158,66,0.15));
+  }
+}
+
+.liner-pro-active-glow {
+  animation-name: pulse-glow;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  /* Ensure the glow respects the card's border radius. This is important if card shapes vary. */
+  border-radius: var(--card-border-radius);
+  /* The box-shadow is entirely controlled by the animation. */
+}
+
+/*
+User's CSS also included a class '.active-glow' which seemed to be a direct application of this animation.
+The current implementation ties the 'pulse-glow' animation to the '.liner-pro-effect' class,
+which is activated by the "Liner Pro" dropdown selection. This seems to match the feature request.
+If an additional, always-on glow for *active* cards (independent of the dropdown) is desired,
+the '.active' class for cards could be augmented, or a new specific class could be used in conjunction.
+For now, only the dropdown controls this specific 'pulse-glow' animation via '.liner-pro-effect'.
+*/

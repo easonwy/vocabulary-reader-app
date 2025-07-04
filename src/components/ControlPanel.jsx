@@ -24,7 +24,11 @@ const ControlPanel = ({
   // onScrollbarToggle, // Removed
   headerPosition,
   onHeaderPositionChange,
+  layout, // Added layout prop
+  onLayoutChange, // Added onLayoutChange prop
   onScrollToTop, // Added onScrollToTop prop
+  activeCardEffect, // Added activeCardEffect prop
+  onActiveCardEffectChange, // Added onActiveCardEffectChange prop
 }) => {
   // textOverlayPosition options
   const textOverlayPositionOptions = [
@@ -89,8 +93,49 @@ const ControlPanel = ({
             <option value="theme-xiaohongshu">小红书风格</option>
           </select>
         </div>
+        {/* Layout */}
+        <div>
+          <label htmlFor="layout-select" className="text-sm block mb-1" style={{color: 'var(--text-primary)'}}>Layout:</label>
+          <select
+            id="layout-select"
+            value={layout}
+            onChange={e => onLayoutChange(e.target.value)}
+            disabled={isReading}
+            className="p-2 rounded-md border-2 shadow-sm text-sm w-full"
+            style={{
+              borderColor: 'var(--input-border-color)',
+              backgroundColor: 'var(--input-bg)',
+              color: 'var(--input-text-color)',
+              fontFamily: 'var(--font-readable)'
+            }}
+          >
+            <option value="grid">Grid</option>
+            <option value="circular">Circular Images</option>
+          </select>
+        </div>
+        {/* Card Effect */}
+        <div>
+          <label htmlFor="card-effect-select" className="text-sm block mb-1" style={{color: 'var(--text-primary)'}}>Active Card Effect:</label>
+          <select
+            id="card-effect-select"
+            value={activeCardEffect}
+            onChange={e => onActiveCardEffectChange(e.target.value)}
+            disabled={isReading}
+            className="p-2 rounded-md border-2 shadow-sm text-sm w-full"
+            style={{
+              borderColor: 'var(--input-border-color)',
+              backgroundColor: 'var(--input-bg)',
+              color: 'var(--input-text-color)',
+              fontFamily: 'var(--font-readable)'
+            }}
+          >
+            <option value="Liner">Liner</option>
+            <option value="LinerPro">Liner Pro</option>
+          </select>
+        </div>
         </div> {/* End of Setup & Content grid */}
       </div> {/* End of Setup & Content section */}
+
 
       {/* Section 2: Reading & Display Options */}
       <div className="mb-6">

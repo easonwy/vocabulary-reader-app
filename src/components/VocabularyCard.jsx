@@ -37,25 +37,107 @@ const VocabularyCard = ({
   isActive,
   onClick,
   onKeyDown,
-  index
+  index,
+  layout,
+  activeCardEffect
 }) => {
   // Base classes - structural and interactive, less theme-dependent directly
   const baseCardClasses = "food-card overflow-hidden text-center cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl cartoon-card";
-  // Active state classes - some might be themeable (like border color if not using active specific var)
-  const activeCardClasses = isActive ? "active cartoon-bounce relative z-10" : "";
+  // Determine if circular layout is active
+  const isCircularLayout = layout === 'circular';
 
-  const cardStyle = {
+  // Base classes applied to all cards
+  const staticBaseClasses = "food-card overflow-hidden text-center cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl cartoon-card";
+  const layoutClass = isCircularLayout ? 'layout-circular' : 'layout-grid';
+
+  let dynamicClasses = [];
+  let cardStyleOverrides = {};
+  const baseActiveStyle = { // Common styles for any active card
     fontFamily: 'var(--card-font-family)',
-    backgroundColor: isActive ? 'var(--card-active-bg)' : 'var(--card-bg)',
-    boxShadow: isActive ? 'var(--card-active-shadow)' : 'var(--card-shadow)',
+    backgroundColor: 'var(--card-active-bg)',
+    boxShadow: 'var(--card-active-shadow)', // Will be overridden by glow animation if present
     borderRadius: 'var(--card-border-radius)',
-    border: `4px solid ${isActive ? 'var(--card-active-border-color)' : 'var(--card-border-color)'}`, // Adjusted for consistent border width
-    position: 'relative', // Keep for HandArrow
+    border: `4px solid var(--card-active-border-color)`,
+    position: 'relative',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    aspectRatio: !isCircularLayout ? '' : 'auto',
+    minHeight: isCircularLayout ? 260 : undefined,
+    padding: isCircularLayout ? '1.2rem 0.5rem 0.8rem 0.5rem' : undefined,
+  };
+  const inactiveStyle = {
+    fontFamily: 'var(--card-font-family)',
+    backgroundColor: 'var(--card-bg)',
+    boxShadow: 'var(--card-shadow)',
+    borderRadius: 'var(--card-border-radius)',
+    border: `4px solid var(--card-border-color)`,
+    position: 'relative',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    aspectRatio: !isCircularLayout ? '' : 'auto',
+    minHeight: isCircularLayout ? 260 : undefined,
+    padding: isCircularLayout ? '1.2rem 0.5rem 0.8rem 0.5rem' : undefined,
+  };
+
+  if (isActive) {
+    dynamicClasses.push("relative", "z-10", "active"); // Add 'active' for all active cards to trigger .food-card.active scale
+    cardStyleOverrides = { ...baseActiveStyle };
+
+    if (activeCardEffect === "LinerPro") {
+      dynamicClasses.push("liner-pro-active-glow");
+      // No 'cartoon-bounce'
+    } else { // "Liner" (default) active effect
+      dynamicClasses.push("cartoon-bounce");
+    }
+  } else {
+    // Inactive card styles
+    cardStyleOverrides = { ...inactiveStyle };
+  }
+
+  const finalClassNames = [staticBaseClasses, ...dynamicClasses, layoutClass].join(' ').trim().replace(/\\s+/g, ' ');
+  const cardStyle = cardStyleOverrides; // Use the determined style overrides
+
+  // For circular layout, image is a circle and centered - This logic remains the same
+  const circularImgWrapperStyle = {
+    width: 120,
+    height: 120,
+    borderRadius: '50%',
+    overflow: 'hidden',
+    margin: '0 auto',
+    marginBottom: '0.7rem',
+    border: `3px solid ${isActive ? 'var(--card-active-border-color)' : 'var(--card-border-color)'}`,
+    background: '#fff',
+    boxShadow: isActive ? '0 0 0 4px #fffbe9' : '0 0 0 2px #fffbe9',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  };
+
+  // For grid layout, define gridImgWrapperStyle
+  const gridImgWrapperStyle = {
+    width: '100%',
+    aspectRatio: '1.4/1', // or adjust as needed
+    overflow: 'hidden',
+    borderTopLeftRadius: 'var(--card-image-border-radius)',
+    borderTopRightRadius: 'var(--card-image-border-radius)',
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+    background: '#fff',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   };
 
   const imgStyle = {
-    borderRadius: 'var(--card-image-border-radius)', // Uses a variable like '1.5rem 1.5rem 0 0'
-    borderBottom: isActive ? `var(--card-image-border-bottom-active)` : 'none',
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    borderRadius: '50%',
+    display: 'block',
   };
 
   const nameStyle = {
@@ -85,8 +167,8 @@ const VocabularyCard = ({
 
   return (
     <div
-      key={index} // key should be on the element being mapped if this is used in a map directly
-      className={`${baseCardClasses} ${activeCardClasses}`}
+      key={index}
+      className={finalClassNames}
       data-index={index}
       style={cardStyle}
       tabIndex={0}
@@ -94,30 +176,57 @@ const VocabularyCard = ({
       onClick={onClick}
       onKeyDown={onKeyDown}
     >
-      {isActive && <HandArrow />} {/* HandArrow might need theming if its colors are hardcoded */}
-      <img
-        src={item.img}
-        alt={item.name}
-        className="w-full h-35 sm:h-40 object-cover cartoon-img" // cartoon-img might have themeable properties
-        style={imgStyle}
-        onError={e => {
-          e.target.onerror = null;
-          e.target.src = ' https://placehold.co/400x400/cccccc/ffffff?text=Image+Not+Found';
-        }}
-      />
-      <div className="p-4">
-        <p className="font-bold text-2xl mb-1" style={nameStyle}>
-          {item.name}
-        </p>
-        <div className="mt-2">
-          <div className="font-mono" style={phoneticStyle}> {/* Removed text-green-700 */}
-            {item.phonetic}
+      {isActive && !isCircularLayout && <HandArrow />}
+      {/* CIRCULAR LAYOUT: circular image, text below */}
+      {isCircularLayout ? (
+        <>
+          <div style={circularImgWrapperStyle}>
+            <img
+              src={item.img}
+              alt={item.name}
+              className="object-cover cartoon-img"
+              style={imgStyle}
+              onError={e => {
+                e.target.onerror = null;
+                e.target.src = ' https://placehold.co/400x400/cccccc/ffffff?text=Image+Not+Found';
+              }}
+            />
           </div>
-          <div className="text-lg" style={translationStyle}> {/* Removed text-yellow-700 */}
-            {item.zh}
+          <div className="text-center w-full">
+            <p className="font-bold mb-1 text-lg" style={nameStyle}>{item.name}</p>
+            <div className="mt-1">
+              <div className="font-mono" style={phoneticStyle}>{item.phonetic}</div>
+              <div className="text-lg" style={translationStyle}>{item.zh}</div>
+            </div>
           </div>
-        </div>
-      </div>
+        </>
+      ) : (
+        <>
+          <div style={gridImgWrapperStyle}>
+            <img
+              src={item.img}
+              alt={item.name}
+              className="object-cover cartoon-img"
+              style={{
+                ...imgStyle,
+                borderRadius: 'var(--card-image-border-radius)',
+                borderBottom: isActive ? `var(--card-image-border-bottom-active)` : 'none',
+              }}
+              onError={e => {
+                e.target.onerror = null;
+                e.target.src = ' https://placehold.co/400x400/cccccc/ffffff?text=Image+Not+Found';
+              }}
+            />
+          </div>
+          <div className="p-4">
+            <p className="font-bold mb-1 text-2xl" style={nameStyle}>{item.name}</p>
+            <div className="mt-2">
+              <div className="font-mono" style={phoneticStyle}>{item.phonetic}</div>
+              <div className="text-lg" style={translationStyle}>{item.zh}</div>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

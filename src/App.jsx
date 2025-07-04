@@ -31,6 +31,8 @@ const App = () => {
   const [currentTheme, setCurrentTheme] = useState('theme-default'); // State for current theme
   // const [showScrollbar, setShowScrollbar] = useState(false); // Removed
   const [headerPosition, setHeaderPosition] = useState('top'); // 'top' or 'bottom'
+  const [layout, setLayout] = useState('grid'); // 'grid' or 'circular'
+  const [activeCardEffect, setActiveCardEffect] = useState('Liner'); // 'Liner' or 'LinerPro'
 
   // Function to load vocabulary data
   const loadVocabulary = useCallback(async (subjectKey) => {
@@ -119,6 +121,16 @@ const App = () => {
   // Handler for header position change
   const handleHeaderPositionChange = (newPosition) => {
     setHeaderPosition(newPosition);
+  };
+
+  // Handler for layout change
+  const handleLayoutChange = (newLayout) => {
+    setLayout(newLayout);
+  };
+
+  // Handler for active card effect change
+  const handleActiveCardEffectChange = (newEffect) => {
+    setActiveCardEffect(newEffect);
   };
 
   // Function to scroll vocabulary grid to top by reloading the current subject
@@ -241,6 +253,8 @@ const App = () => {
             cardsPerRow={cardsPerRow}
             // showScrollbar={showScrollbar} // Removed
             headerPosition={headerPosition}
+            layout={layout} // Pass layout state
+            activeCardEffect={activeCardEffect} // Pass activeCardEffect
           />
         </div>
 
@@ -267,6 +281,10 @@ const App = () => {
             // onScrollbarToggle={handleScrollbarToggle} // Removed
             headerPosition={headerPosition}
             onHeaderPositionChange={handleHeaderPositionChange}
+            layout={layout} // Pass layout state
+            onLayoutChange={handleLayoutChange} // Pass layout handler
+            activeCardEffect={activeCardEffect} // Pass activeCardEffect state
+            onActiveCardEffectChange={handleActiveCardEffectChange} // Pass handler
             onScrollToTop={scrollToTop} // Added scrollToTop prop
           />
         </div>
