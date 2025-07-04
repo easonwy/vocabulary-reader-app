@@ -58,7 +58,7 @@ const Playground = ({
 
       {/* Main Content Area (or status messages) - takes remaining space and scrolls */}
       {/* Text color for status messages should also be themed */}
-      <div className={`flex-1 p-2 md:p-4 text-[var(--text-primary)] ${showScrollbar ? 'overflow-y-auto' : 'overflow-hidden'}`}>
+      <div className={`flex-1 p-2 md:p-4 text-[var(--text-primary)] overflow-hidden`}>
         {isLoading && <div className="text-center p-4">Loading vocabulary...</div>}
         {error && <div className="text-center p-4 text-red-500">Error: {error}</div>} {/* Error color might need its own var */}
             {!isLoading && !error && (!vocabularyItems || vocabularyItems.length === 0) && (
