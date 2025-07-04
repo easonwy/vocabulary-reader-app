@@ -112,7 +112,7 @@ const VocabularyCard = ({
     };
   }
 
-  const finalClassNames = [staticBaseClasses, ...dynamicClasses, layoutClass].join(' ');
+  const finalClassNames = [staticBaseClasses, ...dynamicClasses, layoutClass].join(' ').trim().replace(/\\s+/g, ' ');
   const cardStyle = cardStyleOverrides; // Use the determined style overrides
 
   // For circular layout, image is a circle and centered - This logic remains the same
