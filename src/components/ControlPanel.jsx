@@ -181,6 +181,7 @@ const ControlPanel = ({
             id="header-position-select"
             value={headerPosition}
             onChange={e => onHeaderPositionChange(e.target.value)}
+            disabled={isReading}
             className="p-2 rounded-md border-2 shadow-sm text-sm w-full"
             style={{
               borderColor: 'var(--select-border-color)',
