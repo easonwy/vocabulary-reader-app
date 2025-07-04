@@ -1,6 +1,6 @@
 # Vocabulary Reader App
 
-This is a React application that helps users learn breakfast-related vocabulary with images and audio.
+This is a React application that helps users learn vocabulary with images and audio.
 
 ## Features
 
