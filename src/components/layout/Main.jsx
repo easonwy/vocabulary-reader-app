@@ -1,7 +1,7 @@
 import React from 'react';
 import VocabularyCard from '../VocabularyCard';
 
-const Main = ({ vocabularyItems, activeIndex, isReading, gridRef, setActiveIndex, cardsPerRow }) => { // Removed showScrollbar
+const Main = ({ vocabularyItems, activeIndex, isReading, gridRef, setActiveIndex, cardsPerRow, layout }) => { // Removed showScrollbar, Added layout
   // Helper: Render a single vocabulary card
   const renderCard = (item, index) => {
     const isActive = activeIndex === index;
@@ -17,6 +17,7 @@ const Main = ({ vocabularyItems, activeIndex, isReading, gridRef, setActiveIndex
         onKeyDown={e => {
           if (!isReading && (e.key === 'Enter' || e.key === ' ')) setActiveIndex(index);
         }}
+        layout={layout} // Pass layout to VocabularyCard
       />
     );
   };

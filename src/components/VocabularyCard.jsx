@@ -37,25 +37,38 @@ const VocabularyCard = ({
   isActive,
   onClick,
   onKeyDown,
-  index
+  index,
+  layout // Added layout prop
 }) => {
   // Base classes - structural and interactive, less theme-dependent directly
   const baseCardClasses = "food-card overflow-hidden text-center cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl cartoon-card";
   // Active state classes - some might be themeable (like border color if not using active specific var)
   const activeCardClasses = isActive ? "active cartoon-bounce relative z-10" : "";
 
+  // Determine if circular layout is active
+  const isCircularLayout = layout === 'circular';
+
   const cardStyle = {
     fontFamily: 'var(--card-font-family)',
     backgroundColor: isActive ? 'var(--card-active-bg)' : 'var(--card-bg)',
     boxShadow: isActive ? 'var(--card-active-shadow)' : 'var(--card-shadow)',
-    borderRadius: 'var(--card-border-radius)',
-    border: `4px solid ${isActive ? 'var(--card-active-border-color)' : 'var(--card-border-color)'}`, // Adjusted for consistent border width
+    borderRadius: isCircularLayout ? '50%' : 'var(--card-border-radius)', // Circular for card if layout is circular
+    border: `4px solid ${isActive ? 'var(--card-active-border-color)' : 'var(--card-border-color)'}`,
     position: 'relative', // Keep for HandArrow
+    aspectRatio: isCircularLayout ? '1 / 1' : '', // Maintain aspect ratio for circular cards
+    display: isCircularLayout ? 'flex' : '', // Flex layout for circular cards
+    flexDirection: isCircularLayout ? 'column' : '', // Stack image and text vertically
+    alignItems: isCircularLayout ? 'center' : '', // Center items horizontally
+    justifyContent: isCircularLayout ? 'center' : '', // Center items vertically
   };
 
   const imgStyle = {
-    borderRadius: 'var(--card-image-border-radius)', // Uses a variable like '1.5rem 1.5rem 0 0'
-    borderBottom: isActive ? `var(--card-image-border-bottom-active)` : 'none',
+    borderRadius: isCircularLayout ? '50%' : 'var(--card-image-border-radius)', // Circular image
+    borderBottom: isActive && !isCircularLayout ? `var(--card-image-border-bottom-active)` : 'none', // No border bottom for circular
+    width: isCircularLayout ? '60%' : '100%', // Adjust width for circular image
+    height: isCircularLayout ? '60%' : 'auto', // Adjust height for circular image
+    objectFit: 'cover', // Ensure image covers the area
+    aspectRatio: isCircularLayout ? '1 / 1' : '', // Maintain aspect ratio for circular images
   };
 
   const nameStyle = {
@@ -86,7 +99,7 @@ const VocabularyCard = ({
   return (
     <div
       key={index} // key should be on the element being mapped if this is used in a map directly
-      className={`${baseCardClasses} ${activeCardClasses}`}
+      className={`${baseCardClasses} ${activeCardClasses} ${isCircularLayout ? 'layout-circular' : 'layout-grid'}`}
       data-index={index}
       style={cardStyle}
       tabIndex={0}
@@ -94,27 +107,36 @@ const VocabularyCard = ({
       onClick={onClick}
       onKeyDown={onKeyDown}
     >
-      {isActive && <HandArrow />} {/* HandArrow might need theming if its colors are hardcoded */}
+      {isActive && !isCircularLayout && <HandArrow />} {/* HandArrow might need theming or be hidden for circular */}
       <img
         src={item.img}
         alt={item.name}
-        className="w-full h-35 sm:h-40 object-cover cartoon-img" // cartoon-img might have themeable properties
+        className={`object-cover cartoon-img ${isCircularLayout ? '' : 'w-full h-35 sm:h-40'}`} // Conditional classes for size
         style={imgStyle}
         onError={e => {
           e.target.onerror = null;
           e.target.src = ' https://placehold.co/400x400/cccccc/ffffff?text=Image+Not+Found';
         }}
       />
-      <div className="p-4">
-        <p className="font-bold text-2xl mb-1" style={nameStyle}>
+      <div className={isCircularLayout ? "text-center mt-2" : "p-4"}>
+        <p className={`font-bold mb-1 ${isCircularLayout ? 'text-lg' : 'text-2xl'}`} style={nameStyle}>
           {item.name}
         </p>
-        <div className="mt-2">
-          <div className="font-mono" style={phoneticStyle}> {/* Removed text-green-700 */}
-            {item.phonetic}
-          </div>
-          <div className="text-lg" style={translationStyle}> {/* Removed text-yellow-700 */}
-            {item.zh}
+        <div className={isCircularLayout ? "mt-1" : "mt-2"}>
+          {!isCircularLayout && ( // Only show phonetic and translation if not circular, or adjust styling
+            <>
+              <div className="font-mono" style={phoneticStyle}> {/* Removed text-green-700 */}
+                {item.phonetic}
+              </div>
+              <div className="text-lg" style={translationStyle}> {/* Removed text-yellow-700 */}
+                {item.zh}
+              </div>
+            </>
+          )}
+          {isCircularLayout && ( // Optionally, show a simplified version for circular
+            <p className="text-xs" style={{ color: 'var(--card-phonetic-text-color)' }}>{item.phonetic}</p>
+            // item.zh was duplicated here, removed. It's shown in the !isCircularLayout block or could be added here if desired for circular.
+          )}
           </div>
         </div>
       </div>

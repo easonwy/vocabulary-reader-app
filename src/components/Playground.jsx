@@ -28,6 +28,8 @@ const Playground = ({
   // showScrollbar,
   // Prop for header position
   headerPosition,
+  // Prop for layout
+  layout,
 }) => {
   const mainContentWrapperClasses = `flex-1 p-1 md:p-3 text-[var(--text-primary)] overflow-hidden`;
 
@@ -74,6 +76,7 @@ const Playground = ({
                 gridRef={gridRef}
                 setActiveIndex={setActiveIndex}
                 cardsPerRow={cardsPerRow}
+                layout={layout} // Pass layout to Main
                 // showScrollbar={showScrollbar} // Removed
               />
             )}

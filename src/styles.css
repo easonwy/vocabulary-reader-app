@@ -467,3 +467,30 @@ body {
   60% { transform: translateY(-60%) rotate(-20deg) scale(1.08);}
   100% { transform: translateY(-55%) rotate(-20deg) scale(1.04);}
 }
+
+/* Styles for Circular Layout */
+.layout-circular.food-card {
+  /* Ensure text is centered if not already handled by inline styles */
+  text-align: center;
+}
+
+.layout-circular .cartoon-img {
+  /* Ensure image is centered and doesn't overflow if not handled by inline styles */
+  margin: auto;
+}
+
+.layout-circular.food-card.active {
+  /* Custom active state for circular cards if needed, e.g., border animation or shadow */
+  /* Example: a slightly different shadow or border style for active circular cards */
+  box-shadow: 0 0 20px 5px var(--card-active-border-color); /* More pronounced glow for active circular cards */
+}
+
+/* Adjust text sizes for circular cards if needed */
+.layout-circular .font-bold { /* This targets item.name */
+  font-size: 1rem; /* Smaller font size for name in circular layout */
+  line-height: 1.2; /* Adjust line height for tighter space */
+}
+
+.layout-circular .text-xs { /* This targets item.phonetic if shown in circular */
+  font-size: 0.65rem; /* Even smaller for phonetic */
+}
