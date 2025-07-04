@@ -45,8 +45,8 @@ const VocabularyCard = ({
   const baseCardClasses = "food-card overflow-hidden text-center cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl cartoon-card";
   // Active state classes - some might be themeable (like border color if not using active specific var)
   const activeCardClasses = isActive ? "active cartoon-bounce relative z-10" : "";
-  // Card effect class
-  const cardEffectClass = activeCardEffect === "LinerPro" ? "liner-pro-effect" : "";
+  // Card effect class - now only applies if LinerPro is selected AND card is active
+  const cardEffectClass = activeCardEffect === "LinerPro" && isActive ? "liner-pro-active-glow" : "";
 
   // Determine if circular layout is active
   const isCircularLayout = layout === 'circular';

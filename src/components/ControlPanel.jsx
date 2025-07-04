@@ -113,6 +113,26 @@ const ControlPanel = ({
             <option value="circular">Circular Images</option>
           </select>
         </div>
+        {/* Card Effect */}
+        <div>
+          <label htmlFor="card-effect-select" className="text-sm block mb-1" style={{color: 'var(--text-primary)'}}>Card Effect:</label>
+          <select
+            id="card-effect-select"
+            value={activeCardEffect}
+            onChange={e => onActiveCardEffectChange(e.target.value)}
+            disabled={isReading}
+            className="p-2 rounded-md border-2 shadow-sm text-sm w-full"
+            style={{
+              borderColor: 'var(--input-border-color)',
+              backgroundColor: 'var(--input-bg)',
+              color: 'var(--input-text-color)',
+              fontFamily: 'var(--font-readable)'
+            }}
+          >
+            <option value="Liner">Liner</option>
+            <option value="LinerPro">Liner Pro</option>
+          </select>
+        </div>
         </div> {/* End of Setup & Content grid */}
       </div> {/* End of Setup & Content section */}
 
@@ -121,26 +141,6 @@ const ControlPanel = ({
       <div className="mb-6">
         <h3 className="text-lg font-semibold mb-3 border-b pb-2" style={{ color: 'var(--text-accent)', borderColor: 'var(--control-panel-border-color)' }}>Reading & Display</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-          {/* Card Effect */}
-          <div>
-            <label htmlFor="card-effect-select" className="text-sm block mb-1" style={{color: 'var(--text-primary)'}}>Card Effect:</label>
-            <select
-              id="card-effect-select"
-              value={activeCardEffect}
-              onChange={e => onActiveCardEffectChange(e.target.value)}
-              disabled={isReading}
-              className="p-2 rounded-md border-2 shadow-sm text-sm w-full"
-              style={{
-                borderColor: 'var(--input-border-color)',
-                backgroundColor: 'var(--input-bg)',
-                color: 'var(--input-text-color)',
-                fontFamily: 'var(--font-readable)'
-              }}
-            >
-              <option value="Liner">Liner</option>
-              <option value="LinerPro">Liner Pro</option>
-            </select>
-          </div>
           {/* Speed */}
           <div>
             <label htmlFor="speed-control-slider" className="text-sm block mb-1" style={{color: 'var(--text-primary)'}}>Speed: {speechRate !== undefined ? speechRate.toFixed(1) + 'x' : '1.0x'}</label>
