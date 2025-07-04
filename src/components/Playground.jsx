@@ -32,6 +32,7 @@ const Playground = ({
   layout,
   // Prop for active card effect
   activeCardEffect,
+  siteName, // Added siteName prop
 }) => {
   const mainContentWrapperClasses = `flex-1 p-1 md:p-3 text-[var(--text-primary)] overflow-hidden`; // Reverted to overflow-hidden for diagnosis
 
@@ -60,7 +61,7 @@ const Playground = ({
       }}
     >
       {/* Header: Conditionally rendered based on headerPosition */}
-      {headerPosition === 'top' && <Header currentSubjectName={currentSubjectName} headerPosition={headerPosition} className="mb-1 md:mb-2"/>}
+      {headerPosition === 'top' && <Header currentSubjectName={currentSubjectName} siteName={siteName} headerPosition={headerPosition} className="mb-1 md:mb-2"/>}
 
       {/* Main Content Area (or status messages) - takes remaining space and scrolls */}
       {/* Text color for status messages should also be themed */}
@@ -87,7 +88,7 @@ const Playground = ({
 
       {/* Footer: Conditionally rendered Header if position is 'bottom' */}
       {/* Header is not rendered if headerPosition is 'hide' */}
-      {headerPosition === 'bottom' && <Header currentSubjectName={currentSubjectName} headerPosition={headerPosition} className="mt-1 md:mt-2"/>}
+      {headerPosition === 'bottom' && <Header currentSubjectName={currentSubjectName} siteName={siteName} headerPosition={headerPosition} className="mt-1 md:mt-2"/>}
 
       {/* Text Overlay Display - positioned relative to the root Playground div */}
       {textOverlay && (

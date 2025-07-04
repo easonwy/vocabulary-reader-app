@@ -350,6 +350,82 @@
   --font-readable: 'Inter', 'Nunito', 'Segoe UI', 'Arial', sans-serif;
 }
 
+/* iOS 26 Style Theme */
+.theme-ios26 {
+  /* App Structure - Light, airy, possibly with subtle gradients or transparency */
+  --app-bg-color: #f9f9f9; /* Very light gray, almost white */
+  --app-bg-image: none; /* Generally solid colors in iOS */
+  --playground-area-bg: #ffffff; /* White, clean */
+  --control-panel-bg: #f2f2f7; /* Standard iOS settings background */
+  --control-panel-content-bg: #ffffff; /* White for content areas within control panel */
+  --control-panel-border-color: #d1d1d6; /* Subtle border for separation */
+
+  /* Playground Canvas - Clean lines, possibly rounded corners */
+  --canvas-bg: #ffffff;
+  --canvas-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Softer, more subtle shadow */
+  --canvas-border-radius: 1rem; /* Standard iOS rounded corners */
+
+  /* Header - High contrast and readability */
+  --header-bg: transparent; /* Often integrated or transparent */
+  --header-text-color: #000000; /* Black for strong contrast */
+  --header-font-family: 'SF Pro Display', 'Helvetica Neue', 'Arial', sans-serif; /* iOS system font */
+
+  /* Main Content/Cards - Clean lines, "clear" or slightly translucent feel */
+  --card-bg: rgba(255, 255, 255, 0.9); /* Slightly translucent white for "Liquid Glass" feel */
+  --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); /* Minimal shadow */
+  --card-border-radius: 0.75rem; /* iOS-like rounded corners for cards */
+  --card-border-color: rgba(0, 0, 0, 0.05); /* Very subtle border */
+  --card-active-bg: rgba(230, 230, 255, 0.9); /* Light accent color for active state, translucent */
+  --card-active-border-color: #007aff; /* Standard iOS blue for active elements */
+  --card-active-shadow: 0 4px 10px rgba(0, 122, 255, 0.2); /* Subtle blue glow */
+  --card-image-border-radius: 0.75rem 0.75rem 0 0;
+  --card-image-border-bottom-active: 2px solid #007aff;
+  --card-name-text-color: #000000;
+  --card-phonetic-bg: rgba(240, 240, 245, 0.85); /* Light gray, slightly translucent */
+  --card-phonetic-text-color: #3c3c43; /* Dark gray for secondary text */
+  --card-translation-text-color: #3c3c43;
+  --card-font-family: 'SF Pro Text', 'Helvetica Neue', 'Arial', sans-serif; /* iOS system font for text */
+
+  /* Controls & Text - High contrast and readability, modern */
+  --text-primary: #000000; /* Black */
+  --text-secondary: #8e8e93; /* iOS secondary text color */
+  --text-accent: #007aff; /* iOS blue */
+  --text-disabled: #bcbcc0; /* iOS disabled text color */
+  --text-button-primary: #ffffff; /* White text on blue buttons */
+
+  --button-primary-bg-image: linear-gradient(to bottom, #007aff, #0071e6); /* iOS blue gradient */
+  --button-primary-border-color: transparent;
+  --button-primary-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Minimal shadow for buttons */
+  --button-font-family: 'SF Pro Text', 'Helvetica Neue', 'Arial', sans-serif;
+
+  --button-secondary-bg: #e5e5ea; /* Light gray for secondary buttons */
+  --button-secondary-text: #007aff; /* Blue text */
+  --button-secondary-border: transparent;
+  --button-secondary-hover-bg: #dcdce0;
+
+  --input-bg: #ffffff; /* White background for inputs */
+  --input-border-color: #c7c7cc; /* iOS input border color */
+  --input-text-color: #000000;
+  --input-focus-border-color: #007aff; /* Blue focus border */
+  --input-focus-ring-color: rgba(0, 122, 255, 0.2); /* Subtle blue glow on focus */
+  --input-disabled-opacity: 0.5;
+
+  --select-border-color: #c7c7cc;
+
+  --slider-track-bg: #e5e5ea; /* Light gray track */
+  --slider-thumb-color: #ffffff; /* White thumb with a border or shadow */
+  /* Consider adding a border to slider thumb: box-shadow: 0 0 0 0.5px rgba(0,0,0,0.15), 0 1px 1.5px rgba(0,0,0,0.1); */
+
+  /* Text Overlay - Translucent background, clear text */
+  --overlay-bg: rgba(50, 50, 50, 0.75); /* Darker translucent background for readability */
+  --overlay-text-color: #ffffff;
+
+  /* General - System fonts */
+  --font-body: 'SF Pro Text', 'Helvetica Neue', 'Arial', sans-serif;
+  --font-display: 'SF Pro Display', 'Helvetica Neue', 'Arial', sans-serif;
+  --font-readable: 'SF Pro Text', 'Helvetica Neue', 'Arial', sans-serif;
+}
+
 html, body, #root {
   height: 100%;
   min-height: 100vh;

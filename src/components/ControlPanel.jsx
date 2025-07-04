@@ -29,6 +29,8 @@ const ControlPanel = ({
   onScrollToTop, // Added onScrollToTop prop
   activeCardEffect, // Added activeCardEffect prop
   onActiveCardEffectChange, // Added onActiveCardEffectChange prop
+  siteName, // Added siteName prop
+  onSiteNameChange, // Added onSiteNameChange prop
 }) => {
   // textOverlayPosition options
   const textOverlayPositionOptions = [
@@ -91,6 +93,7 @@ const ControlPanel = ({
             <option value="theme-serene">Serene</option>
             <option value="theme-cartoon">Cartoon</option>
             <option value="theme-xiaohongshu">小红书风格</option>
+            <option value="theme-ios26">iOS 26 Style</option>
           </select>
         </div>
         {/* Layout */}
@@ -132,6 +135,25 @@ const ControlPanel = ({
             <option value="Liner">Liner</option>
             <option value="LinerPro">Liner Pro</option>
           </select>
+        </div>
+        {/* Site Name */}
+        <div className="md:col-span-2">
+          <label htmlFor="site-name-input" className="text-sm block mb-1" style={{color: 'var(--text-primary)'}}>Site Name:</label>
+          <input
+            type="text"
+            id="site-name-input"
+            value={siteName || ''}
+            onChange={e => onSiteNameChange(e.target.value)}
+            disabled={isReading}
+            className="p-2 rounded-md border-2 shadow-sm text-sm w-full"
+            style={{
+              borderColor: 'var(--input-border-color)',
+              backgroundColor: 'var(--input-bg)',
+              color: 'var(--input-text-color)',
+              fontFamily: 'var(--font-readable)'
+            }}
+            placeholder="Enter site name..."
+          />
         </div>
         </div> {/* End of Setup & Content grid */}
       </div> {/* End of Setup & Content section */}

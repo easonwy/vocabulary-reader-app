@@ -3,7 +3,7 @@ import React from 'react';
 // readableFont can be removed if fonts are fully handled by CSS vars
 // const readableFont = "'Baloo 2', 'Nunito', 'Segoe UI', 'Arial', sans-serif";
 
-const Header = ({ currentSubjectName, className, headerPosition }) => { // Added headerPosition prop
+const Header = ({ currentSubjectName, siteName, className, headerPosition }) => { // Added headerPosition prop and siteName
   const mainTitle = (
     <h2
       className="text-2xl tracking-widest"
@@ -12,7 +12,7 @@ const Header = ({ currentSubjectName, className, headerPosition }) => { // Added
         color: 'var(--header-text-color)' // Explicitly set or inherit
       }}
     >
-      Anna英语充电站
+      {siteName || 'Anna英语充电站'}
     </h2>
   );
 

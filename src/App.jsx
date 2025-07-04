@@ -33,6 +33,7 @@ const App = () => {
   const [headerPosition, setHeaderPosition] = useState('top'); // 'top' or 'bottom'
   const [layout, setLayout] = useState('grid'); // 'grid' or 'circular'
   const [activeCardEffect, setActiveCardEffect] = useState('Liner'); // 'Liner' or 'LinerPro'
+  const [siteName, setSiteName] = useState('Anna英语充电站'); // State for site name
 
   // Function to load vocabulary data
   const loadVocabulary = useCallback(async (subjectKey) => {
@@ -131,6 +132,11 @@ const App = () => {
   // Handler for active card effect change
   const handleActiveCardEffectChange = (newEffect) => {
     setActiveCardEffect(newEffect);
+  };
+
+  // Handler for site name change
+  const handleSiteNameChange = (newName) => {
+    setSiteName(newName);
   };
 
   // Function to scroll vocabulary grid to top by reloading the current subject
@@ -255,12 +261,15 @@ const App = () => {
             headerPosition={headerPosition}
             layout={layout} // Pass layout state
             activeCardEffect={activeCardEffect} // Pass activeCardEffect
+            siteName={siteName} // Pass siteName
           />
         </div>
 
         {/* Right Column: Control Panel */}
         <div className="w-full md:w-1/2 p-8 bg-[var(--control-panel-bg)] border-t md:border-t-0 md:border-l border-[var(--control-panel-border-color)] overflow-y-auto flex flex-col items-center">
           <ControlPanel
+            siteName={siteName}
+            onSiteNameChange={handleSiteNameChange}
             startReadingSequence={startReadingSequence}
             startBtnRef={startBtnRef}
             availableSubjects={availableSubjects}
