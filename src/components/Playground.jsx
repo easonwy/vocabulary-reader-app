@@ -56,7 +56,7 @@ const Playground = ({
       }}
     >
       {/* Header: Conditionally rendered based on headerPosition */}
-      {headerPosition === 'top' && <Header currentSubjectName={currentSubjectName} className="mb-2 md:mb-4"/>}
+      {headerPosition === 'top' && <Header currentSubjectName={currentSubjectName} headerPosition={headerPosition} className="mb-2 md:mb-4"/>}
 
       {/* Main Content Area (or status messages) - takes remaining space and scrolls */}
       {/* Text color for status messages should also be themed */}
@@ -81,7 +81,7 @@ const Playground = ({
 
       {/* Footer: Conditionally rendered Header if position is 'bottom' */}
       {/* Header is not rendered if headerPosition is 'hide' */}
-      {headerPosition === 'bottom' && <Header currentSubjectName={currentSubjectName} className="mt-2 md:mt-4"/>}
+      {headerPosition === 'bottom' && <Header currentSubjectName={currentSubjectName} headerPosition={headerPosition} className="mt-2 md:mt-4"/>}
 
       {/* Text Overlay Display - positioned relative to the root Playground div */}
       {textOverlay && (
