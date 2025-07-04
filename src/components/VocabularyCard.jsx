@@ -43,10 +43,16 @@ const VocabularyCard = ({
 }) => {
   // Base classes - structural and interactive, less theme-dependent directly
   const baseCardClasses = "food-card overflow-hidden text-center cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl cartoon-card";
-  // Active state classes - some might be themeable (like border color if not using active specific var)
-  const activeCardClasses = isActive ? "active cartoon-bounce relative z-10" : "";
-  // Card effect class - now only applies if LinerPro is selected AND card is active
-  const cardEffectClass = activeCardEffect === "LinerPro" && isActive ? "liner-pro-active-glow" : "";
+  // Determine classes based on active state and card effect
+  let dynamicCardClasses = "";
+  if (isActive) {
+    dynamicCardClasses = "active relative z-10"; // Base active classes
+    if (activeCardEffect === "LinerPro") {
+      dynamicCardClasses += " liner-pro-active-glow"; // LinerPro on active: add glow, no bounce
+    } else {
+      dynamicCardClasses += " cartoon-bounce"; // Default (Liner) on active: add bounce
+    }
+  }
 
   // Determine if circular layout is active
   const isCircularLayout = layout === 'circular';
@@ -135,7 +141,7 @@ const VocabularyCard = ({
   return (
     <div
       key={index}
-      className={`${baseCardClasses} ${activeCardClasses} ${cardEffectClass} ${isCircularLayout ? 'layout-circular' : 'layout-grid'}`}
+      className={`${baseCardClasses} ${dynamicCardClasses} ${isCircularLayout ? 'layout-circular' : 'layout-grid'}`}
       data-index={index}
       style={cardStyle}
       tabIndex={0}
