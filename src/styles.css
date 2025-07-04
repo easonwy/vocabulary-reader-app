@@ -500,15 +500,15 @@ body {
 @keyframes pulse-glow {
   0% {
     /* Using provided keyframe: combines themed border color with themed active shadow - reduced size */
-    box-shadow: 0 0 3px 0px var(--card-active-border-color), var(--card-active-shadow, 0 8px 32px 0 rgba(245,158,66,0.15));
+    box-shadow: 0 0 2px 0px var(--card-active-border-color), var(--card-active-shadow, 0 8px 32px 0 rgba(245,158,66,0.15));
   }
   50% {
     /* Reduced blur from 20px to 12px, and spread from 10px to 6px */
-    box-shadow: 0 0 12px 6px var(--card-active-border-color), var(--card-active-shadow, 0 8px 32px 0 rgba(245,158,66,0.15));
+    box-shadow: 0 0 12px 5px var(--card-active-border-color), var(--card-active-shadow, 0 8px 32px 0 rgba(245,158,66,0.15));
   }
   100% {
     /* Reduced size */
-    box-shadow: 0 0 3px 0px var(--card-active-border-color), var(--card-active-shadow, 0 8px 32px 0 rgba(245,158,66,0.15));
+    box-shadow: 0 0 2px 0px var(--card-active-border-color), var(--card-active-shadow, 0 8px 32px 0 rgba(245,158,66,0.15));
   }
 }
 
