@@ -29,7 +29,7 @@ const Playground = ({
   // Prop for header position
   headerPosition,
 }) => {
-  const mainContentWrapperClasses = `flex-1 p-2 md:p-4 text-[var(--text-primary)] overflow-hidden`;
+  const mainContentWrapperClasses = `flex-1 p-1 md:p-2 text-[var(--text-primary)] overflow-hidden`;
 
   const getOverlayPositionClasses = () => {
     switch (textOverlayPosition) {
@@ -56,7 +56,7 @@ const Playground = ({
       }}
     >
       {/* Header: Conditionally rendered based on headerPosition */}
-      {headerPosition === 'top' && <Header currentSubjectName={currentSubjectName} headerPosition={headerPosition} className="mb-2 md:mb-4"/>}
+      {headerPosition === 'top' && <Header currentSubjectName={currentSubjectName} headerPosition={headerPosition} className="mb-1 md:mb-1"/>}
 
       {/* Main Content Area (or status messages) - takes remaining space and scrolls */}
       {/* Text color for status messages should also be themed */}
@@ -81,7 +81,7 @@ const Playground = ({
 
       {/* Footer: Conditionally rendered Header if position is 'bottom' */}
       {/* Header is not rendered if headerPosition is 'hide' */}
-      {headerPosition === 'bottom' && <Header currentSubjectName={currentSubjectName} headerPosition={headerPosition} className="mt-2 md:mt-4"/>}
+      {headerPosition === 'bottom' && <Header currentSubjectName={currentSubjectName} headerPosition={headerPosition} className="mt-1 md:mt-1"/>}
 
       {/* Text Overlay Display - positioned relative to the root Playground div */}
       {textOverlay && (

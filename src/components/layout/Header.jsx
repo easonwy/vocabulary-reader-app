@@ -18,7 +18,7 @@ const Header = ({ currentSubjectName, className, headerPosition }) => { // Added
 
   const subjectTitle = (
     <h1
-      className="text-5xl font-bold"
+      className="text-4xl font-bold"
       style={{
         fontFamily: 'var(--font-display)', // Using general display font, can be more specific if needed
         color: 'var(--header-text-color)' // Explicitly set or inherit

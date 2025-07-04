@@ -199,22 +199,6 @@ const ControlPanel = ({
 
       {/* Actions Section - Buttons in a row */}
       <div className="mt-6 flex flex-col sm:flex-row gap-4">
-        {/* Refresh Button */}
-        <button
-          onClick={onScrollToTop}
-          className="text-white font-bold py-3 px-6 rounded-full shadow-lg text-lg flex items-center justify-center cartoon-btn flex-1" // Removed w-full, added flex-1
-          style={{
-            fontFamily: 'var(--button-font-family)',
-            backgroundImage: 'var(--button-primary-bg-image)',
-            borderColor: 'var(--button-primary-border-color)',
-            boxShadow: 'var(--button-primary-shadow)',
-            color: 'var(--text-button-primary)'
-          }}
-          aria-label="Refresh List"
-        >
-          Refresh
-        </button>
-
         {/* Start/Record Button */}
         <button
           id="start-reading-btn"
@@ -235,6 +219,22 @@ const ControlPanel = ({
             <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm0-2a6 6 0 100-12 6 6 0 000 12z" clipRule="evenodd" />
           </svg>
           {isReading ? 'Recording...' : 'Record'}
+        </button>
+
+        {/* Refresh Button */}
+        <button
+          onClick={onScrollToTop}
+          className="text-white font-bold py-3 px-6 rounded-full shadow-lg text-lg flex items-center justify-center cartoon-btn flex-1" // Removed w-full, added flex-1
+          style={{
+            fontFamily: 'var(--button-font-family)',
+            backgroundImage: 'var(--button-primary-bg-image)',
+            borderColor: 'var(--button-primary-border-color)',
+            boxShadow: 'var(--button-primary-shadow)',
+            color: 'var(--text-button-primary)'
+          }}
+          aria-label="Refresh List"
+        >
+          Refresh
         </button>
       </div>
     </div>
