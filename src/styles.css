@@ -495,3 +495,31 @@ body {
 .layout-circular .text-xs { /* This targets item.phonetic if shown in circular */
   font-size: 0.65rem; /* Even smaller for phonetic */
 }
+
+/* Liner Pro Effect */
+@keyframes linerProPulse {
+  0% {
+    box-shadow: 0 0 0 0px var(--card-active-border-color, rgba(245,158,66,0.4));
+  }
+  70% {
+    box-shadow: 0 0 10px 15px rgba(0,0,0,0); /* Transparent shadow to create the pulse effect */
+  }
+  100% {
+    box-shadow: 0 0 0 0px rgba(0,0,0,0);
+  }
+}
+
+.liner-pro-effect {
+  animation: linerProPulse 2s infinite cubic-bezier(0.66, 0, 0, 1);
+  /* Use the card's existing border-radius to ensure the glow follows the card shape */
+  border-radius: var(--card-border-radius);
+}
+
+/* Ensure the effect is visible above other elements if necessary, but typically box-shadow doesn't create stacking issues unless z-index is involved. */
+/* The .active class already has z-index: 10, which should be sufficient. */
+/* If the glow needs to be more prominent on active cards, we can add a specific rule: */
+/*
+.liner-pro-effect.active {
+  animation-duration: 1.5s; // Example: faster pulse for active cards
+}
+*/

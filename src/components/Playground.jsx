@@ -30,6 +30,8 @@ const Playground = ({
   headerPosition,
   // Prop for layout
   layout,
+  // Prop for active card effect
+  activeCardEffect,
 }) => {
   const mainContentWrapperClasses = `flex-1 p-1 md:p-3 text-[var(--text-primary)] overflow-hidden`;
 
@@ -77,6 +79,7 @@ const Playground = ({
                 setActiveIndex={setActiveIndex}
                 cardsPerRow={cardsPerRow}
                 layout={layout} // Pass layout to Main
+                 activeCardEffect={activeCardEffect} // Pass activeCardEffect to Main
                 // showScrollbar={showScrollbar} // Removed
               />
             )}
