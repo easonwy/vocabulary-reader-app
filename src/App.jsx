@@ -13,12 +13,14 @@ const App = () => {
   const [speechRate, setSpeechRate] = useState(1.0);
   const [vocabularyData, setVocabularyData] = useState([]);
   const [textOverlay, setTextOverlay] = useState(''); // State for text overlay
-  const [availableSubjects, setAvailableSubjects] = useState([
+  const [availableSubjects] = useState([
     { key: 'breakfast', name: 'Breakfast' },
     { key: 'lunch', name: 'Lunch' },
     { key: 'chinese-food', name: 'Chinese Food' },
     { key: 'kitchen', name: 'Kitchen' },
     { key: 'animals', name: 'Animals' },
+    { key: 'living-room', name: 'Living Room' }, 
+    { key: 'bedroom', name: 'Bedroom' }, 
     // Add more subjects here or fetch dynamically
   ]);
   const [isLoading, setIsLoading] = useState(true);
