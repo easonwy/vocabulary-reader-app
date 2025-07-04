@@ -86,6 +86,7 @@ const ControlPanel = ({
             <option value="theme-playful">Playful</option>
             <option value="theme-serene">Serene</option>
             <option value="theme-cartoon">Cartoon</option>
+            <option value="theme-xiaohongshu">小红书风格</option>
           </select>
         </div>
         </div> {/* End of Setup & Content grid */}
