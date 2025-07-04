@@ -49,8 +49,8 @@ const Main = ({ vocabularyItems, activeIndex, isReading, gridRef, setActiveIndex
         ref={gridRef} // Keep original ref assignment
         className={vocabularyGridClasses} // Apply dynamic grid class and overflow
         style={{
-          paddingTop: '1rem',
-          paddingBottom: '1rem',
+          paddingTop: '2rem', // Increased from 1rem
+          paddingBottom: '2rem', // Increased from 1rem
           height: '100%'
         }}
       >
