@@ -22,10 +22,11 @@ const ControlPanel = ({
   onThemeChange,
   showScrollbar,
   onScrollbarToggle,
-  headerPosition,
-  onHeaderPositionChange,
+  headerPosition, // Added back
+  onHeaderPositionChange, // Added back
 }) => {
-  const positionOptions = [
+  // textOverlayPosition options
+  const textOverlayPositionOptions = [
     { id: 'pos-top', value: 'top', label: 'Top' },
     { id: 'pos-center', value: 'center', label: 'Center' },
     { id: 'pos-bottom', value: 'bottom', label: 'Bottom' },
@@ -40,7 +41,7 @@ const ControlPanel = ({
         fontFamily: 'var(--font-readable)'
       }}
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
         {/* Subject */}
         <div>
           <label htmlFor="subject-select-panel" className="text-sm block mb-1" style={{color: 'var(--text-primary)'}}>Subject:</label>
@@ -123,7 +124,7 @@ const ControlPanel = ({
           />
         </div>
         {/* Overlay Text */}
-        <div className="md:col-span-2">
+        <div className="md:col-span-3">
           <label htmlFor="text-overlay-input" className="text-sm block mb-1" style={{color: 'var(--text-primary)'}}>Overlay Text:</label>
           <input
             type="text"
@@ -183,7 +184,7 @@ const ControlPanel = ({
           </div>
         </div>
         {/* Vocabulary Grid Scrollbar Toggle */}
-        <div className="md:col-span-2 flex items-center mt-2">
+        <div className="md:col-span-3 flex items-center mt-2">
           <input
             type="checkbox"
             id="vocab-scrollbar-toggle"

@@ -28,6 +28,7 @@ const App = () => {
   const [cardsPerRow, setCardsPerRow] = useState(2); // State for words per row, default 3
   const [currentTheme, setCurrentTheme] = useState('theme-default'); // State for current theme
   const [showScrollbar, setShowScrollbar] = useState(false); // State for scrollbar visibility
+  const [headerPosition, setHeaderPosition] = useState('top'); // 'top' or 'bottom'
 
   // Function to load vocabulary data
   const loadVocabulary = useCallback(async (subjectKey) => {
@@ -116,6 +117,11 @@ const App = () => {
   // Handler for scrollbar toggle
   const handleScrollbarToggle = () => {
     setShowScrollbar(prevShowScrollbar => !prevShowScrollbar);
+  };
+
+  // Handler for header position change
+  const handleHeaderPositionChange = (newPosition) => {
+    setHeaderPosition(newPosition);
   };
 
   // Function to speak text
@@ -228,6 +234,7 @@ const App = () => {
             textOverlayPosition={textOverlayPosition}
             cardsPerRow={cardsPerRow}
             showScrollbar={showScrollbar}
+            headerPosition={headerPosition}
           />
         </div>
 
@@ -252,6 +259,8 @@ const App = () => {
             onThemeChange={handleThemeChange}
             showScrollbar={showScrollbar}
             onScrollbarToggle={handleScrollbarToggle}
+            headerPosition={headerPosition}
+            onHeaderPositionChange={handleHeaderPositionChange}
           />
         </div>
       </div>

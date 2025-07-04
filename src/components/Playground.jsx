@@ -26,6 +26,8 @@ const Playground = ({
   cardsPerRow,
   // Prop for scrollbar visibility
   showScrollbar,
+  // Prop for header position
+  headerPosition,
 }) => {
   const getOverlayPositionClasses = () => {
     switch (textOverlayPosition) {
@@ -51,8 +53,8 @@ const Playground = ({
         borderRadius: 'var(--canvas-border-radius)'
       }}
     >
-      {/* Header renders normally at the top */}
-      <Header currentSubjectName={currentSubjectName} />
+      {/* Header: Conditionally rendered based on headerPosition */}
+      {headerPosition === 'top' && <Header currentSubjectName={currentSubjectName} className="mb-2 md:mb-4"/>}
 
       {/* Main Content Area (or status messages) - takes remaining space and scrolls */}
       {/* Text color for status messages should also be themed */}
@@ -74,6 +76,9 @@ const Playground = ({
               />
             )}
           </div>
+
+      {/* Footer: Conditionally rendered Header if position is 'bottom' */}
+      {headerPosition === 'bottom' && <Header currentSubjectName={currentSubjectName} className="mt-2 md:mt-4"/>}
 
       {/* Text Overlay Display - positioned relative to the root Playground div */}
       {textOverlay && (
