@@ -35,9 +35,23 @@ const Main = ({ vocabularyItems, activeIndex, isReading, gridRef, setActiveIndex
     }
   };
   const gridColsClass = getGridColsClass(cardsPerRow);
-  // Added box-border for correct height calculation with padding
   const vocabularyGridClasses = `box-border grid ${gridColsClass} gap-4 md:gap-6 px-2 w-full max-w-[1200px] ${showScrollbar ? 'overflow-auto' : 'overflow-hidden'}`;
-  // console.log("Main.jsx - showScrollbar:", showScrollbar, "classes:", vocabularyGridClasses); // Removed diagnostic log
+
+  console.log('Main.jsx - received showScrollbar:', showScrollbar);
+  console.log('Main.jsx - vocabularyGridClasses:', vocabularyGridClasses);
+
+  // Ref for #vocabulary-grid to access clientHeight and scrollHeight
+  const vocabularyGridRef = React.useRef(null);
+
+  React.useEffect(() => {
+    if (vocabularyGridRef.current) {
+      console.log('Main.jsx - #vocabulary-grid dimensions:', {
+        clientHeight: vocabularyGridRef.current.clientHeight,
+        scrollHeight: vocabularyGridRef.current.scrollHeight,
+        computedOverflowY: window.getComputedStyle(vocabularyGridRef.current).overflowY
+      });
+    }
+  }, [vocabularyItems, cardsPerRow, showScrollbar]); // Re-log when these change
 
   return (
     // The main element itself is now just a flex container.
@@ -45,13 +59,12 @@ const Main = ({ vocabularyItems, activeIndex, isReading, gridRef, setActiveIndex
     <main className="flex flex-col items-center flex-grow">
       <div
         id="vocabulary-grid"
-        ref={gridRef}
+        ref={r => { gridRef.current = r; vocabularyGridRef.current = r; }} // Assign to both refs
         className={vocabularyGridClasses} // Apply dynamic grid class and overflow
         style={{
           paddingTop: '1rem',
           paddingBottom: '1rem',
           height: '100%'
-          // Diagnostic inline style removed
         }}
       >
         {vocabularyItems && vocabularyItems.map(renderCard)}
