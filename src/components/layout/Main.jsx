@@ -38,7 +38,7 @@ const Main = ({ vocabularyItems, activeIndex, isReading, gridRef, setActiveIndex
   };
   const gridColsClass = getGridColsClass(cardsPerRow);
   // Changed to always use overflow-auto
-  const vocabularyGridClasses = `box-border grid ${gridColsClass} gap-4 md:gap-6 px-2 w-full max-w-[1200px] overflow-auto`;
+  const vocabularyGridClasses = `box-border grid ${gridColsClass} gap-4 md:gap-6 px-4 w-full max-w-[1200px] overflow-auto`; // Changed px-2 to px-4
 
   return (
     // The main element itself is now just a flex container.
