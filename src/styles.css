@@ -350,6 +350,152 @@
   --font-readable: 'Inter', 'Nunito', 'Segoe UI', 'Arial', sans-serif;
 }
 
+/* iOS 26 Style Theme */
+.theme-ios26 {
+  /* App Structure - Vibrant gradient background */
+  --app-bg-color: #7f5af0; /* Fallback color */
+  --app-bg-image: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); /* Example: Purple to Blue. Will be refined. */
+  /* From image: Purplish-blue at top, to pinkish-orange at bottom.
+     Let's try to approximate that. A common way is multiple stops.
+     e.g. top-left to bottom-right: #4a00e0 (violet) -> #8e2de2 (purple) -> #ff6e7f (pink) -> #f9d423 (yellow/orange)
+     A simpler one: #622774 (purple) via #c53364 (pink) to #fd8a5e (orange) */
+  --app-bg-image: linear-gradient(to bottom right, #602080, #a03060, #f07050);
+  --playground-area-bg: transparent; /* Playground itself should be transparent to show app gradient */
+  --control-panel-bg: transparent; /* Control panel also transparent */
+  --control-panel-content-bg: rgba(255, 255, 255, 0.1); /* Glassmorphic base for control panel sections */
+  --control-panel-border-color: rgba(255, 255, 255, 0.2); /* Subtle border for glass */
+
+  /* Playground Canvas (main content frame) - Glassmorphic */
+  --canvas-bg: rgba(255, 255, 255, 0.15); /* Semi-transparent white for glass effect */
+  /* backdrop-filter will be applied directly to elements needing it, not via CSS var */
+  --canvas-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2); /* Softer, diffused shadow */
+  --canvas-border-radius: 1rem; /* Consistent rounded corners */
+  /* Add a subtle border to the canvas itself if it's a glass pane */
+  /* --canvas-border: 1px solid rgba(255, 255, 255, 0.18); */
+
+  /* Header - Text needs to be readable on gradient/glass */
+  --header-bg: transparent; /* Header is part of the glass pane or transparent */
+  --header-text-color: #ffffff; /* White text for readability */
+  --header-font-family: 'Inter', 'SF Pro Display', 'Helvetica Neue', 'Arial', sans-serif; /* Clean sans-serif */
+
+  /* Main Content/Cards - Glassmorphic */
+  --card-bg: rgba(255, 255, 255, 0.1); /* More transparent for cards */
+  --card-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.15);
+  --card-border-radius: 0.75rem;
+  --card-border-color: rgba(255, 255, 255, 0.18); /* Light border for glass effect */
+  --card-active-bg: rgba(255, 255, 255, 0.2);
+  --card-active-border-color: rgba(255, 255, 255, 0.5); /* Brighter border for active state */
+  --card-active-shadow: 0 8px 25px 0 rgba(0, 0, 0, 0.2);
+  --card-image-border-radius: 0.75rem 0.75rem 0 0;
+  --card-image-border-bottom-active: 2px solid rgba(255, 255, 255, 0.5);
+  --card-name-text-color: #ffffff;
+  --card-phonetic-bg: rgba(255, 255, 255, 0.1);
+  --card-phonetic-text-color: #e0e0e0; /* Light gray for secondary text */
+  --card-translation-text-color: #e0e0e0;
+  --card-font-family: 'Inter', 'SF Pro Text', 'Helvetica Neue', 'Arial', sans-serif;
+
+  /* Controls & Text - Readable on glass/gradient */
+  --text-primary: #ffffff;
+  --text-secondary: #d0d0d0; /* Lighter gray for secondary text on dark/glass bg */
+  --text-accent: #80bfff; /* A light, vibrant blue as an accent */
+  --text-disabled: #a0a0a0;
+  --text-button-primary: #ffffff;
+
+  /* Buttons - Glassmorphic or clean & simple */
+  --button-primary-bg-image: none; /* Remove gradient if using solid/glass */
+  --button-primary-bg-color: rgba(255, 255, 255, 0.15); /* Glassmorphic button */
+  --button-primary-border-color: rgba(255, 255, 255, 0.25);
+  --button-primary-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.1);
+  --button-font-family: 'Inter', 'SF Pro Text', 'Helvetica Neue', 'Arial', sans-serif;
+  /* Add hover/active states for buttons */
+
+  --button-secondary-bg: rgba(255, 255, 255, 0.1);
+  --button-secondary-text: #ffffff;
+  --button-secondary-border: rgba(255, 255, 255, 0.2);
+  --button-secondary-hover-bg: rgba(255, 255, 255, 0.15);
+
+  --input-bg: rgba(255, 255, 255, 0.1); /* Glassmorphic input */
+  --input-border-color: rgba(255, 255, 255, 0.2);
+  --input-text-color: #ffffff;
+  --input-focus-border-color: var(--text-accent);
+  --input-focus-ring-color: rgba(128, 191, 255, 0.25); /* Accent color glow */
+  --input-disabled-opacity: 0.5;
+
+  --select-border-color: rgba(255, 255, 255, 0.2);
+
+  --slider-track-bg: rgba(255, 255, 255, 0.1);
+  --slider-thumb-color: #ffffff;
+  /* Add border to slider thumb for definition */
+  /* box-shadow: 0 0 0 1px rgba(0,0,0,0.1); */
+
+  /* Text Overlay - Clear text on a slightly darker glassmorphic background */
+  --overlay-bg: rgba(0, 0, 0, 0.3); /* Darker translucent for better contrast */
+  --overlay-text-color: #ffffff;
+
+  /* General - System fonts */
+  --font-body: 'Inter', 'SF Pro Text', 'Helvetica Neue', 'Arial', sans-serif;
+  --font-display: 'Inter', 'SF Pro Display', 'Helvetica Neue', 'Arial', sans-serif; /* Using Inter as a good, modern sans-serif */
+  --font-readable: 'Inter', 'SF Pro Text', 'Helvetica Neue', 'Arial', sans-serif;
+}
+
+/* Applying backdrop-filter directly where needed */
+.theme-ios26 .control-panel-content-bg-glass { /* Example class for control panel sections */
+  background-color: var(--control-panel-content-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); /* For Safari */
+  border: 1px solid var(--control-panel-border-color);
+  border-radius: 0.75rem; /* Match card radius */
+}
+
+.theme-ios26 .playground-canvas-glass { /* Class for the main playground canvas if it's glass */
+  background-color: var(--canvas-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.18); /* As per --canvas-border example */
+  border-radius: var(--canvas-border-radius);
+}
+
+.theme-ios26 .card-glass { /* Class for vocabulary cards */
+  background-color: var(--card-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--card-border-color);
+  /* border-radius is already on .food-card, but ensure it's applied if this class is on a different element */
+}
+.theme-ios26 .card-glass.active {
+    background-color: var(--card-active-bg);
+    border-color: var(--card-active-border-color);
+}
+
+
+.theme-ios26 .button-glass { /* Class for glassmorphic buttons */
+  background-color: var(--button-primary-bg-color);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid var(--button-primary-border-color);
+}
+.theme-ios26 .button-glass:hover {
+    background-color: rgba(255, 255, 255, 0.25); /* Lighten on hover */
+}
+
+.theme-ios26 input,
+.theme-ios26 select,
+.theme-ios26 textarea {
+    background-color: var(--input-bg); /* Ensure this applies if not default */
+    border: 1px solid var(--input-border-color);
+    color: var(--input-text-color);
+    /* Consider adding backdrop-filter to inputs if they should also be glassmorphic */
+    /* backdrop-filter: blur(3px); */
+    /* -webkit-backdrop-filter: blur(3px); */
+}
+.theme-ios26 input:focus,
+.theme-ios26 select:focus,
+.theme-ios26 textarea:focus {
+    border-color: var(--input-focus-border-color);
+    box-shadow: 0 0 0 2px var(--input-focus-ring-color);
+}
+
+
 html, body, #root {
   height: 100%;
   min-height: 100vh;

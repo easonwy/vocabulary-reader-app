@@ -29,6 +29,9 @@ const ControlPanel = ({
   onScrollToTop, // Added onScrollToTop prop
   activeCardEffect, // Added activeCardEffect prop
   onActiveCardEffectChange, // Added onActiveCardEffectChange prop
+  siteName, // Added siteName prop
+  onSiteNameChange, // Added onSiteNameChange prop
+  currentTheme, // Added currentTheme
 }) => {
   // textOverlayPosition options
   const textOverlayPositionOptions = [
@@ -39,9 +42,9 @@ const ControlPanel = ({
 
   return (
     <div
-      className="p-8 rounded-lg shadow-xl border flex flex-col gap-6 w-full md:w-[90%] max-w-2xl"
+      className={`p-8 rounded-lg shadow-xl border flex flex-col gap-6 w-full md:w-[90%] max-w-2xl ${currentTheme === 'theme-ios26' ? 'control-panel-content-bg-glass' : ''}`}
       style={{
-        backgroundColor: 'var(--control-panel-content-bg)',
+        backgroundColor: 'var(--control-panel-content-bg)', // Always use the variable; it's correctly translucent for theme-ios26
         borderColor: 'var(--control-panel-border-color)',
         fontFamily: 'var(--font-readable)'
       }}
@@ -91,6 +94,7 @@ const ControlPanel = ({
             <option value="theme-serene">Serene</option>
             <option value="theme-cartoon">Cartoon</option>
             <option value="theme-xiaohongshu">小红书风格</option>
+            <option value="theme-ios26">iOS 26 Style</option>
           </select>
         </div>
         {/* Layout */}
@@ -132,6 +136,25 @@ const ControlPanel = ({
             <option value="Liner">Liner</option>
             <option value="LinerPro">Liner Pro</option>
           </select>
+        </div>
+        {/* Site Name */}
+        <div className="md:col-span-2">
+          <label htmlFor="site-name-input" className="text-sm block mb-1" style={{color: 'var(--text-primary)'}}>Site Name:</label>
+          <input
+            type="text"
+            id="site-name-input"
+            value={siteName || ''}
+            onChange={e => onSiteNameChange(e.target.value)}
+            disabled={isReading}
+            className="p-2 rounded-md border-2 shadow-sm text-sm w-full"
+            style={{
+              borderColor: 'var(--input-border-color)',
+              backgroundColor: 'var(--input-bg)',
+              color: 'var(--input-text-color)',
+              fontFamily: 'var(--font-readable)'
+            }}
+            placeholder="Enter site name..."
+          />
         </div>
         </div> {/* End of Setup & Content grid */}
       </div> {/* End of Setup & Content section */}
@@ -252,10 +275,11 @@ const ControlPanel = ({
           ref={startBtnRef}
           onClick={startReadingSequence}
           disabled={isReading}
-          className="text-white font-bold py-3 px-6 rounded-full shadow-lg text-lg flex items-center justify-center cartoon-btn flex-1" // Removed w-full, added flex-1
+          className={`text-white font-bold py-3 px-6 rounded-full shadow-lg text-lg flex items-center justify-center cartoon-btn flex-1 ${currentTheme === 'theme-ios26' ? 'button-glass' : ''}`}
           style={{
             fontFamily: 'var(--button-font-family)',
-            backgroundImage: 'var(--button-primary-bg-image)',
+            backgroundColor: currentTheme === 'theme-ios26' ? 'var(--button-primary-bg-color)' : undefined, // Use variable for glass, undefined for others to let CSS image take over
+            backgroundImage: currentTheme === 'theme-ios26' ? 'none' : 'var(--button-primary-bg-image)',
             borderColor: 'var(--button-primary-border-color)',
             boxShadow: 'var(--button-primary-shadow)',
             color: 'var(--text-button-primary)'
@@ -271,10 +295,11 @@ const ControlPanel = ({
         {/* Refresh Button */}
         <button
           onClick={onScrollToTop}
-          className="text-white font-bold py-3 px-6 rounded-full shadow-lg text-lg flex items-center justify-center cartoon-btn flex-1" // Removed w-full, added flex-1
+          className={`text-white font-bold py-3 px-6 rounded-full shadow-lg text-lg flex items-center justify-center cartoon-btn flex-1 ${currentTheme === 'theme-ios26' ? 'button-glass' : ''}`}
           style={{
             fontFamily: 'var(--button-font-family)',
-            backgroundImage: 'var(--button-primary-bg-image)',
+            backgroundColor: currentTheme === 'theme-ios26' ? 'var(--button-primary-bg-color)' : undefined, // Use variable for glass, undefined for others to let CSS image take over
+            backgroundImage: currentTheme === 'theme-ios26' ? 'none' : 'var(--button-primary-bg-image)',
             borderColor: 'var(--button-primary-border-color)',
             boxShadow: 'var(--button-primary-shadow)',
             color: 'var(--text-button-primary)'

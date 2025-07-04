@@ -39,7 +39,8 @@ const VocabularyCard = ({
   onKeyDown,
   index,
   layout,
-  activeCardEffect
+  activeCardEffect,
+  currentTheme, // Added currentTheme prop
 }) => {
   // Base classes - structural and interactive, less theme-dependent directly
   const baseCardClasses = "food-card overflow-hidden text-center cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl cartoon-card";
@@ -98,7 +99,12 @@ const VocabularyCard = ({
     cardStyleOverrides = { ...inactiveStyle };
   }
 
-  const finalClassNames = [staticBaseClasses, ...dynamicClasses, layoutClass].join(' ').trim().replace(/\\s+/g, ' ');
+  let classList = [staticBaseClasses, ...dynamicClasses, layoutClass];
+  if (currentTheme === 'theme-ios26') {
+    classList.push('card-glass');
+  }
+
+  const finalClassNames = classList.join(' ').trim().replace(/\s+/g, ' ');
   const cardStyle = cardStyleOverrides; // Use the determined style overrides
 
   // For circular layout, image is a circle and centered - This logic remains the same
