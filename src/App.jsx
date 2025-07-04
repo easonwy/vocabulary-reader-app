@@ -210,13 +210,10 @@ const App = () => {
 
   return (
     <div className={`min-h-screen h-screen flex flex-col overflow-hidden ${currentTheme} cartoon-bg`}>
-      {/* Header is now part of Playground, so no direct rendering here */}
-
       {/* Main content area: flex-col on small screens, md:flex-row on medium and up */}
       <div className="flex flex-col md:flex-row flex-1 overflow-hidden">
-        {/* Left Column: Playground wrapper - for centering the Playground component */}
-        {/* This div will now use CSS variables for its background */}
-        <div className="flex-1 flex items-center justify-center overflow-hidden p-1 bg-[var(--playground-area-bg)]">
+        {/* Left Column: Playground wrapper */}
+        <div className="w-full md:w-1/2 flex items-center justify-center overflow-hidden p-1 bg-[var(--playground-area-bg)]">
           <Playground
             currentSubjectName={availableSubjects.find(s => s.key === currentSubject)?.name || 'Vocabulary'}
             vocabularyItems={vocabularyData}
@@ -230,13 +227,12 @@ const App = () => {
             countdownValue={countdownValue}
             textOverlayPosition={textOverlayPosition}
             cardsPerRow={cardsPerRow}
-            showScrollbar={showScrollbar} // Pass showScrollbar to Playground
+            showScrollbar={showScrollbar}
           />
         </div>
 
         {/* Right Column: Control Panel */}
-        {/* This div will also use CSS variables for its background and border */}
-        <div className="p-4 bg-[var(--control-panel-bg)] border-t md:border-t-0 md:border-l border-[var(--control-panel-border-color)] overflow-y-auto">
+        <div className="w-full md:w-1/2 p-8 bg-[var(--control-panel-bg)] border-t md:border-t-0 md:border-l border-[var(--control-panel-border-color)] overflow-y-auto flex flex-col items-center">
           <ControlPanel
             startReadingSequence={startReadingSequence}
             startBtnRef={startBtnRef}
@@ -252,10 +248,10 @@ const App = () => {
             onTextOverlayPositionChange={handleTextOverlayPositionChange}
             cardsPerRow={cardsPerRow}
             onCardsPerRowChange={handleCardsPerRowChange}
-            currentTheme={currentTheme} // Pass currentTheme to ControlPanel
-            onThemeChange={handleThemeChange} // Pass theme handler to ControlPanel
-            showScrollbar={showScrollbar} // Pass showScrollbar to ControlPanel
-            onScrollbarToggle={handleScrollbarToggle} // Pass handler to ControlPanel
+            currentTheme={currentTheme}
+            onThemeChange={handleThemeChange}
+            showScrollbar={showScrollbar}
+            onScrollbarToggle={handleScrollbarToggle}
           />
         </div>
       </div>

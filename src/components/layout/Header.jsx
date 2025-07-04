@@ -4,7 +4,7 @@ import React from 'react';
 // const readableFont = "'Baloo 2', 'Nunito', 'Segoe UI', 'Arial', sans-serif";
 
 const Header = ({ currentSubjectName, className }) => ( // Added className prop
-  <header className={`text-center mb-4 ${className || ''}`}> {/* Apply passed className */}
+  <header className={`text-center ${className || ''}`}> {/* Apply passed className */}
     <div
       className="inline-block px-6 py-2 rounded-xl shadow-lg" // Removed title-card, text-white. Will use CSS vars.
       style={{

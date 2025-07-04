@@ -22,6 +22,8 @@ const ControlPanel = ({
   onThemeChange,
   showScrollbar,
   onScrollbarToggle,
+  headerPosition,
+  onHeaderPositionChange,
 }) => {
   const positionOptions = [
     { id: 'pos-top', value: 'top', label: 'Top' },
@@ -31,22 +33,178 @@ const ControlPanel = ({
 
   return (
     <div
-      className="p-6 rounded-lg shadow-xl border flex flex-col items-center gap-4 w-full md:w-80"
+      className="p-8 rounded-lg shadow-xl border flex flex-col gap-6 w-full md:w-[90%] max-w-2xl"
       style={{
         backgroundColor: 'var(--control-panel-content-bg)',
         borderColor: 'var(--control-panel-border-color)',
-        // The overall font for control panel text can be defined here or inherit from body
         fontFamily: 'var(--font-readable)'
       }}
     >
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+        {/* Subject */}
+        <div>
+          <label htmlFor="subject-select-panel" className="text-sm block mb-1" style={{color: 'var(--text-primary)'}}>Subject:</label>
+          <select
+            id="subject-select-panel"
+            value={currentSubjectKey}
+            onChange={onSubjectChange}
+            disabled={isReading}
+            className="p-2 rounded-md border-2 shadow-sm text-sm w-full"
+            style={{
+              borderColor: 'var(--select-border-color)',
+              backgroundColor: 'var(--input-bg)',
+              color: 'var(--input-text-color)',
+              fontFamily: 'var(--font-readable)'
+            }}
+          >
+            {availableSubjects.map(s => <option key={s.key} value={s.key}>{s.name}</option>)}
+          </select>
+        </div>
+        {/* Theme */}
+        <div>
+          <label htmlFor="theme-select" className="text-sm block mb-1" style={{color: 'var(--text-primary)'}}>Theme:</label>
+          <select
+            id="theme-select"
+            value={currentTheme}
+            onChange={e => onThemeChange(e.target.value)}
+            disabled={isReading}
+            className="p-2 rounded-md border-2 shadow-sm text-sm w-full"
+            style={{
+              borderColor: 'var(--input-border-color)',
+              backgroundColor: 'var(--input-bg)',
+              color: 'var(--input-text-color)',
+              fontFamily: 'var(--font-readable)'
+            }}
+          >
+            <option value="theme-default">Default</option>
+            <option value="theme-dark">Dark Mode</option>
+            <option value="theme-playful">Playful</option>
+            <option value="theme-serene">Serene</option>
+            <option value="theme-cartoon">Cartoon</option>
+          </select>
+        </div>
+        {/* Speed */}
+        <div>
+          <label htmlFor="speed-control-slider" className="text-sm block mb-1" style={{color: 'var(--text-primary)'}}>Speed: {speechRate !== undefined ? speechRate.toFixed(1) + 'x' : '1.0x'}</label>
+          <input
+            type="range"
+            id="speed-control-slider"
+            min="0.5"
+            max="2"
+            step="0.1"
+            value={speechRate === undefined ? 1.0 : speechRate}
+            onChange={e => onSpeedChange(parseFloat(e.target.value))}
+            disabled={isReading}
+            className="w-full h-2 rounded-lg appearance-none cursor-pointer"
+            style={{
+              backgroundColor: 'var(--slider-track-bg)',
+              accentColor: 'var(--slider-thumb-color)'
+            }}
+          />
+        </div>
+        {/* Cards Per Row */}
+        <div>
+          <label htmlFor="cards-per-row-input" className="text-sm block mb-1" style={{color: 'var(--text-primary)'}}>Words per Row (1-5):</label>
+          <input
+            type="number"
+            id="cards-per-row-input"
+            value={cardsPerRow === undefined ? 3 : cardsPerRow}
+            onChange={e => onCardsPerRowChange(e.target.value)}
+            disabled={isReading}
+            min="1"
+            max="5"
+            className="p-2 rounded-md border-2 shadow-sm text-sm w-full"
+            style={{
+              borderColor: 'var(--input-border-color)',
+              backgroundColor: 'var(--input-bg)',
+              color: 'var(--input-text-color)',
+              fontFamily: 'var(--font-readable)'
+            }}
+          />
+        </div>
+        {/* Overlay Text */}
+        <div className="md:col-span-2">
+          <label htmlFor="text-overlay-input" className="text-sm block mb-1" style={{color: 'var(--text-primary)'}}>Overlay Text:</label>
+          <input
+            type="text"
+            id="text-overlay-input"
+            value={textOverlay || ''}
+            onChange={e => onTextOverlayChange(e.target.value)}
+            disabled={isReading}
+            className="p-2 rounded-md border-2 shadow-sm text-sm w-full"
+            style={{
+              borderColor: 'var(--input-border-color)',
+              backgroundColor: 'var(--input-bg)',
+              color: 'var(--input-text-color)',
+              fontFamily: 'var(--font-readable)'
+            }}
+            placeholder="Enter text for overlay..."
+          />
+        </div>
+        {/* Overlay Position */}
+        <div>
+          <label className="text-sm block mb-2" style={{ color: 'var(--text-primary)' }}>Overlay Position:</label>
+          <div className="flex gap-2">
+            {["top", "center", "bottom"].map(pos => (
+              <label key={pos} className="flex items-center text-sm cursor-pointer" style={{color: 'var(--text-secondary)'}}>
+                <input
+                  type="radio"
+                  name="textOverlayPosition"
+                  value={pos}
+                  checked={textOverlayPosition === pos}
+                  onChange={() => onTextOverlayPositionChange(pos)}
+                  disabled={isReading}
+                  className="mr-1.5 h-4 w-4"
+                  style={{ accentColor: 'var(--text-accent)'}}
+                />
+                {pos.charAt(0).toUpperCase() + pos.slice(1)}
+              </label>
+            ))}
+          </div>
+        </div>
+        {/* Header Position */}
+        <div>
+          <label className="text-sm block mb-2" style={{ color: 'var(--text-primary)' }}>Header Position:</label>
+          <div className="flex gap-2">
+            {["top", "bottom"].map(pos => (
+              <label key={pos} className="flex items-center text-sm cursor-pointer" style={{color: 'var(--text-secondary)'}}>
+                <input
+                  type="radio"
+                  name="headerPosition"
+                  value={pos}
+                  checked={headerPosition === pos}
+                  onChange={() => onHeaderPositionChange(pos)}
+                  className="mr-1.5 h-4 w-4"
+                  style={{ accentColor: 'var(--text-accent)'}}
+                />
+                {pos.charAt(0).toUpperCase() + pos.slice(1)}
+              </label>
+            ))}
+          </div>
+        </div>
+        {/* Vocabulary Grid Scrollbar Toggle */}
+        <div className="md:col-span-2 flex items-center mt-2">
+          <input
+            type="checkbox"
+            id="vocab-scrollbar-toggle"
+            checked={!!showScrollbar}
+            onChange={onScrollbarToggle}
+            className="mr-2"
+          />
+          <label htmlFor="vocab-scrollbar-toggle" className="text-sm" style={{ color: 'var(--text-primary)' }}>
+            Show Scrollbar for Vocabulary Grid
+          </label>
+        </div>
+      </div>
+      {/* Start/Record Button at the bottom, full width */}
       <button
         id="start-reading-btn"
         ref={startBtnRef}
         onClick={startReadingSequence}
         disabled={isReading}
-        className="text-white font-bold py-3 px-6 rounded-full shadow-lg text-lg flex items-center justify-center w-full cartoon-btn" // Removed btn-learn, text-white is now var
+        className="mt-8 text-white font-bold py-3 px-6 rounded-full shadow-lg text-lg flex items-center justify-center w-full cartoon-btn"
         style={{
-          fontFamily: 'var(--button-font-family)', // Using the specific button font
+          fontFamily: 'var(--button-font-family)',
           backgroundImage: 'var(--button-primary-bg-image)',
           borderColor: 'var(--button-primary-border-color)',
           boxShadow: 'var(--button-primary-shadow)',
@@ -59,138 +217,6 @@ const ControlPanel = ({
         </svg>
         {isReading ? 'Recording...' : 'Record'}
       </button>
-
-      {/* Generic style for input/select wrappers */}
-      {[[
-        "Subject:", "subject-select-panel", currentSubjectKey, onSubjectChange, availableSubjects.map(s => ({value: s.key, label: s.name})), "select"
-      ],[
-        "Theme:", "theme-select", currentTheme, (e) => onThemeChange(e.target.value), [
-          { value: 'theme-default', label: 'Default' },
-          { value: 'theme-dark', label: 'Dark Mode' },
-          { value: 'theme-playful', label: 'Playful' },
-          { value: 'theme-serene', label: 'Serene' },
-          { value: 'theme-cartoon', label: 'Cartoon' }, // Added Cartoon theme
-        ], "select"
-      ],[
-        `Speed: ${speechRate !== undefined ? speechRate.toFixed(1) + 'x' : '1.0x'}`, "speed-control-slider", speechRate === undefined ? 1.0 : speechRate, (e) => onSpeedChange(parseFloat(e.target.value)), {min: "0.5", max: "2", step: "0.1"}, "range"
-      ],[
-        "Words per Row (1-5):", "cards-per-row-input", cardsPerRow === undefined ? 3 : cardsPerRow, (e) => onCardsPerRowChange(e.target.value), {min: "1", max: "5"}, "number"
-      ],[
-        "Overlay Text:", "text-overlay-input", textOverlay || '', (e) => onTextOverlayChange(e.target.value), {placeholder: "Enter text for overlay..."}, "text"
-      ]].map(([labelContent, id, value, handleChange, optionsOrProps, type]) => (
-        <div className="mt-4 w-full" key={id}>
-          <label htmlFor={id} className="mr-2 text-sm block mb-1" style={{color: 'var(--text-primary)'}}>
-            {labelContent}
-          </label>
-          {type === "select" ? (
-            <select
-              id={id}
-              value={value}
-              onChange={handleChange}
-              disabled={isReading}
-              className="p-2 rounded-md border-2 shadow-sm text-sm w-full disabled:opacity-[var(--input-disabled-opacity)]"
-              style={{
-                borderColor: id === 'subject-select-panel' ? 'var(--select-border-color)' : 'var(--input-border-color)',
-                backgroundColor: 'var(--input-bg)',
-                color: 'var(--input-text-color)',
-                fontFamily: 'var(--font-readable)',
-                // Tailwind's focus:ring/border doesn't easily accept CSS vars for color, could use JS or more complex CSS if needed
-              }}
-            >
-              {optionsOrProps.map(opt => <option key={opt.value} value={opt.value}>{opt.label}</option>)}
-            </select>
-          ) : type === "range" ? (
-            <input
-              type={type}
-              id={id}
-              value={value}
-              onChange={handleChange}
-              disabled={isReading}
-              min={optionsOrProps.min}
-              max={optionsOrProps.max}
-              step={optionsOrProps.step}
-              className="w-full h-2 rounded-lg appearance-none cursor-pointer disabled:opacity-[var(--input-disabled-opacity)]"
-              style={{
-                backgroundColor: 'var(--slider-track-bg)',
-                accentColor: 'var(--slider-thumb-color)' // For browsers supporting accent-color
-              }}
-            />
-          ) : ( // text, number
-            <input
-              type={type}
-              id={id}
-              value={value}
-              onChange={handleChange}
-              disabled={isReading}
-              min={optionsOrProps?.min}
-              max={optionsOrProps?.max}
-              placeholder={optionsOrProps?.placeholder}
-              className="p-2 rounded-md border-2 shadow-sm text-sm w-full disabled:opacity-[var(--input-disabled-opacity)]"
-              style={{
-                borderColor: 'var(--input-border-color)',
-                backgroundColor: 'var(--input-bg)',
-                color: 'var(--input-text-color)',
-                fontFamily: 'var(--font-readable)'
-              }}
-            />
-          )}
-        </div>
-      ))}
-
-      {/* Text Overlay Position Controls - Radio buttons need more specific structure */}
-      <div className="mt-4 w-full">
-        <label className="mr-2 text-sm block mb-2" style={{ color: 'var(--text-primary)' }}>
-          Overlay Position:
-        </label>
-        <div className="flex justify-around items-center gap-2">
-          {positionOptions.map(option => (
-            <label key={option.id} htmlFor={option.id} className="flex items-center text-sm cursor-pointer" style={{color: 'var(--text-secondary)'}}>
-              <input
-                type="radio"
-                id={option.id}
-                name="textOverlayPosition"
-                value={option.value}
-                checked={textOverlayPosition === option.value}
-                onChange={() => onTextOverlayPositionChange(option.value)}
-                disabled={isReading}
-                className="mr-1.5 h-4 w-4 border-gray-300 disabled:opacity-[var(--input-disabled-opacity)]"
-                style={{ accentColor: 'var(--text-accent)'}} // For browsers supporting accent-color
-              />
-              {option.label}
-            </label>
-          ))}
-        </div>
-      </div>
-
-      {/* Scrollbar Toggle Switch */}
-      <div className="mt-4 w-full flex items-center justify-between">
-        <label htmlFor="scrollbar-toggle-switch" className="text-sm" style={{ color: 'var(--text-primary)' }}>
-          Show Scrollbar
-        </label>
-        <button
-          id="scrollbar-toggle-switch"
-          type="button"
-          role="switch"
-          aria-checked={showScrollbar}
-          onClick={onScrollbarToggle}
-          disabled={isReading}
-          className={`relative inline-flex items-center h-6 rounded-full w-11 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-[var(--input-disabled-opacity)]`}
-          style={{
-            backgroundColor: showScrollbar ? 'var(--text-accent)' : 'var(--input-border-color)',
-            borderColor: 'transparent', // Or use a variable if needed
-            // Ring color might need a variable if you want it themed
-            // For now, using a generic one or relying on Tailwind's default if applicable
-            // '--tw-ring-color': 'var(--input-focus-ring-color)', // Example if needed
-          }}
-        >
-          <span
-            className={`inline-block w-4 h-4 transform bg-white rounded-full transition-transform`}
-            style={{
-              transform: showScrollbar ? 'translateX(1.25rem)' : 'translateX(0.25rem)', // Adjust based on h-6 w-11
-            }}
-          />
-        </button>
-      </div>
     </div>
   );
 };
