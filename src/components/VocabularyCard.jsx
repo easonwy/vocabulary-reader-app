@@ -52,64 +52,50 @@ const VocabularyCard = ({
 
   let dynamicClasses = [];
   let cardStyleOverrides = {};
+  const baseActiveStyle = { // Common styles for any active card
+    fontFamily: 'var(--card-font-family)',
+    backgroundColor: 'var(--card-active-bg)',
+    boxShadow: 'var(--card-active-shadow)', // Will be overridden by glow animation if present
+    borderRadius: 'var(--card-border-radius)',
+    border: `4px solid var(--card-active-border-color)`,
+    position: 'relative',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    aspectRatio: !isCircularLayout ? '' : 'auto',
+    minHeight: isCircularLayout ? 260 : undefined,
+    padding: isCircularLayout ? '1.2rem 0.5rem 0.8rem 0.5rem' : undefined,
+  };
+  const inactiveStyle = {
+    fontFamily: 'var(--card-font-family)',
+    backgroundColor: 'var(--card-bg)',
+    boxShadow: 'var(--card-shadow)',
+    borderRadius: 'var(--card-border-radius)',
+    border: `4px solid var(--card-border-color)`,
+    position: 'relative',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    aspectRatio: !isCircularLayout ? '' : 'auto',
+    minHeight: isCircularLayout ? 260 : undefined,
+    padding: isCircularLayout ? '1.2rem 0.5rem 0.8rem 0.5rem' : undefined,
+  };
 
   if (isActive) {
-    dynamicClasses.push("relative", "z-10"); // For stacking context
+    dynamicClasses.push("relative", "z-10", "active"); // Add 'active' for all active cards to trigger .food-card.active scale
+    cardStyleOverrides = { ...baseActiveStyle };
 
     if (activeCardEffect === "LinerPro") {
       dynamicClasses.push("liner-pro-active-glow");
-      // For LinerPro active, keep visual style of inactive card, glow is the only indicator
-      cardStyleOverrides = {
-        fontFamily: 'var(--card-font-family)',
-        backgroundColor: 'var(--card-bg)', // Use inactive bg
-        boxShadow: 'var(--card-shadow)',     // Use inactive shadow (animation will override anyway)
-        borderRadius: 'var(--card-border-radius)',
-        border: `4px solid var(--card-border-color)`, // Use inactive border
-        position: 'relative',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        aspectRatio: !isCircularLayout ? '' : 'auto',
-        minHeight: isCircularLayout ? 260 : undefined,
-        padding: isCircularLayout ? '1.2rem 0.5rem 0.8rem 0.5rem' : undefined,
-      };
+      // No 'cartoon-bounce'
     } else { // "Liner" (default) active effect
-      dynamicClasses.push("active", "cartoon-bounce");
-      // Standard active card styles
-      cardStyleOverrides = {
-        fontFamily: 'var(--card-font-family)',
-        backgroundColor: 'var(--card-active-bg)',
-        boxShadow: 'var(--card-active-shadow)',
-        borderRadius: 'var(--card-border-radius)',
-        border: `4px solid var(--card-active-border-color)`,
-        position: 'relative',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        aspectRatio: !isCircularLayout ? '' : 'auto',
-        minHeight: isCircularLayout ? 260 : undefined,
-        padding: isCircularLayout ? '1.2rem 0.5rem 0.8rem 0.5rem' : undefined,
-      };
+      dynamicClasses.push("cartoon-bounce");
     }
   } else {
     // Inactive card styles
-    cardStyleOverrides = {
-      fontFamily: 'var(--card-font-family)',
-      backgroundColor: 'var(--card-bg)',
-      boxShadow: 'var(--card-shadow)',
-      borderRadius: 'var(--card-border-radius)',
-      border: `4px solid var(--card-border-color)`,
-      position: 'relative',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'flex-start',
-      aspectRatio: !isCircularLayout ? '' : 'auto',
-      minHeight: isCircularLayout ? 260 : undefined,
-      padding: isCircularLayout ? '1.2rem 0.5rem 0.8rem 0.5rem' : undefined,
-    };
+    cardStyleOverrides = { ...inactiveStyle };
   }
 
   const finalClassNames = [staticBaseClasses, ...dynamicClasses, layoutClass].join(' ').trim().replace(/\\s+/g, ' ');
@@ -182,7 +168,7 @@ const VocabularyCard = ({
   return (
     <div
       key={index}
-      className={`${baseCardClasses} ${dynamicCardClasses} ${isCircularLayout ? 'layout-circular' : 'layout-grid'}`}
+      className={finalClassNames}
       data-index={index}
       style={cardStyle}
       tabIndex={0}
