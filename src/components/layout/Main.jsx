@@ -35,6 +35,9 @@ const Main = ({ vocabularyItems, activeIndex, isReading, gridRef, setActiveIndex
     }
   };
   const gridColsClass = getGridColsClass(cardsPerRow);
+  // Added box-border for correct height calculation with padding
+  const vocabularyGridClasses = `box-border grid ${gridColsClass} gap-4 md:gap-6 px-2 w-full max-w-[1200px] ${showScrollbar ? 'overflow-auto' : 'overflow-hidden'}`;
+  // console.log("Main.jsx - showScrollbar:", showScrollbar, "classes:", vocabularyGridClasses); // Removed diagnostic log
 
   return (
     // The main element itself is now just a flex container.
@@ -43,11 +46,12 @@ const Main = ({ vocabularyItems, activeIndex, isReading, gridRef, setActiveIndex
       <div
         id="vocabulary-grid"
         ref={gridRef}
-        className={`grid ${gridColsClass} gap-4 md:gap-6 px-2 w-full max-w-[1200px] ${showScrollbar ? 'overflow-auto' : 'overflow-hidden'}`} // Apply dynamic grid class and overflow
+        className={vocabularyGridClasses} // Apply dynamic grid class and overflow
         style={{
-          paddingTop: '1rem', // These paddings could also become variables if needed
+          paddingTop: '1rem',
           paddingBottom: '1rem',
-          height: '100%' // Added height: 100% to allow internal scrolling
+          height: '100%'
+          // Diagnostic inline style removed
         }}
       >
         {vocabularyItems && vocabularyItems.map(renderCard)}
