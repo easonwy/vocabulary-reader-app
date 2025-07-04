@@ -115,7 +115,7 @@ const ControlPanel = ({
         </div>
         {/* Card Effect */}
         <div>
-          <label htmlFor="card-effect-select" className="text-sm block mb-1" style={{color: 'var(--text-primary)'}}>Card Effect:</label>
+          <label htmlFor="card-effect-select" className="text-sm block mb-1" style={{color: 'var(--text-primary)'}}>Active Card Effect:</label>
           <select
             id="card-effect-select"
             value={activeCardEffect}

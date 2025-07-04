@@ -43,38 +43,79 @@ const VocabularyCard = ({
 }) => {
   // Base classes - structural and interactive, less theme-dependent directly
   const baseCardClasses = "food-card overflow-hidden text-center cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl cartoon-card";
-  // Determine classes based on active state and card effect
-  let dynamicCardClasses = "";
-  if (isActive) {
-    dynamicCardClasses = "active relative z-10"; // Base active classes
-    if (activeCardEffect === "LinerPro") {
-      dynamicCardClasses += " liner-pro-active-glow"; // LinerPro on active: add glow, no bounce
-    } else {
-      dynamicCardClasses += " cartoon-bounce"; // Default (Liner) on active: add bounce
-    }
-  }
-
   // Determine if circular layout is active
   const isCircularLayout = layout === 'circular';
 
-  // Card style: only the image is circular in circular layout
-  const cardStyle = {
-    fontFamily: 'var(--card-font-family)',
-    backgroundColor: isActive ? 'var(--card-active-bg)' : 'var(--card-bg)',
-    boxShadow: isActive ? 'var(--card-active-shadow)' : 'var(--card-shadow)',
-    borderRadius: 'var(--card-border-radius)', // Always rounded, not 50%
-    border: `4px solid ${isActive ? 'var(--card-active-border-color)' : 'var(--card-border-color)'}`,
-    position: 'relative',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    aspectRatio: !isCircularLayout ? '' : 'auto', // Remove forced aspect for card
-    minHeight: isCircularLayout ? 260 : undefined, // Ensure enough height for image+text
-    padding: isCircularLayout ? '1.2rem 0.5rem 0.8rem 0.5rem' : undefined,
-  };
+  // Base classes applied to all cards
+  const staticBaseClasses = "food-card overflow-hidden text-center cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl cartoon-card";
+  const layoutClass = isCircularLayout ? 'layout-circular' : 'layout-grid';
 
-  // For circular layout, image is a circle and centered
+  let dynamicClasses = [];
+  let cardStyleOverrides = {};
+
+  if (isActive) {
+    dynamicClasses.push("relative", "z-10"); // For stacking context
+
+    if (activeCardEffect === "LinerPro") {
+      dynamicClasses.push("liner-pro-active-glow");
+      // For LinerPro active, keep visual style of inactive card, glow is the only indicator
+      cardStyleOverrides = {
+        fontFamily: 'var(--card-font-family)',
+        backgroundColor: 'var(--card-bg)', // Use inactive bg
+        boxShadow: 'var(--card-shadow)',     // Use inactive shadow (animation will override anyway)
+        borderRadius: 'var(--card-border-radius)',
+        border: `4px solid var(--card-border-color)`, // Use inactive border
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        aspectRatio: !isCircularLayout ? '' : 'auto',
+        minHeight: isCircularLayout ? 260 : undefined,
+        padding: isCircularLayout ? '1.2rem 0.5rem 0.8rem 0.5rem' : undefined,
+      };
+    } else { // "Liner" (default) active effect
+      dynamicClasses.push("active", "cartoon-bounce");
+      // Standard active card styles
+      cardStyleOverrides = {
+        fontFamily: 'var(--card-font-family)',
+        backgroundColor: 'var(--card-active-bg)',
+        boxShadow: 'var(--card-active-shadow)',
+        borderRadius: 'var(--card-border-radius)',
+        border: `4px solid var(--card-active-border-color)`,
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        aspectRatio: !isCircularLayout ? '' : 'auto',
+        minHeight: isCircularLayout ? 260 : undefined,
+        padding: isCircularLayout ? '1.2rem 0.5rem 0.8rem 0.5rem' : undefined,
+      };
+    }
+  } else {
+    // Inactive card styles
+    cardStyleOverrides = {
+      fontFamily: 'var(--card-font-family)',
+      backgroundColor: 'var(--card-bg)',
+      boxShadow: 'var(--card-shadow)',
+      borderRadius: 'var(--card-border-radius)',
+      border: `4px solid var(--card-border-color)`,
+      position: 'relative',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+      aspectRatio: !isCircularLayout ? '' : 'auto',
+      minHeight: isCircularLayout ? 260 : undefined,
+      padding: isCircularLayout ? '1.2rem 0.5rem 0.8rem 0.5rem' : undefined,
+    };
+  }
+
+  const finalClassNames = [staticBaseClasses, ...dynamicClasses, layoutClass].join(' ');
+  const cardStyle = cardStyleOverrides; // Use the determined style overrides
+
+  // For circular layout, image is a circle and centered - This logic remains the same
   const circularImgWrapperStyle = {
     width: 120,
     height: 120,
