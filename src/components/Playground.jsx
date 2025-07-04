@@ -29,6 +29,10 @@ const Playground = ({
   // Prop for header position
   headerPosition,
 }) => {
+  console.log('Playground.jsx - received showScrollbar:', showScrollbar);
+  const mainContentWrapperClasses = `flex-1 p-2 md:p-4 text-[var(--text-primary)] overflow-hidden`;
+  console.log('Playground.jsx - mainContentWrapperClasses:', mainContentWrapperClasses);
+
   const getOverlayPositionClasses = () => {
     switch (textOverlayPosition) {
       case 'top':
@@ -58,7 +62,7 @@ const Playground = ({
 
       {/* Main Content Area (or status messages) - takes remaining space and scrolls */}
       {/* Text color for status messages should also be themed */}
-      <div className={`flex-1 p-2 md:p-4 text-[var(--text-primary)] overflow-hidden`}>
+      <div className={mainContentWrapperClasses}>
         {isLoading && <div className="text-center p-4">Loading vocabulary...</div>}
         {error && <div className="text-center p-4 text-red-500">Error: {error}</div>} {/* Error color might need its own var */}
             {!isLoading && !error && (!vocabularyItems || vocabularyItems.length === 0) && (

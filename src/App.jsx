@@ -116,7 +116,11 @@ const App = () => {
 
   // Handler for scrollbar toggle
   const handleScrollbarToggle = () => {
-    setShowScrollbar(prevShowScrollbar => !prevShowScrollbar);
+    setShowScrollbar(prevShowScrollbar => {
+      const newShowScrollbar = !prevShowScrollbar;
+      console.log('App.jsx - handleScrollbarToggle - newShowScrollbar:', newShowScrollbar);
+      return newShowScrollbar;
+    });
   };
 
   // Handler for header position change
