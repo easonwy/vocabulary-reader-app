@@ -42,12 +42,15 @@ const ControlPanel = ({
         fontFamily: 'var(--font-readable)'
       }}
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-        {/* Subject */}
-        <div>
-          <label htmlFor="subject-select-panel" className="text-sm block mb-1" style={{color: 'var(--text-primary)'}}>Subject:</label>
-          <select
-            id="subject-select-panel"
+      {/* Section 1: Setup / Content */}
+      <div className="mb-6">
+        <h3 className="text-lg font-semibold mb-3 border-b pb-2" style={{ color: 'var(--text-accent)', borderColor: 'var(--control-panel-border-color)' }}>Setup & Content</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+          {/* Subject */}
+          <div>
+            <label htmlFor="subject-select-panel" className="text-sm block mb-1" style={{color: 'var(--text-primary)'}}>Subject:</label>
+            <select
+              id="subject-select-panel"
             value={currentSubjectKey}
             onChange={onSubjectChange}
             disabled={isReading}
@@ -85,10 +88,17 @@ const ControlPanel = ({
             <option value="theme-cartoon">Cartoon</option>
           </select>
         </div>
-        {/* Speed */}
-        <div>
-          <label htmlFor="speed-control-slider" className="text-sm block mb-1" style={{color: 'var(--text-primary)'}}>Speed: {speechRate !== undefined ? speechRate.toFixed(1) + 'x' : '1.0x'}</label>
-          <input
+        </div> {/* End of Setup & Content grid */}
+      </div> {/* End of Setup & Content section */}
+
+      {/* Section 2: Reading & Display Options */}
+      <div className="mb-6">
+        <h3 className="text-lg font-semibold mb-3 border-b pb-2" style={{ color: 'var(--text-accent)', borderColor: 'var(--control-panel-border-color)' }}>Reading & Display</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+          {/* Speed */}
+          <div>
+            <label htmlFor="speed-control-slider" className="text-sm block mb-1" style={{color: 'var(--text-primary)'}}>Speed: {speechRate !== undefined ? speechRate.toFixed(1) + 'x' : '1.0x'}</label>
+            <input
             type="range"
             id="speed-control-slider"
             min="0.5"
@@ -143,10 +153,10 @@ const ControlPanel = ({
             placeholder="Enter text for overlay..."
           />
         </div>
-        {/* Overlay Position */}
-        <div>
+        {/* Overlay Position - Make it span 2 columns */}
+        <div className="md:col-span-2">
           <label className="text-sm block mb-2" style={{ color: 'var(--text-primary)' }}>Overlay Position:</label>
-          <div className="flex gap-2">
+          <div className="flex gap-x-4 gap-y-2 flex-wrap"> {/* Added flex-wrap and more gap for better spacing */}
             {["top", "center", "bottom"].map(pos => (
               <label key={pos} className="flex items-center text-sm cursor-pointer" style={{color: 'var(--text-secondary)'}}>
                 <input
@@ -184,12 +194,14 @@ const ControlPanel = ({
             <option value="hide">Hide</option>
           </select>
         </div>
-      </div>
+        </div> {/* End of Reading & Display Options grid */}
+      </div> {/* End of Reading & Display Options section */}
 
+      {/* Actions Section (Implicit - buttons are outside the grid) */}
       {/* Refresh Button - Full width */}
       <button
         onClick={onScrollToTop}
-        className="mt-4 mb-2 text-white font-bold py-3 px-6 rounded-full shadow-lg text-lg flex items-center justify-center w-full cartoon-btn"
+        className="mt-6 mb-2 text-white font-bold py-3 px-6 rounded-full shadow-lg text-lg flex items-center justify-center w-full cartoon-btn"
         style={{
           fontFamily: 'var(--button-font-family)',
           backgroundImage: 'var(--button-primary-bg-image)', // Re-using primary button style for now
@@ -208,7 +220,7 @@ const ControlPanel = ({
         ref={startBtnRef}
         onClick={startReadingSequence}
         disabled={isReading}
-        className="mt-8 text-white font-bold py-3 px-6 rounded-full shadow-lg text-lg flex items-center justify-center w-full cartoon-btn"
+        className="mt-4 text-white font-bold py-3 px-6 rounded-full shadow-lg text-lg flex items-center justify-center w-full cartoon-btn" // Changed mt-8 to mt-4
         style={{
           fontFamily: 'var(--button-font-family)',
           backgroundImage: 'var(--button-primary-bg-image)',
