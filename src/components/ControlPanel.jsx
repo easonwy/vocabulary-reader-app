@@ -184,18 +184,26 @@ const ControlPanel = ({
             ))}
           </div>
         </div>
-        {/* Scroll to Top Button */}
-        <div>
-          <label className="text-sm block mb-2" style={{ color: 'var(--text-primary)' }}>Actions:</label>
-          <button
-            onClick={onScrollToTop}
-            className="p-2 rounded-md border-2 shadow-sm text-sm w-full bg-[var(--button-secondary-bg)] text-[var(--button-secondary-text)] border-[var(--button-secondary-border)] hover:bg-[var(--button-secondary-hover-bg)]"
-            style={{ fontFamily: 'var(--font-readable)' }}
-          >
-            Scroll to Top
-          </button>
-        </div>
+        {/* Scroll to Top Button - Moved below the grid, before Record button */}
       </div>
+
+      {/* Scroll to Top Button - Full width */}
+      <button
+        onClick={onScrollToTop}
+        className="mt-4 mb-2 text-white font-bold py-3 px-6 rounded-full shadow-lg text-lg flex items-center justify-center w-full cartoon-btn"
+        style={{
+          fontFamily: 'var(--button-font-family)',
+          backgroundImage: 'var(--button-primary-bg-image)', // Re-using primary button style for now
+          borderColor: 'var(--button-primary-border-color)',
+          boxShadow: 'var(--button-primary-shadow)',
+          color: 'var(--text-button-primary)'
+        }}
+        aria-label="Scroll to Top"
+      >
+        {/* Simple text, an icon could be added here */}
+        Scroll to Top
+      </button>
+
       {/* Start/Record Button at the bottom, full width */}
       <button
         id="start-reading-btn"

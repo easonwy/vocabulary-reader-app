@@ -121,8 +121,17 @@ const App = () => {
 
   // Function to scroll vocabulary grid to top
   const scrollToTop = () => {
+    console.log('App.jsx - scrollToTop called. gridRef.current:', gridRef.current);
     if (gridRef.current) {
+      console.log('App.jsx - gridRef.current details:', {
+        scrollHeight: gridRef.current.scrollHeight,
+        clientHeight: gridRef.current.clientHeight,
+        scrollTopBefore: gridRef.current.scrollTop
+      });
       gridRef.current.scrollTop = 0;
+      console.log('App.jsx - gridRef.current.scrollTop after setting to 0:', gridRef.current.scrollTop);
+    } else {
+      console.warn('App.jsx - scrollToTop: gridRef.current is null or undefined.');
     }
   };
 
