@@ -20,10 +20,11 @@ const ControlPanel = ({
   onCardsPerRowChange,
   currentTheme,
   onThemeChange,
-  showScrollbar,
-  onScrollbarToggle,
-  headerPosition, // Added back
-  onHeaderPositionChange, // Added back
+  // showScrollbar, // Removed
+  // onScrollbarToggle, // Removed
+  headerPosition,
+  onHeaderPositionChange,
+  onScrollToTop, // Added onScrollToTop prop
 }) => {
   // textOverlayPosition options
   const textOverlayPositionOptions = [
@@ -183,18 +184,16 @@ const ControlPanel = ({
             ))}
           </div>
         </div>
-        {/* Vocabulary Grid Scrollbar Toggle */}
-        <div className="md:col-span-2 flex items-center mt-2">
-          <input
-            type="checkbox"
-            id="vocab-scrollbar-toggle"
-            checked={!!showScrollbar}
-            onChange={onScrollbarToggle}
-            className="mr-2"
-          />
-          <label htmlFor="vocab-scrollbar-toggle" className="text-sm" style={{ color: 'var(--text-primary)' }}>
-            Show Scrollbar for Vocabulary Grid
-          </label>
+        {/* Scroll to Top Button */}
+        <div>
+          <label className="text-sm block mb-2" style={{ color: 'var(--text-primary)' }}>Actions:</label>
+          <button
+            onClick={onScrollToTop}
+            className="p-2 rounded-md border-2 shadow-sm text-sm w-full bg-[var(--button-secondary-bg)] text-[var(--button-secondary-text)] border-[var(--button-secondary-border)] hover:bg-[var(--button-secondary-hover-bg)]"
+            style={{ fontFamily: 'var(--font-readable)' }}
+          >
+            Scroll to Top
+          </button>
         </div>
       </div>
       {/* Start/Record Button at the bottom, full width */}

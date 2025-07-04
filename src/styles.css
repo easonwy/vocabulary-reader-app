@@ -49,6 +49,11 @@
   --button-primary-shadow: 0 4px 16px 0 #f59e42;
   --button-font-family: 'Patrick Hand', 'Comic Sans MS', cursive, sans-serif;
 
+  --button-secondary-bg: #e5e7eb; /* gray-200 */
+  --button-secondary-text: #374151; /* gray-700 */
+  --button-secondary-border: #d1d5db; /* gray-300 */
+  --button-secondary-hover-bg: #d1d5db; /* gray-300 */
+
   --input-bg: #ffffff;
   --input-border-color: #d1d5db; /* gray-300 */
   --input-text-color: #111827; /* gray-900 */

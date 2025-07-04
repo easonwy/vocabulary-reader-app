@@ -27,7 +27,7 @@ const App = () => {
   const [textOverlayPosition, setTextOverlayPosition] = useState('bottom'); // State for overlay position
   const [cardsPerRow, setCardsPerRow] = useState(2); // State for words per row, default 3
   const [currentTheme, setCurrentTheme] = useState('theme-default'); // State for current theme
-  const [showScrollbar, setShowScrollbar] = useState(false); // State for scrollbar visibility
+  // const [showScrollbar, setShowScrollbar] = useState(false); // Removed
   const [headerPosition, setHeaderPosition] = useState('top'); // 'top' or 'bottom'
 
   // Function to load vocabulary data
@@ -114,14 +114,16 @@ const App = () => {
     setCurrentTheme(newTheme);
   };
 
-  // Handler for scrollbar toggle
-  const handleScrollbarToggle = () => {
-    setShowScrollbar(prevShowScrollbar => !prevShowScrollbar);
-  };
-
   // Handler for header position change
   const handleHeaderPositionChange = (newPosition) => {
     setHeaderPosition(newPosition);
+  };
+
+  // Function to scroll vocabulary grid to top
+  const scrollToTop = () => {
+    if (gridRef.current) {
+      gridRef.current.scrollTop = 0;
+    }
   };
 
   // Function to speak text
@@ -233,7 +235,7 @@ const App = () => {
             countdownValue={countdownValue}
             textOverlayPosition={textOverlayPosition}
             cardsPerRow={cardsPerRow}
-            showScrollbar={showScrollbar}
+            // showScrollbar={showScrollbar} // Removed
             headerPosition={headerPosition}
           />
         </div>
@@ -257,10 +259,11 @@ const App = () => {
             onCardsPerRowChange={handleCardsPerRowChange}
             currentTheme={currentTheme}
             onThemeChange={handleThemeChange}
-            showScrollbar={showScrollbar}
-            onScrollbarToggle={handleScrollbarToggle}
+            // showScrollbar={showScrollbar} // Removed
+            // onScrollbarToggle={handleScrollbarToggle} // Removed
             headerPosition={headerPosition}
             onHeaderPositionChange={handleHeaderPositionChange}
+            onScrollToTop={scrollToTop} // Added scrollToTop prop
           />
         </div>
       </div>

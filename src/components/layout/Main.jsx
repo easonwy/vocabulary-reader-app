@@ -1,7 +1,7 @@
 import React from 'react';
 import VocabularyCard from '../VocabularyCard';
 
-const Main = ({ vocabularyItems, activeIndex, isReading, gridRef, setActiveIndex, cardsPerRow, showScrollbar }) => {
+const Main = ({ vocabularyItems, activeIndex, isReading, gridRef, setActiveIndex, cardsPerRow }) => { // Removed showScrollbar
   // Helper: Render a single vocabulary card
   const renderCard = (item, index) => {
     const isActive = activeIndex === index;
@@ -35,7 +35,8 @@ const Main = ({ vocabularyItems, activeIndex, isReading, gridRef, setActiveIndex
     }
   };
   const gridColsClass = getGridColsClass(cardsPerRow);
-  const vocabularyGridClasses = `box-border grid ${gridColsClass} gap-4 md:gap-6 px-2 w-full max-w-[1200px] ${showScrollbar ? 'overflow-auto' : 'overflow-hidden'}`;
+  // Changed to always use overflow-auto
+  const vocabularyGridClasses = `box-border grid ${gridColsClass} gap-4 md:gap-6 px-2 w-full max-w-[1200px] overflow-auto`;
 
   return (
     // The main element itself is now just a flex container.
