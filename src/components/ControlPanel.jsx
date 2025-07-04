@@ -31,7 +31,7 @@ const ControlPanel = ({
   onActiveCardEffectChange, // Added onActiveCardEffectChange prop
   siteName, // Added siteName prop
   onSiteNameChange, // Added onSiteNameChange prop
-  currentTheme, // Added currentTheme
+  // currentTheme is already correctly destructured earlier
 }) => {
   // textOverlayPosition options
   const textOverlayPositionOptions = [
