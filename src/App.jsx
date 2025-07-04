@@ -163,8 +163,6 @@ const App = () => {
     await new Promise(res => setTimeout(res, 1000));
     setCountdownValue(null); // Clear countdown
 
-    await new Promise(res => setTimeout(res, 3000)); // Wait 3 seconds before starting reading
-
     setIsReading(true);
     isReadingRef.current = true;
     if (startBtnRef.current) {

@@ -164,30 +164,29 @@ const ControlPanel = ({
             ))}
           </div>
         </div>
-        {/* Header Position */}
-        <div>
-          <label className="text-sm block mb-2" style={{ color: 'var(--text-primary)' }}>Header Position:</label>
-          <div className="flex gap-2">
-            {["top", "bottom"].map(pos => (
-              <label key={pos} className="flex items-center text-sm cursor-pointer" style={{color: 'var(--text-secondary)'}}>
-                <input
-                  type="radio"
-                  name="headerPosition"
-                  value={pos}
-                  checked={headerPosition === pos}
-                  onChange={() => onHeaderPositionChange(pos)}
-                  className="mr-1.5 h-4 w-4"
-                  style={{ accentColor: 'var(--text-accent)'}}
-                />
-                {pos.charAt(0).toUpperCase() + pos.slice(1)}
-              </label>
-            ))}
-          </div>
+        {/* Header Position - Changed to Select dropdown and given its own row */}
+        <div className="md:col-span-2"> {/* Make this control take a full row on medium screens */}
+          <label htmlFor="header-position-select" className="text-sm block mb-1" style={{color: 'var(--text-primary)'}}>Header Position:</label>
+          <select
+            id="header-position-select"
+            value={headerPosition}
+            onChange={e => onHeaderPositionChange(e.target.value)}
+            className="p-2 rounded-md border-2 shadow-sm text-sm w-full"
+            style={{
+              borderColor: 'var(--select-border-color)',
+              backgroundColor: 'var(--input-bg)',
+              color: 'var(--input-text-color)',
+              fontFamily: 'var(--font-readable)'
+            }}
+          >
+            <option value="top">Top</option>
+            <option value="bottom">Bottom</option>
+            <option value="hide">Hide</option>
+          </select>
         </div>
-        {/* Scroll to Top Button - Moved below the grid, before Record button */}
       </div>
 
-      {/* Scroll to Top Button - Full width */}
+      {/* Refresh Button - Full width */}
       <button
         onClick={onScrollToTop}
         className="mt-4 mb-2 text-white font-bold py-3 px-6 rounded-full shadow-lg text-lg flex items-center justify-center w-full cartoon-btn"
@@ -198,10 +197,9 @@ const ControlPanel = ({
           boxShadow: 'var(--button-primary-shadow)',
           color: 'var(--text-button-primary)'
         }}
-        aria-label="Scroll to Top"
+        aria-label="Refresh List"
       >
-        {/* Simple text, an icon could be added here */}
-        Scroll to Top
+        Refresh
       </button>
 
       {/* Start/Record Button at the bottom, full width */}

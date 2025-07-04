@@ -80,6 +80,7 @@ const Playground = ({
           </div>
 
       {/* Footer: Conditionally rendered Header if position is 'bottom' */}
+      {/* Header is not rendered if headerPosition is 'hide' */}
       {headerPosition === 'bottom' && <Header currentSubjectName={currentSubjectName} className="mt-2 md:mt-4"/>}
 
       {/* Text Overlay Display - positioned relative to the root Playground div */}
