@@ -37,19 +37,17 @@ const Main = ({ vocabularyItems, activeIndex, isReading, gridRef, setActiveIndex
   const gridColsClass = getGridColsClass(cardsPerRow);
 
   return (
-    // The main element itself doesn't have much direct styling that needs theming,
-    // mostly structure. Its children (cards) will be themed.
-    <main className={`flex flex-col items-center flex-grow ${showScrollbar ? 'overflow-auto' : 'overflow-hidden'}`}>
+    // The main element itself is now just a flex container.
+    // Its child, vocabulary-grid, will handle the scrolling.
+    <main className="flex flex-col items-center flex-grow">
       <div
         id="vocabulary-grid"
         ref={gridRef}
-        className={`grid ${gridColsClass} gap-4 md:gap-6 px-2`} // Apply dynamic grid class
+        className={`grid ${gridColsClass} gap-4 md:gap-6 px-2 w-full max-w-[1200px] ${showScrollbar ? 'overflow-auto' : 'overflow-hidden'}`} // Apply dynamic grid class and overflow
         style={{
           paddingTop: '1rem', // These paddings could also become variables if needed
           paddingBottom: '1rem',
-          width: '100%',
-          maxWidth: 1200
-          // maxHeight and overflowY removed
+          height: '100%' // Added height: 100% to allow internal scrolling
         }}
       >
         {vocabularyItems && vocabularyItems.map(renderCard)}
