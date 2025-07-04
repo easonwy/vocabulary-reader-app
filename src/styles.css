@@ -470,8 +470,9 @@ body {
 
 /* Styles for Circular Layout */
 .layout-circular.food-card {
-  /* Ensure text is centered if not already handled by inline styles */
+  /* Remove border-radius: 50%; so card is not a circle */
   text-align: center;
+  /* Remove aspect-ratio and other circle-forcing styles */
 }
 
 .layout-circular .cartoon-img {
