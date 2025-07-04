@@ -29,9 +29,7 @@ const Playground = ({
   // Prop for header position
   headerPosition,
 }) => {
-  console.log('Playground.jsx - received showScrollbar:', showScrollbar);
   const mainContentWrapperClasses = `flex-1 p-2 md:p-4 text-[var(--text-primary)] overflow-hidden`;
-  console.log('Playground.jsx - mainContentWrapperClasses:', mainContentWrapperClasses);
 
   const getOverlayPositionClasses = () => {
     switch (textOverlayPosition) {
