@@ -20,7 +20,8 @@ const App = () => {
     { key: 'kitchen', name: 'Kitchen' },
     { key: 'animals', name: 'Animals' },
     { key: 'living-room', name: 'Living Room' }, 
-    { key: 'bedroom', name: 'Bedroom' }, 
+    { key: 'bedroom', name: 'Bedroom' },
+    { key: 'house', name: 'House' },
     // Add more subjects here or fetch dynamically
   ]);
   const [isLoading, setIsLoading] = useState(true);
@@ -191,7 +192,7 @@ const App = () => {
     }
 
     // Wait for 3 seconds before starting reading
-    await new Promise(res => setTimeout(res, 3000));
+    await new Promise(res => setTimeout(res, 2000));
 
     const cards = document.querySelectorAll('.food-card');
 
