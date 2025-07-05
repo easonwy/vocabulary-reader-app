@@ -537,9 +537,10 @@
    A common practice is to use a light, often white, glow.
    Consider adding a specific --header-glow-color variable if themes vary wildly.
 */
+/* For themes where header text is light, use fallback for a more distinct white glow */
 .theme-dark .header-anim-pulsing-glow,
-.theme-ios26 .header-anim-pulsing-glow { /* Example for themes where header text might be light */
-  animation-name: pulsingGlow; /* uses var(--header-text-color) which is light in these themes */
+.theme-ios26 .header-anim-pulsing-glow {
+  animation-name: pulsingGlowFallback; /* Use white glow for light text on dark/vibrant backgrounds */
 }
 /* For default or other themes where header-text-color might be dark: */
 .theme-default .header-anim-pulsing-glow,
