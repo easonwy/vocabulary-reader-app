@@ -1,0 +1,13 @@
+[
+  { "name": "Attic", "phonetic": "/ˈæt.ɪk/", "zh": "阁楼", "img": "https://via.placeholder.com/150/FFC107/000000?Text=Attic" },
+  { "name": "Roof", "phonetic": "/ruːf/", "zh": "屋顶", "img": "https://via.placeholder.com/150/FFC107/000000?Text=Roof" },
+  { "name": "Door", "phonetic": "/dɔːr/", "zh": "门", "img": "https://via.placeholder.com/150/FFC107/000000?Text=Door" },
+  { "name": "Skylight", "phonetic": "/ˈskaɪ.laɪt/", "zh": "天窗", "img": "https://via.placeholder.com/150/FFC107/000000?Text=Skylight" },
+  { "name": "Tiles", "phonetic": "/taɪlz/", "zh": "瓦片", "img": "https://via.placeholder.com/150/FFC107/000000?Text=Tiles" },
+  { "name": "Storage Room", "phonetic": "/ˈstɔː.rɪdʒ ruːm/", "zh": "储藏室", "img": "https://via.placeholder.com/150/FFC107/000000?Text=Storage+Room" },
+  { "name": "Garden", "phonetic": "/ˈɡɑːr.dən/", "zh": "花园", "img": "https://via.placeholder.com/150/FFC107/000000?Text=Garden" },
+  { "name": "Bathroom", "phonetic": "/ˈbæθ.ruːm/", "zh": "浴室", "img": "https://via.placeholder.com/150/FFC107/000000?Text=Bathroom" },
+  { "name": "Bedroom", "phonetic": "/ˈbed.ruːm/", "zh": "卧室", "img": "https://via.placeholder.com/150/FFC107/000000?Text=Bedroom" },
+  { "name": "Entrance", "phonetic": "/ˈen.trəns/", "zh": "门厅", "img": "https://via.placeholder.com/150/FFC107/000000?Text=Entrance" },
+  { "name": "Kitchen", "phonetic": "/ˈkɪtʃ.ən/", "zh": "厨房", "img": "https://via.placeholder.com/150/FFC107/000000?Text=Kitchen" }
+]
