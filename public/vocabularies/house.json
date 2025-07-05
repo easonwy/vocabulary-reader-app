@@ -9,10 +9,5 @@
   { "name": "Bathroom", "phonetic": "/ˈbæθ.ruːm/", "zh": "浴室", "img": "https://via.placeholder.com/150/FFC107/000000?Text=Bathroom" },
   { "name": "Bedroom", "phonetic": "/ˈbed.ruːm/", "zh": "卧室", "img": "https://via.placeholder.com/150/FFC107/000000?Text=Bedroom" },
   { "name": "Entrance", "phonetic": "/ˈen.trəns/", "zh": "门厅", "img": "https://via.placeholder.com/150/FFC107/000000?Text=Entrance" },
-  { "name": "Kitchen", "phonetic": "/ˈkɪtʃ.ən/", "zh": "厨房", "img": "https://via.placeholder.com/150/FFC107/000000?Text=Kitchen" },
-  { "name": "Living Room", "phonetic": "/ˈlɪv.ɪŋ ruːm/", "zh": "客厅", "img": "https://via.placeholder.com/150/FFC107/000000?Text=Living+Room" },
-  { "name": "Dining Room", "phonetic": "/ˈdaɪ.nɪŋ ruːm/", "zh": "餐厅", "img": "https://via.placeholder.com/150/FFC107/000000?Text=Dining+Room" },
-  { "name": "Garage", "phonetic": "/ɡəˈrɑːʒ/", "zh": "车库", "img": "https://via.placeholder.com/150/FFC107/000000?Text=Garage" },
-  { "name": "Balcony", "phonetic": "/ˈbæl.kə.ni/", "zh": "阳台", "img": "https://via.placeholder.com/150/FFC107/000000?Text=Balcony" },
-  { "name": "Fence", "phonetic": "/fens/", "zh": "栅栏", "img": "https://via.placeholder.com/150/FFC107/000000?Text=Fence" }
+  { "name": "Kitchen", "phonetic": "/ˈkɪtʃ.ən/", "zh": "厨房", "img": "https://via.placeholder.com/150/FFC107/000000?Text=Kitchen" }
 ]

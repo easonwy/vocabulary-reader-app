@@ -115,6 +115,7 @@ const ControlPanel = ({
           >
             <option value="grid">Grid</option>
             <option value="circular">Circular Images</option>
+            <option value="no-image">No Image</option>
           </select>
         </div>
         {/* Card Effect */}
