@@ -31,7 +31,8 @@ const ControlPanel = ({
   onActiveCardEffectChange, // Added onActiveCardEffectChange prop
   siteName, // Added siteName prop
   onSiteNameChange, // Added onSiteNameChange prop
-  // currentTheme is already correctly destructured earlier
+  headerAnimationEffect, // Added headerAnimationEffect prop
+  onHeaderAnimationEffectChange, // Added onHeaderAnimationEffectChange prop
 }) => {
   // textOverlayPosition options
   const textOverlayPositionOptions = [
@@ -155,6 +156,29 @@ const ControlPanel = ({
             }}
             placeholder="Enter site name..."
           />
+        </div>
+        {/* Header Animation Effect */}
+        <div>
+          <label htmlFor="header-animation-effect-select" className="text-sm block mb-1" style={{color: 'var(--text-primary)'}}>Header Effect:</label>
+          <select
+            id="header-animation-effect-select"
+            value={headerAnimationEffect}
+            onChange={e => onHeaderAnimationEffectChange(e.target.value)}
+            disabled={isReading} // Should this also be disabled during reading? Or independent? Plan says independent.
+            className="p-2 rounded-md border-2 shadow-sm text-sm w-full"
+            style={{
+              borderColor: 'var(--input-border-color)',
+              backgroundColor: 'var(--input-bg)',
+              color: 'var(--input-text-color)',
+              fontFamily: 'var(--font-readable)'
+            }}
+          >
+            <option value="none">None</option>
+            <option value="fade-in">Fade In</option>
+            <option value="breathing">Breathing</option>
+            <option value="pulsing-glow">Pulsing Glow</option>
+            <option value="slide-up-fade-in">Slide Up & Fade In</option>
+          </select>
         </div>
         </div> {/* End of Setup & Content grid */}
       </div> {/* End of Setup & Content section */}

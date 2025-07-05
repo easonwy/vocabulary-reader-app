@@ -495,6 +495,77 @@
     box-shadow: 0 0 0 2px var(--input-focus-ring-color);
 }
 
+/* Header Text Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.header-anim-fade-in {
+  animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+@keyframes breathing {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}
+
+.header-anim-breathing {
+  animation: breathing 3s ease-in-out infinite;
+}
+
+@keyframes pulsingGlow {
+  0%, 100% { text-shadow: 0 0 5px var(--header-text-color, #fff), 0 0 10px var(--header-text-color, #fff); }
+  50% { text-shadow: 0 0 10px var(--header-text-color, #fff), 0 0 20px var(--header-text-color, #fff), 0 0 25px var(--header-text-color, #fff); }
+}
+/* Fallback for text-shadow in case --header-text-color is not defined or suitable for glowing */
+@keyframes pulsingGlowFallback {
+  0%, 100% { text-shadow: 0 0 5px rgba(255,255,255,0.7), 0 0 10px rgba(255,255,255,0.5); }
+  50% { text-shadow: 0 0 10px rgba(255,255,255,0.7), 0 0 20px rgba(255,255,255,0.5), 0 0 25px rgba(255,255,255,0.3); }
+}
+
+
+.header-anim-pulsing-glow {
+  /* Attempt to use themed header text color for glow, with fallback */
+  animation: pulsingGlow 2.5s ease-in-out infinite;
+  /* A more generic fallback if var(--header-text-color) is dark or unsuitable for a glow */
+  /* This could be complex; for now, we rely on --header-text-color being light enough or theme overriding */
+}
+/* If var(--header-text-color) is dark, a white or light glow is better.
+   This might need theme-specific overrides for the glow color or a more complex setup.
+   For simplicity, this example assumes --header-text-color can serve as a base for the glow.
+   A common practice is to use a light, often white, glow.
+   Consider adding a specific --header-glow-color variable if themes vary wildly.
+*/
+.theme-dark .header-anim-pulsing-glow,
+.theme-ios26 .header-anim-pulsing-glow { /* Example for themes where header text might be light */
+  animation-name: pulsingGlow; /* uses var(--header-text-color) which is light in these themes */
+}
+/* For default or other themes where header-text-color might be dark: */
+.theme-default .header-anim-pulsing-glow,
+.theme-playful .header-anim-pulsing-glow, /* Example, adjust if needed */
+.theme-serene .header-anim-pulsing-glow,
+.theme-cartoon .header-anim-pulsing-glow,
+.theme-xiaohongshu .header-anim-pulsing-glow {
+    animation-name: pulsingGlowFallback; /* uses a white glow */
+}
+
+
+@keyframes slideUpFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.header-anim-slide-up-fade-in {
+  animation: slideUpFadeIn 0.5s ease-in-out forwards;
+}
+
 
 html, body, #root {
   height: 100%;

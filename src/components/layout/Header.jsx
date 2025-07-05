@@ -3,10 +3,30 @@ import React from 'react';
 // readableFont can be removed if fonts are fully handled by CSS vars
 // const readableFont = "'Baloo 2', 'Nunito', 'Segoe UI', 'Arial', sans-serif";
 
-const Header = ({ currentSubjectName, siteName, className, headerPosition }) => { // Added headerPosition prop and siteName
+const Header = ({ currentSubjectName, siteName, className, headerPosition, headerAnimationEffect }) => {
+
+  const getAnimationClass = (effect) => {
+    switch (effect) {
+      case 'fade-in':
+        return 'header-anim-fade-in';
+      case 'breathing':
+        return 'header-anim-breathing';
+      case 'pulsing-glow':
+        return 'header-anim-pulsing-glow';
+      case 'slide-up-fade-in':
+        return 'header-anim-slide-up-fade-in';
+      case 'none':
+      default:
+        return '';
+    }
+  };
+
+  const animationClass = getAnimationClass(headerAnimationEffect);
+
   const mainTitle = (
     <h2
-      className="text-2xl tracking-widest"
+      key={`${siteName}-${headerAnimationEffect}`} // Key to re-trigger animation
+      className={`text-2xl tracking-widest ${animationClass}`}
       style={{
         fontFamily: 'var(--font-display)', // Using general display font
         color: 'var(--header-text-color)' // Explicitly set or inherit
@@ -18,7 +38,8 @@ const Header = ({ currentSubjectName, siteName, className, headerPosition }) => 
 
   const subjectTitle = (
     <h1
-      className="text-4xl font-bold"
+      key={`${currentSubjectName}-${headerAnimationEffect}`} // Key to re-trigger animation
+      className={`text-4xl font-bold ${animationClass}`}
       style={{
         fontFamily: 'var(--font-display)', // Using general display font, can be more specific if needed
         color: 'var(--header-text-color)' // Explicitly set or inherit

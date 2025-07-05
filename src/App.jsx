@@ -34,6 +34,7 @@ const App = () => {
   const [layout, setLayout] = useState('grid'); // 'grid' or 'circular'
   const [activeCardEffect, setActiveCardEffect] = useState('Liner'); // 'Liner' or 'LinerPro'
   const [siteName, setSiteName] = useState('Anna英语充电站'); // State for site name
+  const [headerAnimationEffect, setHeaderAnimationEffect] = useState('pulsing-glow'); // Default header animation
 
   // Function to load vocabulary data
   const loadVocabulary = useCallback(async (subjectKey) => {
@@ -143,6 +144,11 @@ const App = () => {
   const scrollToTop = () => {
     console.log('App.jsx - scrollToTop (reload list) called for subject:', currentSubject);
     loadVocabulary(currentSubject);
+  };
+
+  // Handler for header animation effect change
+  const handleHeaderAnimationEffectChange = (newEffect) => {
+    setHeaderAnimationEffect(newEffect);
   };
 
   // Function to speak text
@@ -298,6 +304,8 @@ const App = () => {
             onLayoutChange={handleLayoutChange} // Pass layout handler
             activeCardEffect={activeCardEffect} // Pass activeCardEffect state
             onActiveCardEffectChange={handleActiveCardEffectChange} // Pass handler
+            headerAnimationEffect={headerAnimationEffect} // Pass headerAnimationEffect state
+            onHeaderAnimationEffectChange={handleHeaderAnimationEffectChange} // Pass handler
             onScrollToTop={scrollToTop} // Added scrollToTop prop
           />
         </div>
