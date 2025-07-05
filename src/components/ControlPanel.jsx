@@ -295,6 +295,7 @@ const ControlPanel = ({
         {/* Refresh Button */}
         <button
           onClick={onScrollToTop}
+          disabled={isReading}
           className={`text-white font-bold py-3 px-6 rounded-full shadow-lg text-lg flex items-center justify-center cartoon-btn flex-1 ${currentTheme === 'theme-ios26' ? 'button-glass' : ''}`}
           style={{
             fontFamily: 'var(--button-font-family)',
