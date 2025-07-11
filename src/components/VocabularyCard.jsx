@@ -98,29 +98,29 @@ const VocabularyCard = ({
       cardBorderRadius: '0.9rem',
       cardImageBorderRadius: '0.9rem 0.9rem 0 0',
     },
-    big: {
-      minHeightCircular: 168,
-      minHeightNoImage: 108,
-      paddingCircular: '0.85rem 0.35rem 0.5rem 0.35rem',
-      paddingNoImage: '0.6rem',
-      gridTextPaddingClass: 'p-2.5',
-      circularImgSize: 76,
+    big: { // Updated to Medium * 1.3
+      minHeightCircular: 182,
+      minHeightNoImage: 117,
+      paddingCircular: '0.9rem 0.4rem 0.5rem 0.4rem',
+      paddingNoImage: '0.65rem',
+      gridTextPaddingClass: 'p-2.5', // (0.625rem, from Medium 0.5rem * 1.3 = 0.65rem)
+      circularImgSize: 84,
       circularImgMarginBottom: '0.5rem',
-      circularImgBorderWidth: '2.5px', // Can use 2px or 3px
-      phoneticFontSize: '0.875rem', // text-sm
-      phoneticBorderRadius: '0.35rem',
-      phoneticPadding: '0.05rem 0.35rem', // approx
-      phoneticMarginBottom: '0.15rem', // approx
-      translationFontSize: '0.875rem', // text-sm
-      nameFontClassGrid: 'text-base', // From 1.05rem target
-      nameFontClassCircular: 'text-sm',  // From 0.9rem target
-      nameFontClassNoImage: 'text-xl', // From 1.2rem target
-      nameMarginBottomClass: 'mb-0.5', // From 0.15rem target
-      textDetailsMarginTopGrid: 'mt-1', // From 0.3rem target
-      textDetailsMarginTopCircular: 'mt-0.5', // From 0.15rem target
-      textDetailsMarginTopNoImage: 'mt-2', // From 0.45rem target
-      cardBorderRadius: '1.1rem',
-      cardImageBorderRadius: '1.1rem 1.1rem 0 0',
+      circularImgBorderWidth: '3px',
+      phoneticFontSize: '1rem', // text-base (from Medium 0.75rem * 1.3 = 0.975rem)
+      phoneticBorderRadius: '0.4rem',
+      phoneticPadding: '0.1rem 0.4rem',
+      phoneticMarginBottom: '0.15rem',
+      translationFontSize: '1rem', // text-base (from Medium 0.75rem * 1.3 = 0.975rem)
+      nameFontClassGrid: 'text-lg', // (from Medium 0.875rem * 1.3 = 1.1375rem)
+      nameFontClassCircular: 'text-base', // (from Medium 0.75rem * 1.3 = 0.975rem)
+      nameFontClassNoImage: 'text-xl', // (from Medium 1rem * 1.3 = 1.3rem)
+      nameMarginBottomClass: 'mb-1', // (from Medium 0.125rem * 1.3 = 0.1625rem)
+      textDetailsMarginTopGrid: 'mt-1.5', // (from Medium 0.25rem * 1.3 = 0.325rem)
+      textDetailsMarginTopCircular: 'mt-0.5', // (from Medium 0.125rem * 1.3 = 0.1625rem)
+      textDetailsMarginTopNoImage: 'mt-2', // (from Medium 0.375rem * 1.3 = 0.4875rem)
+      cardBorderRadius: '1.2rem', // (from Medium 0.9rem * 1.3 = 1.17rem)
+      cardImageBorderRadius: '1.2rem 1.2rem 0 0', // (from Medium 0.9rem * 1.3 = 1.17rem)
     }
   };
 
