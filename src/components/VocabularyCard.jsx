@@ -74,8 +74,8 @@ const VocabularyCard = ({
     alignItems: 'center',
     justifyContent: isNoImageLayout ? 'center' : 'flex-start', // Center content vertically for no-image
     aspectRatio: !isCircularLayout && !isNoImageLayout ? '' : 'auto', // No aspect ratio for no-image
-    minHeight: isCircularLayout ? 260 : (isNoImageLayout ? 150 : undefined), // Min height for no-image, adjust as needed
-    padding: isCircularLayout ? '1.2rem 0.5rem 0.8rem 0.5rem' : (isNoImageLayout ? '1rem' : undefined),
+    minHeight: isCircularLayout ? 200 : (isNoImageLayout ? 120 : undefined), // Min height for no-image, adjust as needed
+    padding: isCircularLayout ? '1rem 0.4rem 0.6rem 0.4rem' : (isNoImageLayout ? '0.75rem' : undefined),
   };
   const inactiveStyle = {
     fontFamily: 'var(--card-font-family)',
@@ -89,8 +89,8 @@ const VocabularyCard = ({
     alignItems: 'center',
     justifyContent: isNoImageLayout ? 'center' : 'flex-start', // Center content vertically for no-image
     aspectRatio: !isCircularLayout && !isNoImageLayout ? '' : 'auto', // No aspect ratio for no-image
-    minHeight: isCircularLayout ? 260 : (isNoImageLayout ? 150 : undefined), // Min height for no-image, adjust as needed
-    padding: isCircularLayout ? '1.2rem 0.5rem 0.8rem 0.5rem' : (isNoImageLayout ? '1rem' : undefined),
+    minHeight: isCircularLayout ? 200 : (isNoImageLayout ? 120 : undefined), // Min height for no-image, adjust as needed
+    padding: isCircularLayout ? '1rem 0.4rem 0.6rem 0.4rem' : (isNoImageLayout ? '0.75rem' : undefined),
   };
 
   if (isActive) {
@@ -118,15 +118,15 @@ const VocabularyCard = ({
 
   // For circular layout, image is a circle and centered - This logic remains the same
   const circularImgWrapperStyle = {
-    width: 120,
-    height: 120,
+    width: 90,
+    height: 90,
     borderRadius: '50%',
     overflow: 'hidden',
     margin: '0 auto',
-    marginBottom: '0.7rem',
+    marginBottom: '0.5rem',
     border: `3px solid ${isActive ? 'var(--card-active-border-color)' : 'var(--card-border-color)'}`,
     background: '#fff',
-    boxShadow: isActive ? '0 0 0 4px #fffbe9' : '0 0 0 2px #fffbe9',
+    boxShadow: isActive ? '0 0 0 3px #fffbe9' : '0 0 0 2px #fffbe9', // Slightly reduced active shadow
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -158,14 +158,14 @@ const VocabularyCard = ({
   const nameStyle = {
     color: 'var(--card-name-text-color)',
     fontFamily: 'var(--font-readable)', // or specific card name font var
-    letterSpacing: '0.02em',
+    letterSpacing: '0.01em', // Slightly reduced letter spacing
   };
 
   const phoneticStyle = {
-    fontSize: '1.2rem',
+    fontSize: '1.0rem', // Reduced from 1.2rem
     backgroundColor: 'var(--card-phonetic-bg)',
     color: 'var(--card-phonetic-text-color)',
-    borderRadius: '0.5rem',
+    borderRadius: '0.4rem', // Slightly smaller border radius
     display: 'inline-block',
     padding: '0.1rem 0.5rem',
     marginBottom: '0.2rem',
@@ -174,7 +174,7 @@ const VocabularyCard = ({
   };
 
   const translationStyle = {
-    fontSize: '1.2rem',
+    fontSize: '1.0rem', // Reduced from 1.2rem
     fontWeight: 'bold',
     fontFamily: 'var(--font-readable)',
     color: 'var(--card-translation-text-color)',
@@ -230,11 +230,11 @@ const VocabularyCard = ({
 
       {/* Text Content Area */}
       {/* For 'no-image' layout, text might need more prominent styling or different padding */}
-      <div className={`text-center w-full ${isNoImageLayout ? 'p-4 flex flex-col justify-center items-center h-full' : (isCircularLayout ? '' : 'p-4')}`}>
-        <p className={`font-bold mb-1 ${isNoImageLayout ? 'text-3xl' : (isCircularLayout ? 'text-lg' : 'text-2xl')}`} style={nameStyle}>{item.name}</p>
-        <div className={isNoImageLayout ? 'mt-3' : (isCircularLayout ? 'mt-1' : 'mt-2')}>
-          <div className="font-mono" style={{...phoneticStyle, fontSize: isNoImageLayout ? '1.4rem' : phoneticStyle.fontSize }}>{item.phonetic}</div>
-          <div className="text-lg" style={{...translationStyle, fontSize: isNoImageLayout ? '1.4rem' : translationStyle.fontSize }}>{item.zh}</div>
+      <div className={`text-center w-full ${isNoImageLayout ? 'p-3 flex flex-col justify-center items-center h-full' : (isCircularLayout ? '' : 'p-3')}`}>
+        <p className={`font-bold mb-1 ${isNoImageLayout ? 'text-2xl' : (isCircularLayout ? 'text-base' : 'text-xl')}`} style={nameStyle}>{item.name}</p>
+        <div className={isNoImageLayout ? 'mt-2' : (isCircularLayout ? 'mt-1' : 'mt-1.5')}>
+          <div className="font-mono" style={{...phoneticStyle, fontSize: isNoImageLayout ? '1.1rem' : phoneticStyle.fontSize }}>{item.phonetic}</div>
+          <div className="text-base" style={{...translationStyle, fontSize: isNoImageLayout ? '1.1rem' : translationStyle.fontSize }}>{item.zh}</div>
         </div>
       </div>
     </div>
