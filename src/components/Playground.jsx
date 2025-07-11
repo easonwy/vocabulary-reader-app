@@ -34,6 +34,7 @@ const Playground = ({
   activeCardEffect,
   siteName, // Added siteName prop
   currentTheme, // Added currentTheme prop
+  cardSize, // Added cardSize prop
 }) => {
   const mainContentWrapperClasses = `flex-1 p-1 md:p-3 text-[var(--text-primary)] overflow-hidden`; // Reverted to overflow-hidden for diagnosis
 
@@ -83,6 +84,7 @@ const Playground = ({
                 layout={layout} // Pass layout to Main
                 activeCardEffect={activeCardEffect} // Pass activeCardEffect to Main
                 currentTheme={currentTheme} // Pass currentTheme to Main
+                cardSize={cardSize} // Pass cardSize to Main
                 // showScrollbar={showScrollbar} // Removed
               />
             )}

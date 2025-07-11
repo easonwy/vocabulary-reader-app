@@ -35,6 +35,7 @@ const App = () => {
   const [layout, setLayout] = useState('grid'); // 'grid' or 'circular'
   const [activeCardEffect, setActiveCardEffect] = useState('Liner'); // 'Liner' or 'LinerPro'
   const [siteName, setSiteName] = useState('Anna英语充电站'); // State for site name
+  const [cardSize, setCardSize] = useState('medium'); // 'small', 'medium', 'big'
 
   // Function to load vocabulary data
   const loadVocabulary = useCallback(async (subjectKey) => {
@@ -138,6 +139,10 @@ const App = () => {
   // Handler for site name change
   const handleSiteNameChange = (newName) => {
     setSiteName(newName);
+  };
+
+  const handleCardSizeChange = (newSize) => {
+    setCardSize(newSize);
   };
 
   // Function to scroll vocabulary grid to top by reloading the current subject
@@ -267,6 +272,7 @@ const App = () => {
             layout={layout} // Pass layout state
             activeCardEffect={activeCardEffect} // Pass activeCardEffect
             siteName={siteName} // Pass siteName
+            cardSize={cardSize} // Pass cardSize
           />
         </div>
 
@@ -299,6 +305,8 @@ const App = () => {
             onLayoutChange={handleLayoutChange} // Pass layout handler
             activeCardEffect={activeCardEffect} // Pass activeCardEffect state
             onActiveCardEffectChange={handleActiveCardEffectChange} // Pass handler
+            cardSize={cardSize} // Pass cardSize state
+            onCardSizeChange={handleCardSizeChange} // Pass cardSize handler
             onScrollToTop={scrollToTop} // Added scrollToTop prop
           />
         </div>

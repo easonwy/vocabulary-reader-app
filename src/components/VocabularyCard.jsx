@@ -41,9 +41,91 @@ const VocabularyCard = ({
   layout,
   activeCardEffect,
   currentTheme, // Added currentTheme prop
+  cardSize = 'medium', // Added cardSize prop, default to medium
 }) => {
   // Base classes - structural and interactive, less theme-dependent directly
   const baseCardClasses = "food-card overflow-hidden text-center cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl cartoon-card";
+
+  const sizeConfigs = {
+    small: {
+      minHeightCircular: 112,
+      minHeightNoImage: 72,
+      paddingCircular: '0.55rem 0.25rem 0.3rem 0.25rem',
+      paddingNoImage: '0.4rem',
+      gridTextPaddingClass: 'p-1.5',
+      circularImgSize: 52,
+      circularImgMarginBottom: '0.3rem',
+      circularImgBorderWidth: '1.5px',
+      phoneticFontSize: '0.75rem', // Floor
+      phoneticBorderRadius: '0.25rem',
+      phoneticPadding: '0.05rem 0.25rem',
+      phoneticMarginBottom: '0.05rem',
+      translationFontSize: '0.75rem', // Floor
+      nameFontClassGrid: 'text-xs', // Floor from 0.7rem target
+      nameFontClassCircular: 'text-xs', // Floor
+      nameFontClassNoImage: 'text-sm', // From 0.8rem target
+      nameMarginBottomClass: 'mb-px',
+      textDetailsMarginTopGrid: 'mt-0.5',
+      textDetailsMarginTopCircular: 'mt-px',
+      textDetailsMarginTopNoImage: 'mt-1',
+      // Border radii for default theme (themes might override with their own logic or CSS vars)
+      // Values for Cartoon, Xiaohongshu, iOS26 are calculated but applied via CSS vars if not overridden by dynamic styles.
+      // This dynamic override is primarily for the default theme or if a theme doesn't specify its own radius.
+      cardBorderRadius: '0.7rem',
+      cardImageBorderRadius: '0.7rem 0.7rem 0 0',
+    },
+    medium: { // Current baseline
+      minHeightCircular: 140,
+      minHeightNoImage: 90,
+      paddingCircular: '0.7rem 0.3rem 0.4rem 0.3rem',
+      paddingNoImage: '0.5rem',
+      gridTextPaddingClass: 'p-2',
+      circularImgSize: 64,
+      circularImgMarginBottom: '0.4rem',
+      circularImgBorderWidth: '2px',
+      phoneticFontSize: '0.75rem',
+      phoneticBorderRadius: '0.3rem',
+      phoneticPadding: '0.05rem 0.3rem',
+      phoneticMarginBottom: '0.1rem',
+      translationFontSize: '0.75rem',
+      nameFontClassGrid: 'text-sm',
+      nameFontClassCircular: 'text-xs',
+      nameFontClassNoImage: 'text-base',
+      nameMarginBottomClass: 'mb-0.5',
+      textDetailsMarginTopGrid: 'mt-1',
+      textDetailsMarginTopCircular: 'mt-0.5',
+      textDetailsMarginTopNoImage: 'mt-1.5',
+      cardBorderRadius: '0.9rem',
+      cardImageBorderRadius: '0.9rem 0.9rem 0 0',
+    },
+    big: {
+      minHeightCircular: 168,
+      minHeightNoImage: 108,
+      paddingCircular: '0.85rem 0.35rem 0.5rem 0.35rem',
+      paddingNoImage: '0.6rem',
+      gridTextPaddingClass: 'p-2.5',
+      circularImgSize: 76,
+      circularImgMarginBottom: '0.5rem',
+      circularImgBorderWidth: '2.5px', // Can use 2px or 3px
+      phoneticFontSize: '0.875rem', // text-sm
+      phoneticBorderRadius: '0.35rem',
+      phoneticPadding: '0.05rem 0.35rem', // approx
+      phoneticMarginBottom: '0.15rem', // approx
+      translationFontSize: '0.875rem', // text-sm
+      nameFontClassGrid: 'text-base', // From 1.05rem target
+      nameFontClassCircular: 'text-sm',  // From 0.9rem target
+      nameFontClassNoImage: 'text-xl', // From 1.2rem target
+      nameMarginBottomClass: 'mb-0.5', // From 0.15rem target
+      textDetailsMarginTopGrid: 'mt-1', // From 0.3rem target
+      textDetailsMarginTopCircular: 'mt-0.5', // From 0.15rem target
+      textDetailsMarginTopNoImage: 'mt-2', // From 0.45rem target
+      cardBorderRadius: '1.1rem',
+      cardImageBorderRadius: '1.1rem 1.1rem 0 0',
+    }
+  };
+
+  const currentSizeConfig = sizeConfigs[cardSize] || sizeConfigs.medium;
+
   // Determine if circular layout is active
   const isCircularLayout = layout === 'circular';
   const isNoImageLayout = layout === 'no-image';
@@ -66,47 +148,48 @@ const VocabularyCard = ({
     fontFamily: 'var(--card-font-family)',
     backgroundColor: 'var(--card-active-bg)',
     boxShadow: 'var(--card-active-shadow)', // Will be overridden by glow animation if present
-    borderRadius: 'var(--card-border-radius)',
-    border: `4px solid var(--card-active-border-color)`,
+    // borderRadius will be set dynamically based on cardSizeConfig
+    border: `4px solid var(--card-active-border-color)`, // Border width could also be dynamic
     position: 'relative',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: isNoImageLayout ? 'center' : 'flex-start', // Center content vertically for no-image
-    aspectRatio: !isCircularLayout && !isNoImageLayout ? '' : 'auto', // No aspect ratio for no-image
-    minHeight: isCircularLayout ? 140 : (isNoImageLayout ? 90 : undefined), // Min height further reduced
-    padding: isCircularLayout ? '0.7rem 0.3rem 0.4rem 0.3rem' : (isNoImageLayout ? '0.5rem' : undefined), // Padding further reduced
+    justifyContent: isNoImageLayout ? 'center' : 'flex-start',
+    aspectRatio: !isCircularLayout && !isNoImageLayout ? '' : 'auto',
+    minHeight: isCircularLayout ? currentSizeConfig.minHeightCircular : (isNoImageLayout ? currentSizeConfig.minHeightNoImage : undefined),
+    padding: isCircularLayout ? currentSizeConfig.paddingCircular : (isNoImageLayout ? currentSizeConfig.paddingNoImage : undefined),
   };
   const inactiveStyle = {
     fontFamily: 'var(--card-font-family)',
     backgroundColor: 'var(--card-bg)',
     boxShadow: 'var(--card-shadow)',
-    borderRadius: 'var(--card-border-radius)',
-    border: `4px solid var(--card-border-color)`,
+    // borderRadius will be set dynamically
+    border: `4px solid var(--card-border-color)`, // Border width could also be dynamic
     position: 'relative',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: isNoImageLayout ? 'center' : 'flex-start', // Center content vertically for no-image
-    aspectRatio: !isCircularLayout && !isNoImageLayout ? '' : 'auto', // No aspect ratio for no-image
-    minHeight: isCircularLayout ? 140 : (isNoImageLayout ? 90 : undefined), // Min height further reduced
-    padding: isCircularLayout ? '0.7rem 0.3rem 0.4rem 0.3rem' : (isNoImageLayout ? '0.5rem' : undefined), // Padding further reduced
+    justifyContent: isNoImageLayout ? 'center' : 'flex-start',
+    aspectRatio: !isCircularLayout && !isNoImageLayout ? '' : 'auto',
+    minHeight: isCircularLayout ? currentSizeConfig.minHeightCircular : (isNoImageLayout ? currentSizeConfig.minHeightNoImage : undefined),
+    padding: isCircularLayout ? currentSizeConfig.paddingCircular : (isNoImageLayout ? currentSizeConfig.paddingNoImage : undefined),
   };
 
   if (isActive) {
-    dynamicClasses.push("relative", "z-10", "active"); // Add 'active' for all active cards to trigger .food-card.active scale
+    dynamicClasses.push("relative", "z-10", "active");
     cardStyleOverrides = { ...baseActiveStyle };
-
     if (activeCardEffect === "LinerPro") {
       dynamicClasses.push("liner-pro-active-glow");
-      // No 'cartoon-bounce'
-    } else { // "Liner" (default) active effect
+    } else {
       dynamicClasses.push("cartoon-bounce");
     }
   } else {
-    // Inactive card styles
     cardStyleOverrides = { ...inactiveStyle };
   }
+
+  // Dynamically set border radius from config. Themes might override this via CSS if their vars are more specific or use !important.
+  cardStyleOverrides.borderRadius = currentSizeConfig.cardBorderRadius;
+
 
   let classList = [staticBaseClasses, ...dynamicClasses, layoutClass];
   if (currentTheme === 'theme-ios26') {
@@ -114,19 +197,18 @@ const VocabularyCard = ({
   }
 
   const finalClassNames = classList.join(' ').trim().replace(/\s+/g, ' ');
-  const cardStyle = cardStyleOverrides; // Use the determined style overrides
+  const cardStyle = cardStyleOverrides;
 
-  // For circular layout, image is a circle and centered - This logic remains the same
   const circularImgWrapperStyle = {
-    width: 64, // Further reduced
-    height: 64, // Further reduced
+    width: currentSizeConfig.circularImgSize,
+    height: currentSizeConfig.circularImgSize,
     borderRadius: '50%',
     overflow: 'hidden',
     margin: '0 auto',
-    marginBottom: '0.4rem', // Further reduced
-    border: `2px solid ${isActive ? 'var(--card-active-border-color)' : 'var(--card-border-color)'}`, // Border reduced
+    marginBottom: currentSizeConfig.circularImgMarginBottom,
+    border: `${currentSizeConfig.circularImgBorderWidth} solid ${isActive ? 'var(--card-active-border-color)' : 'var(--card-border-color)'}`,
     background: '#fff',
-    boxShadow: isActive ? '0 0 0 2px #fffbe9' : '0 0 0 1px #fffbe9', // Active shadow further reduced
+    boxShadow: isActive ? `0 0 0 ${currentSizeConfig.circularImgBorderWidth === '1.5px' ? '1.5px' : '2px'} #fffbe9` : `0 0 0 1px #fffbe9`, // Adjusted shadow based on border
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -137,8 +219,9 @@ const VocabularyCard = ({
     width: '100%',
     aspectRatio: '1.4/1', // or adjust as needed
     overflow: 'hidden',
-    borderTopLeftRadius: 'var(--card-image-border-radius)',
-    borderTopRightRadius: 'var(--card-image-border-radius)',
+    // Dynamically set image border radius from config for top corners
+    borderTopLeftRadius: currentSizeConfig.cardImageBorderRadius.split(' ')[0], // Assumes format "value value 0 0"
+    borderTopRightRadius: currentSizeConfig.cardImageBorderRadius.split(' ')[1], // Assumes format "value value 0 0"
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
     background: '#fff',
@@ -162,23 +245,64 @@ const VocabularyCard = ({
   };
 
   const phoneticStyle = {
-    fontSize: '0.75rem', // Further reduced (Tailwind text-xs)
+    fontSize: currentSizeConfig.phoneticFontSize,
     backgroundColor: 'var(--card-phonetic-bg)',
     color: 'var(--card-phonetic-text-color)',
-    borderRadius: '0.3rem', // Further smaller border radius
+    borderRadius: currentSizeConfig.phoneticBorderRadius,
     display: 'inline-block',
-    padding: '0.05rem 0.3rem', // Reduced padding
-    marginBottom: '0.1rem', // Reduced margin
+    padding: currentSizeConfig.phoneticPadding,
+    marginBottom: currentSizeConfig.phoneticMarginBottom,
     fontFamily: 'var(--font-readable)',
     fontWeight: 600,
   };
 
   const translationStyle = {
-    fontSize: '0.75rem', // Further reduced (Tailwind text-xs)
+    fontSize: currentSizeConfig.translationFontSize,
     fontWeight: 'bold',
     fontFamily: 'var(--font-readable)',
     color: 'var(--card-translation-text-color)',
   };
+
+  // Determine text content area padding class
+  const textContentPaddingClass = isCircularLayout ? '' : currentSizeConfig.gridTextPaddingClass;
+  const textContentClasses = `text-center w-full ${isNoImageLayout ? `${textContentPaddingClass} flex flex-col justify-center items-center h-full` : textContentPaddingClass}`;
+
+
+  // Determine name font class
+  let nameFontClass = currentSizeConfig.nameFontClassGrid; // Default to grid
+  if (isCircularLayout) {
+    nameFontClass = currentSizeConfig.nameFontClassCircular;
+  } else if (isNoImageLayout) {
+    nameFontClass = currentSizeConfig.nameFontClassNoImage;
+  }
+
+  // Determine margin class for name paragraph
+  const nameMarginBottomClass = currentSizeConfig.nameMarginBottomClass;
+
+  // Determine margin class for the div containing phonetic and translation
+  let textDetailsMarginTopClass = currentSizeConfig.textDetailsMarginTopGrid; // Default to grid
+  if (isCircularLayout) {
+    textDetailsMarginTopClass = currentSizeConfig.textDetailsMarginTopCircular;
+  } else if (isNoImageLayout) {
+    textDetailsMarginTopClass = currentSizeConfig.textDetailsMarginTopNoImage;
+  }
+
+  // Determine font size for phonetic and translation for no-image layout (others use style object)
+  // For no-image layout, these specific font sizes from the config are used.
+  // For other layouts, the font sizes are directly from the phoneticStyle and translationStyle objects.
+  const noImagePhoneticFontSize = currentSizeConfig.phoneticFontSize;
+  const noImageTranslationFontSize = currentSizeConfig.translationFontSize;
+
+  // Determine translation text class for non-no-image layouts
+  let translationTextClass = '';
+  if (!isNoImageLayout) {
+    if (currentSizeConfig.translationFontSize === '0.75rem') {
+      translationTextClass = 'text-xs';
+    } else if (currentSizeConfig.translationFontSize === '0.875rem') {
+      translationTextClass = 'text-sm';
+    } // Add more conditions if other font sizes are introduced for translation for non-no-image
+  }
+
 
   return (
     <div
@@ -201,7 +325,7 @@ const VocabularyCard = ({
               src={item.img}
               alt={item.name}
               className="object-cover cartoon-img"
-              style={imgStyle}
+              style={imgStyle} // imgStyle already makes it a circle for this path if circularImgWrapper is a circle
               onError={e => {
                 e.target.onerror = null;
                 e.target.src = ' https://placehold.co/400x400/cccccc/ffffff?text=Image+Not+Found';
@@ -214,9 +338,10 @@ const VocabularyCard = ({
               src={item.img}
               alt={item.name}
               className="object-cover cartoon-img"
-              style={{
+              style={{ // For grid, imgStyle's borderRadius: 50% is overridden by this specific borderRadius
                 ...imgStyle,
-                borderRadius: 'var(--card-image-border-radius)',
+                // Apply the top-left and top-right parts of cardImageBorderRadius
+                borderRadius: `${currentSizeConfig.cardImageBorderRadius.split(' ')[0]} ${currentSizeConfig.cardImageBorderRadius.split(' ')[1]} 0 0`,
                 borderBottom: isActive ? `var(--card-image-border-bottom-active)` : 'none',
               }}
               onError={e => {
@@ -229,12 +354,11 @@ const VocabularyCard = ({
       )}
 
       {/* Text Content Area */}
-      {/* For 'no-image' layout, text might need more prominent styling or different padding */}
-      <div className={`text-center w-full ${isNoImageLayout ? 'p-2 flex flex-col justify-center items-center h-full' : (isCircularLayout ? '' : 'p-2')}`}>
-        <p className={`font-bold mb-0.5 ${isNoImageLayout ? 'text-base' : (isCircularLayout ? 'text-xs' : 'text-sm')}`} style={nameStyle}>{item.name}</p>
-        <div className={isNoImageLayout ? 'mt-1.5' : (isCircularLayout ? 'mt-0.5' : 'mt-1')}>
-          <div className="font-mono" style={{...phoneticStyle, fontSize: isNoImageLayout ? '0.75rem' : phoneticStyle.fontSize }}>{item.phonetic}</div>
-          <div className="text-xs" style={{...translationStyle, fontSize: isNoImageLayout ? '0.75rem' : translationStyle.fontSize }}>{item.zh}</div>
+      <div className={textContentClasses}>
+        <p className={`font-bold ${nameMarginBottomClass} ${nameFontClass}`} style={nameStyle}>{item.name}</p>
+        <div className={textDetailsMarginTopClass}>
+          <div className="font-mono" style={{...phoneticStyle, fontSize: isNoImageLayout ? noImagePhoneticFontSize : phoneticStyle.fontSize }}>{item.phonetic}</div>
+          <div className={isNoImageLayout ? '' : translationTextClass} style={{...translationStyle, fontSize: isNoImageLayout ? noImageTranslationFontSize : translationStyle.fontSize }}>{item.zh}</div>
         </div>
       </div>
     </div>

@@ -31,6 +31,8 @@ const ControlPanel = ({
   onActiveCardEffectChange, // Added onActiveCardEffectChange prop
   siteName, // Added siteName prop
   onSiteNameChange, // Added onSiteNameChange prop
+  cardSize, // Added cardSize prop
+  onCardSizeChange, // Added onCardSizeChange prop
   // currentTheme is already correctly destructured earlier
 }) => {
   // textOverlayPosition options
@@ -116,6 +118,27 @@ const ControlPanel = ({
             <option value="grid">Grid</option>
             <option value="circular">Circular Images</option>
             <option value="no-image">No Image</option>
+          </select>
+        </div>
+        {/* Card Size */}
+        <div>
+          <label htmlFor="card-size-select" className="text-sm block mb-1" style={{color: 'var(--text-primary)'}}>Card Size:</label>
+          <select
+            id="card-size-select"
+            value={cardSize}
+            onChange={e => onCardSizeChange(e.target.value)}
+            disabled={isReading}
+            className="p-2 rounded-md border-2 shadow-sm text-sm w-full"
+            style={{
+              borderColor: 'var(--input-border-color)',
+              backgroundColor: 'var(--input-bg)',
+              color: 'var(--input-text-color)',
+              fontFamily: 'var(--font-readable)'
+            }}
+          >
+            <option value="small">Small</option>
+            <option value="medium">Medium</option>
+            <option value="big">Big</option>
           </select>
         </div>
         {/* Card Effect */}
