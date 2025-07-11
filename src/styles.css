@@ -24,12 +24,12 @@
   /* Main Content/Cards */
   --card-bg: #ffffff;
   --card-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); /* shadow-xl */
-  --card-border-radius: 1.2rem;
+  --card-border-radius: 0.9rem;
   --card-border-color: transparent; /* From food-card */
   --card-active-bg: linear-gradient(135deg,#fffbe9 80%,#ffe0b2 100%);
   --card-active-border-color: #f59e42; /* amber-500 variant */
   --card-active-shadow: 0 8px 32px 0 rgba(245,158,66,0.15);
-  --card-image-border-radius: 1.2rem 1.2rem 0 0;
+  --card-image-border-radius: 0.9rem 0.9rem 0 0;
   --card-image-border-bottom-active: 3px dashed #f59e42;
   --card-name-text-color: #f59e42;
   --card-phonetic-bg: #fffbe9;
@@ -238,12 +238,12 @@
 
   --card-bg: #fffbe9;
   --card-shadow: 0 10px 20px 0 #fbbf24;
-  --card-border-radius: 1.5rem;
+  --card-border-radius: 1.0rem;
   --card-border-color: #fbbf24;
   --card-active-bg: linear-gradient(135deg,#fffbe9 80%,#ffe0b2 100%);
   --card-active-border-color: #f59e42;
   --card-active-shadow: 0 8px 32px 0 #f59e42;
-  --card-image-border-radius: 1.5rem 1.5rem 0 0;
+  --card-image-border-radius: 1.0rem 1.0rem 0 0;
   --card-image-border-bottom-active: 3px dashed #f59e42;
   --card-name-text-color: #f59e42;
   --card-phonetic-bg: #ffe0b2;
@@ -301,12 +301,12 @@
 
   --card-bg: #fff;
   --card-shadow: 0 4px 16px 0 rgba(255,36,66,0.10);
-  --card-border-radius: 1rem;
+  --card-border-radius: 0.7rem;
   --card-border-color: #ff2442;
   --card-active-bg: #fff0f3;
   --card-active-border-color: #ff2442;
   --card-active-shadow: 0 8px 32px 0 rgba(255,36,66,0.15);
-  --card-image-border-radius: 1rem 1rem 0 0;
+  --card-image-border-radius: 0.7rem 0.7rem 0 0;
   --card-image-border-bottom-active: 3px solid #ff2442;
   --card-name-text-color: #ff2442;
   --card-phonetic-bg: #fff0f3;
@@ -381,12 +381,12 @@
   /* Main Content/Cards - Glassmorphic */
   --card-bg: rgba(255, 255, 255, 0.1); /* More transparent for cards */
   --card-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.15);
-  --card-border-radius: 0.6rem;
+  --card-border-radius: 0.4rem;
   --card-border-color: rgba(255, 255, 255, 0.18); /* Light border for glass effect */
   --card-active-bg: rgba(255, 255, 255, 0.2);
   --card-active-border-color: rgba(255, 255, 255, 0.5); /* Brighter border for active state */
   --card-active-shadow: 0 8px 25px 0 rgba(0, 0, 0, 0.2);
-  --card-image-border-radius: 0.6rem 0.6rem 0 0;
+  --card-image-border-radius: 0.4rem 0.4rem 0 0;
   --card-image-border-bottom-active: 2px solid rgba(255, 255, 255, 0.5);
   --card-name-text-color: #ffffff;
   --card-phonetic-bg: rgba(255, 255, 255, 0.1);
