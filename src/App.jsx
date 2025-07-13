@@ -22,6 +22,11 @@ const App = () => {
     { key: 'living-room', name: 'Living Room' }, 
     { key: 'bedroom', name: 'Bedroom' },
     { key: 'house', name: 'House' },
+    { key: 'dinner', name: 'Dinner' },
+    { key: 'dessert', name: 'Dessert' },
+    { key: 'drinks', name: 'Drinks' },
+    { key: 'cooking', name: 'Cooking' },
+    { key: 'travel', name: 'Travel' },
     // Add more subjects here or fetch dynamically
   ]);
   const [isLoading, setIsLoading] = useState(true);
