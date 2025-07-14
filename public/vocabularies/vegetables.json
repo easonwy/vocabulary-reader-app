@@ -1,0 +1,12 @@
+[
+  { "name": "Carrot", "phonetic": "/ˈkær.ət/", "zh": "胡萝卜", "img": "https://images.unsplash.com/photo-1590868309235-ea34bed7bd7f?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { "name": "Broccoli", "phonetic": "/ˈbrɒk.əl.i/", "zh": "西兰花", "img": "https://images.unsplash.com/photo-1587351177733-a03281a169a8?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { "name": "Spinach", "phonetic": "/ˈspɪn.ɪtʃ/", "zh": "菠菜", "img": "https://images.unsplash.com/photo-1576045057995-568f58d16e0a?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { "name": "Potato", "phonetic": "/pəˈteɪ.toʊ/", "zh": "土豆", "img": "https://images.unsplash.com/photo-1518977676601-b53f82aba655?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { "name": "Tomato", "phonetic": "/təˈmɑː.toʊ/", "zh": "西红柿", "img": "https://images.unsplash.com/photo-1561155653-29e1c141c5a3?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { "name": "Cucumber", "phonetic": "/ˈkjuː.kʌm.bər/", "zh": "黄瓜", "img": "https://images.unsplash.com/photo-1581347993180-3f133293f92e?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { "name": "Lettuce", "phonetic": "/ˈlet.ɪs/", "zh": "生菜", "img": "https://images.unsplash.com/photo-1556801713-3c9a1a4c4a8a?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { "name": "Onion", "phonetic": "/ˈʌn.jən/", "zh": "洋葱", "img": "https://images.unsplash.com/photo-1587374918293-6a2f6b1c0a8f?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { "name": "Garlic", "phonetic": "/ˈɡɑːr.lɪk/", "zh": "大蒜", "img": "https://images.unsplash.com/photo-1594299248493-3934d7a742a3?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { "name": "Pepper", "phonetic": "/ˈpep.ər/", "zh": "辣椒", "img": "https://images.unsplash.com/photo-1566038849522-4a6a5db359d7?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" }
+]

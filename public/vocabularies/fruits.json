@@ -1,0 +1,12 @@
+[
+  { "name": "Apple", "phonetic": "/ˈæp.əl/", "zh": "苹果", "img": "https://images.unsplash.com/photo-1579613832125-5d34a1325264?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { "name": "Banana", "phonetic": "/bəˈnɑː.nə/", "zh": "香蕉", "img": "https://images.unsplash.com/photo-1528825871115-3581a5387919?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { "name": "Orange", "phonetic": "/ˈɒr.ɪndʒ/", "zh": "橙子", "img": "https://images.unsplash.com/photo-1547514701-42782101795e?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { "name": "Strawberry", "phonetic": "/ˈstrɔː.bər.i/", "zh": "草莓", "img": "https://images.unsplash.com/photo-1588343448590-0f69b6a38935?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { "name": "Grape", "phonetic": "/ɡreɪp/", "zh": "葡萄", "img": "https://images.unsplash.com/photo-1537640538966-79f369143f8f?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { "name": "Watermelon", "phonetic": "/ˈwɔː.təˌmel.ən/", "zh": "西瓜", "img": "https://images.unsplash.com/photo-1589984662202-55b095a1e0a8?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { "name": "Pineapple", "phonetic": "/ˈpaɪnˌæp.əl/", "zh": "菠萝", "img": "https://images.unsplash.com/photo-1550258984-3b084f4c71f5?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { "name": "Mango", "phonetic": "/ˈmæŋ.ɡoʊ/", "zh": "芒果", "img": "https://images.unsplash.com/photo-1591073113125-e457119f632e?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { "name": "Peach", "phonetic": "/piːtʃ/", "zh": "桃子", "img": "https://images.unsplash.com/photo-1558030009-459675246baa?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { "name": "Cherry", "phonetic": "/ˈtʃer.i/", "zh": "樱桃", "img": "https://images.unsplash.com/photo-1528821128474-27b9b3b97b3d?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" }
+]
