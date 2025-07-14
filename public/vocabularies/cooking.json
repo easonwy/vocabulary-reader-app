@@ -1,0 +1,10 @@
+[
+  { "name": "Stir Fry", "phonetic": "/ˈstɜːr fraɪ/", "zh": "炒菜", "img": "https://images.unsplash.com/photo-1568901346375-23c9460c58cd?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0" },
+  { "name": "Grilled Fish", "phonetic": "/ɡraɪld fɪʃ/", "zh": "烤鱼", "img": "https://images.unsplash.com/photo-1586040230966-67e286a9429f?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0" },
+  { "name": "Roast Chicken", "phonetic": "/roʊst ˈtʃɪk.ɪn/", "zh": "烤鸡", "img": "https://images.unsplash.com/photo-1560101470-09b0499f962a?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0" },
+  { "name": "Baking", "phonetic": "/ˈbeɪkɪŋ/", "zh": "烘焙", "img": "https://images.unsplash.com/photo-1593642634564-3485940afcf0?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0" },
+  { "name": "Frying", "phonetic": "/ˈfraɪɪŋ/", "zh": "油炸", "img": "https://images.unsplash.com/photo-1572635196237-1496e44a9a03?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0" },
+  { "name": "Cooking", "phonetic": "/kʊkɪŋ/", "zh": "烹饪", "img": "https://images.unsplash.com/photo-1572635196237-1496e44a9a03?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0" },
+  { "name": "Baking", "phonetic": "/ˈbeɪkɪŋ/", "zh": "烘焙", "img": "https://images.unsplash.com/photo-1593642634564-3485940afcf0?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0" },
+  { "name": "Frying", "phonetic": "/ˈfraɪɪŋ/", "zh": "油炸", "img": "https://images.unsplash.com/photo-1572635196237-1496e44a9a03?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0" }
+]

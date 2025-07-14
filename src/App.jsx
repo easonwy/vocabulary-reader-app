@@ -22,6 +22,11 @@ const App = () => {
     { key: 'living-room', name: 'Living Room' }, 
     { key: 'bedroom', name: 'Bedroom' },
     { key: 'house', name: 'House' },
+    { key: 'dinner', name: 'Dinner' },
+    { key: 'dessert', name: 'Dessert' },
+    { key: 'drinks', name: 'Drinks' },
+    { key: 'cooking', name: 'Cooking' },
+    { key: 'travel', name: 'Travel' },
     { key: 'fruits', name: 'Fruits' },
     { key: 'vegetables', name: 'Vegetables' },
     { key: 'clothing', name: 'Clothing' },
@@ -34,11 +39,11 @@ const App = () => {
   const [cardsPerRow, setCardsPerRow] = useState(2); // State for words per row, default 3
   const [currentTheme, setCurrentTheme] = useState('theme-default'); // State for current theme
   // const [showScrollbar, setShowScrollbar] = useState(false); // Removed
-  const [headerPosition, setHeaderPosition] = useState('top'); // 'top' or 'bottom'
+  const [headerPosition, setHeaderPosition] = useState('bottom'); // 'top' or 'bottom'
   const [layout, setLayout] = useState('grid'); // 'grid' or 'circular'
   const [activeCardEffect, setActiveCardEffect] = useState('Liner'); // 'Liner' or 'LinerPro'
   const [siteName, setSiteName] = useState('Anna英语充电站'); // State for site name
-  const [cardSize, setCardSize] = useState('medium'); // 'small', 'medium', 'big'
+  const [cardSize, setCardSize] = useState('big'); // 'small', 'medium', 'big'
 
   // Function to load vocabulary data
   const loadVocabulary = useCallback(async (subjectKey) => {
