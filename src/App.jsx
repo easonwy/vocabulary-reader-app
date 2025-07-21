@@ -44,6 +44,7 @@ const App = () => {
   const [activeCardEffect, setActiveCardEffect] = useState('Liner'); // 'Liner' or 'LinerPro'
   const [siteName, setSiteName] = useState('Anna英语充电站'); // State for site name
   const [cardSize, setCardSize] = useState('big'); // 'small', 'medium', 'big'
+  const [voices, setVoices] = useState([]);
 
   // Function to load vocabulary data
   const loadVocabulary = useCallback(async (subjectKey) => {
@@ -88,6 +89,16 @@ const App = () => {
   useEffect(() => {
     loadVocabulary(currentSubject);
   }, [currentSubject, loadVocabulary]);
+
+  // Load voices
+  useEffect(() => {
+    const loadVoices = () => {
+      const availableVoices = window.speechSynthesis.getVoices();
+      setVoices(availableVoices);
+    };
+    window.speechSynthesis.onvoiceschanged = loadVoices;
+    loadVoices();
+  }, []);
 
   // Handler for subject change
   const handleSubjectChange = (input) => {
@@ -160,7 +171,7 @@ const App = () => {
   };
 
   // Function to speak text
-  const speak = (text, { lang = 'en-US', pitch = 1.1, rate = speechRate } = {}) => {
+  const speak = (text, { lang = 'en-US', pitch = 1.1, rate = speechRate, voice = null } = {}) => {
     return new Promise((resolve) => {
       if (!('speechSynthesis' in window)) {
         console.warn('Speech Synthesis not supported by this browser.');
@@ -172,6 +183,9 @@ const App = () => {
       utterance.lang = lang;
       utterance.rate = rate;
       utterance.pitch = pitch;
+      if (voice) {
+        utterance.voice = voice;
+      }
       utterance.onend = () => resolve();
       utterance.onerror = (e) => {
         console.error('An error occurred during speech synthesis:', e);
@@ -212,6 +226,8 @@ const App = () => {
     const cards = document.querySelectorAll('.food-card');
 
     if (vocabularyData.length > 0 && cards.length > 0) {
+      const femaleVoice = voices.find(v => v.lang.startsWith('en-') && v.name.includes('Female'));
+
       for (let i = 0; i < vocabularyData.length; i++) {
         if (!window.speechSynthesis || !isReadingRef.current) {
           window.speechSynthesis.cancel();
@@ -225,9 +241,9 @@ const App = () => {
           card.scrollIntoView({ behavior: 'smooth', block: 'center' });
           await new Promise(res => setTimeout(res, 500));
           await speak(word); // First read in normal voice
-          await new Promise(res => setTimeout(res, 300)); // Short pause
-          await speak(word, { pitch: 0.9, rate: speechRate * 1.1 }); // Second read in childish voice
-          await new Promise(res => setTimeout(res, 300)); // Short pause
+          await new Promise(res => setTimeout(res, 200)); // Short pause
+          await speak(word, { pitch: 1.4, rate: speechRate * 1.1, voice: femaleVoice }); // Second read in female voice
+          await new Promise(res => setTimeout(res, 200)); // Short pause
           await speakChinese(vocabularyData[i].zh); // Read Chinese translation
           await new Promise(res => setTimeout(res, 300));
         }
