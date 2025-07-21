@@ -1,0 +1,80 @@
+[
+    {
+        "name": "Coffee",
+        "phonetic": "/ˈkɒfi/",
+        "zh": "咖啡",
+        "img": "https://images.unsplash.com/photo-1568901346375-23c9460c58cd?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0"
+    },
+    {
+        "name": "American Coffee",
+        "phonetic": "/ˈæmərɪkən ˈkɒfi/",
+        "zh": "美式咖啡",
+        "img": "https://images.unsplash.com/photo-1540574163026-643ea20ade25?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0"
+    },
+    {
+        "name": "Black Coffee",
+        "phonetic": "/blæk ˈkɒfi/",
+        "zh": "黑咖啡",
+        "img": "https://images.unsplash.com/photo-1596436656688-51b39e457a5b?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0"
+    },
+    {
+        "name": "Espresso",
+        "phonetic": "/eˈspresəʊ/",
+        "zh": "浓缩咖啡",
+        "img": "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=1280&auto=format&fit=crop&ixlib=rb-4.1.0"
+    },
+    {
+        "name": "Latte",
+        "phonetic": "/ˈlæteɪ/",
+        "zh": "拿铁",
+        "img": "https://images.unsplash.com/photo-1559925393-1b1181e0a4a8?q=80&w=1280&auto=format&fit=crop&ixlib=rb-4.1.0"
+    },
+    {
+        "name": "Cappuccino",
+        "phonetic": "/ˌkæpuˈtʃiːnəʊ/",
+        "zh": "卡布奇诺",
+        "img": "https://images.unsplash.com/photo-1598515216685-10058d674915?q=80&w=1280&auto=format&fit=crop&ixlib=rb-4.1.0"
+    },
+    {
+        "name": "Mocha",
+        "phonetic": "/ˈməʊkə/",
+        "zh": "摩卡",
+        "img": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?q=80&w=1280&auto=format&fit=crop&ixlib=rb-4.1.0"
+    },
+    {
+        "name": "Cold Brew",
+        "phonetic": "/kəʊld bruː/",
+        "zh": "冷萃咖啡",
+        "img": "https://images.unsplash.com/photo-1591566754173-075926b50a70?q=80&w=1280&auto=format&fit=crop&ixlib=rb-4.1.0"
+    },
+    {
+        "name": "Hot Chocolate",
+        "phonetic": "/hɒt ˈtʃɒklət/",
+        "zh": "热巧克力",
+        "img": "https://images.unsplash.com/photo-1544247558-96fe98715de6?q=80&w=1280&auto=format&fit=crop&ixlib=rb-4.1.0"
+    },
+    {
+        "name": "Macchiato",
+        "phonetic": "/ˌmækiˈɑːtəʊ/",
+        "zh": "玛奇朵",
+        "img": "https://images.unsplash.com/photo-1600508774260-9e85556155d3?q=80&w=1280&auto=format&fit=crop&ixlib=rb-4.1.0"
+    },
+    {
+        "name": "Flat White",
+        "phonetic": "/flæt waɪt/",
+        "zh": "白咖啡",
+        "img": "https://images.unsplash.com/photo-1525610553368-efbb5cb6218f?q=80&w=1280&auto=format&fit=crop&ixlib=rb-4.1.0"
+    },
+    {
+        "name": "Affogato",
+        "phonetic": "/ˌæfəˈɡɑːtəʊ/",
+        "zh": "阿芙佳朵",
+        "img": "https://images.unsplash.com/photo-1576613317142-042f2c28668f?q=80&w=1280&auto=format&fit=crop&ixlib=rb-4.1.0"
+    },
+    {
+        "name": "Irish Coffee",
+        "phonetic": "/ˈaɪrɪʃ ˈkɒfi/",
+        "zh": "爱尔兰咖啡",
+        "img": "https://images.unsplash.com/photo-1563183222-ff776d1076e1?q=80&w=1280&auto=format&fit=crop&ixlib=rb-4.1.0"
+    }
+]
