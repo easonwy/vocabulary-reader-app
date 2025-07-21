@@ -160,20 +160,18 @@ const App = () => {
   };
 
   // Function to speak text
-  const speak = (text) => {
+  const speak = (text, { lang = 'en-US', pitch = 1.1, rate = speechRate } = {}) => {
     return new Promise((resolve) => {
       if (!('speechSynthesis' in window)) {
         console.warn('Speech Synthesis not supported by this browser.');
-        setTimeout(resolve, 1000); 
+        setTimeout(resolve, 1000);
         return;
       }
       
-      window.speechSynthesis.cancel(); 
-      
       const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'en-US';
-      utterance.rate = speechRate;
-      utterance.pitch = 1.1;
+      utterance.lang = lang;
+      utterance.rate = rate;
+      utterance.pitch = pitch;
       utterance.onend = () => resolve();
       utterance.onerror = (e) => {
         console.error('An error occurred during speech synthesis:', e);
@@ -182,6 +180,10 @@ const App = () => {
       
       window.speechSynthesis.speak(utterance);
     });
+  };
+
+  const speakChinese = (text) => {
+    return speak(text, { lang: 'zh-CN', pitch: 0.9, rate: speechRate * 0.9 });
   };
 
   // Main function to read words aloud
@@ -222,7 +224,11 @@ const App = () => {
         if (card) {
           card.scrollIntoView({ behavior: 'smooth', block: 'center' });
           await new Promise(res => setTimeout(res, 500));
-          await speak(word);
+          await speak(word); // First read in normal voice
+          await new Promise(res => setTimeout(res, 300)); // Short pause
+          await speak(word, { pitch: 0.9, rate: speechRate * 1.1 }); // Second read in childish voice
+          await new Promise(res => setTimeout(res, 300)); // Short pause
+          await speakChinese(vocabularyData[i].zh); // Read Chinese translation
           await new Promise(res => setTimeout(res, 300));
         }
       }
